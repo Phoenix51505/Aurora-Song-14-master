@@ -1,0 +1,29 @@
+- type: entity
+  id: ASWeaponRifleNitroExpress
+  parent: [ NFBaseWeaponRifleChamber60, NFBaseWeaponFrameRifleSniperCybersun ]
+  name: BW-5 Nitro Express Rifle
+  description: A large-bore double-barreled anti material rifle. The recoil feels strong enough to break your shoulder.
+  components:
+  - type: Sprite
+    sprite: _AS/Objects/Weapons/Guns/Rifles/nitroexpress.rsi
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
+  - type: Item
+    size: Normal
+    shape:
+    - 1,0,4,0
+  - type: Gun 
+    soundGunshot: /Audio/_AS/Weapons/Guns/Gunshots/bw-5.ogg
+    fireRate: 0.5
+    maxAngle: 35
+    angleIncrease: 20
+    angleDecay: 3
+  - type: NFWeaponDetails
+    class: weapon-details-manufacturer-phoenix
+  - type: EyeCursorOffset
+    maxOffset: 0
+  - type: SpeedModifiedOnWield
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: BallisticAmmoProvider
+    capacity: 2
