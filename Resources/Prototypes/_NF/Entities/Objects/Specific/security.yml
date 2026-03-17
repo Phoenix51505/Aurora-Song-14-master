@@ -47,10 +47,12 @@
     count: 10
 
 # Uplinks
+
+# Aurora's Song - NFSD Uplinks converted to SLE
 - type: entity
   parent: [ BaseItem, StorePresetSecurityUplink ]
   id: BaseSecurityUplinkRadio
-  name: NFSD uplink
+  name: SLE uplink # Aurora's Song - changed to SLE uplink
   description: Retro looking old radio...
   suffix: Empty
   categories: [ HideSpawnMenu ]
@@ -84,7 +86,7 @@
 - type: entity
   parent: BaseSecurityUplinkRadio
   id: BaseSecurityUplinkRadioSheriff
-  suffix: Sheriff 20
+  suffix: Commissioner 20 # Aurora's Song - changed from Sheriff to Commissioner
   components:
   - type: Store
     balance:

@@ -124,6 +124,7 @@
         priority: 1
         whitelist:
           tags:
+            - Grenade # Aurora's Song - Allows the Projector to use blast grenades
             - NFTrackingDart
             - NFCartridgeGrenade40mmEmp
             - NFCartridgeGrenade40mmFlash

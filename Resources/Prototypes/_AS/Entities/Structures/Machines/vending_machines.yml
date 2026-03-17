@@ -158,7 +158,8 @@
 - type: entity
   parent: [BaseStructureDisableAnchoring, BaseStructureDisableScrewing, VendingMachine]
   id: MedicGearVend
-  name: Medic Gear Vending Machine [POI]
+  name: Medic Gear Vending machine
+  suffix: POI
   description: A vending machine stocked with medical supplies and gear.
   components:
     - type: VendingMachine
@@ -193,12 +194,12 @@
     - type: MarketModifier
       mod: 5
 
-# Aurora Song - SLE (Security Logistics Enforcement) vending machines
+# Aurora Song - SLE (Sector Law Enforcement) vending machines
 - type: entity
   parent: [BaseStructureDisableAnchoring, VendingMachine]
   id: ASVendingMachineSLEDrobe
   name: SLEDrobe
-  description: A vending machine for Security Logistics Enforcement clothing and equipment.
+  description: A vending machine for Sector Law Enforcement clothing and equipment.
   components:
   - type: VendingMachine
     pack: ASSLEDrobeInventory
@@ -224,7 +225,7 @@
   parent: [BaseStructureDisableAnchoring, VendingMachine]
   id: ASVendingMachineSLETech
   name: SLETech
-  description: A vending machine for Security Logistics Enforcement technical equipment.
+  description: A vending machine for Sector Law Enforcement technical equipment.
   components:
   - type: VendingMachine
     pack: ASSLETechInventory
@@ -245,3 +246,13 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [["Security"]]
+
+- type: entity
+  parent: NFVendingMachineCart
+  id: ASVendingMachineCartSLE
+  suffix: SLE
+  components:
+  - type: VendingMachine
+    pack: ASPTechSLEInventory
+  - type: AccessReader
+    access: [["HeadOfSecurity"]]

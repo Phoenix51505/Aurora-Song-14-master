@@ -7,7 +7,7 @@
   category: Medium
   group: Medical
   access: Medical # Aurora
-  shuttlePath: /Maps/_AS/Shuttles/Medical/vitalis.yml #Aurora Song
+  shuttlePath: /Maps/_NF/Shuttles/vitalis.yml
   guidebookPage: ShipyardVitalis
   class:
   - Medical
@@ -17,7 +17,7 @@
 - type: gameMap
   id: Vitalis
   mapName: 'CTC Vitalis'
-  mapPath: /Maps/_AS/Shuttles/Medical/vitalis.yml #Aurora Song
+  mapPath: /Maps/_NF/Shuttles/vitalis.yml
   minPlayers: 0
   stations:
     Vitalis:

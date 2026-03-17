@@ -10,6 +10,7 @@
   - MobHumanoidInvetory
   id: MobExplorerBase
   components:
+  - type: CombatMode # Aurora's Song - Enable NavSmash behavior
   - type: NpcFactionMember
     factions:
     - ExplorersExpeditionNF

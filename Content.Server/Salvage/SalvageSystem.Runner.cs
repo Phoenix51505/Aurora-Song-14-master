@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Server._NF.Salvage; //AS
 using Content.Server.Salvage.Expeditions;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
@@ -7,16 +8,35 @@ using Content.Shared.Chat;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.EntityEffects; // AS
+using Content.Shared.NPC; //AS
+using Content.Shared.Damage; //AS
+using Content.Shared.Damage.Prototypes; //AS
+using Content.Shared.NPC.Components; //AS
+using Content.Shared.NPC.Systems; //AS
 using Content.Shared.Salvage.Expeditions;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Localizations;
+using Content.Shared.Mind.Components; // AS
+using Content.Shared.Mobs.Components; // AS
+using Content.Shared.Warps; // AS
 using Robust.Shared.Map.Components;
+using Robust.Server.GameObjects; // AS
 using Robust.Shared.Player;
 using Robust.Shared.Map; // Frontier
 using Content.Server.GameTicking; // Frontier
 using Content.Server._NF.Salvage.Expeditions.Structure; // Frontier
 using Content.Server._NF.Salvage.Expeditions;
-using Content.Shared.Salvage; // Frontier
+using Content.Shared.Mind.Components; // AS
+using Content.Shared.Salvage; // AS
+using Content.Shared.Warps; // AS
+using Content.Shared.Buckle; // AS
+using Content.Shared.Buckle.Components; // AS
+using Content.Shared.Implants; // AS
+using Robust.Server.Player;// Coyote
+using Robust.Shared.Audio; // AS
+using Robust.Shared.Audio.Systems; //AS
+using Robust.Shared.Enums; // Frontier
 
 namespace Content.Server.Salvage;
 
@@ -28,6 +48,9 @@ public sealed partial class SalvageSystem
 
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!; // Frontier
+    [Dependency] private readonly DamageableSystem _damageable = default!; // AS
+    [Dependency] private readonly IPlayerManager _players = default!; // Coyote
+    [Dependency] private readonly SharedBuckleSystem _buckle = default!; // AS
 
     private void InitializeRunner()
     {
@@ -196,6 +219,8 @@ public sealed partial class SalvageSystem
             var remaining = comp.EndTime - _timing.CurTime;
             var audioLength = _audio.GetAudioLength(comp.SelectedSong);
 
+            AbortIfWiped(uid, comp); // Coyote
+
             if (comp.Stage < ExpeditionStage.FinalCountdown && remaining < TimeSpan.FromSeconds(45))
             {
                 comp.Stage = ExpeditionStage.FinalCountdown;
@@ -284,7 +309,13 @@ public sealed partial class SalvageSystem
                                 dropLocation = _random.NextVector2(minRange, maxRange);
                             }
 
-                            _shuttle.FTLToCoordinates(shuttleUid, shuttle, new EntityCoordinates(mapUid.Value, dropLocation), 0f, ftlTime, TravelTime);
+                            _shuttle.FTLToCoordinates(
+                                shuttleUid,
+                                shuttle,
+                                new EntityCoordinates(mapUid.Value, dropLocation),
+                                0f,
+                                ftlTime,
+                                TravelTime);
                             // End Frontier:  try to find a potential destination for ship that doesn't collide with other grids.
                             //_shuttle.FTLToDock(shuttleUid, shuttle, member, ftlTime); // Frontier: use above instead
                         }
@@ -294,8 +325,121 @@ public sealed partial class SalvageSystem
                 }
             }
 
+            if (remaining < TimeSpan.FromSeconds(2.5)) // AS: Get players and non-hostile ghost roles left on the expedition and yeet them onto the shuttle before we delete the map
+            {
+                var shuttleQuery = AllEntityQuery<ShuttleComponent, TransformComponent>();
+
+                if (TryComp<StationDataComponent>(comp.Station, out var data))
+                {
+                    foreach (var member in data.Grids)
+                    {
+                        while (shuttleQuery.MoveNext(out var shuttleUid, out var shuttle, out var shuttleXform))
+                        {
+                            if (shuttleXform.MapUid != uid)
+                                continue;
+
+                            // Get everyone we want to recover that is on the map and not on the shuttle
+                            var playerQuery = EntityQueryEnumerator<MindContainerComponent, TransformComponent>();
+                            while (playerQuery.MoveNext(out var quid, out var mindContainer, out var mobXform))
+                            {
+                                // If they aren't on the expedition map, don't want em
+                                if (mobXform.MapUid != uid)
+                                    continue;
+
+                                //if they are on the shuttle, don't bother.
+                                if (mobXform.GridUid == shuttleUid)
+                                    continue;
+
+                                // Not player controlled at any point
+                                if (!mindContainer.HasMind)
+                                    continue;
+
+                                // NPC, definitely not a person
+                                if (HasComp<ActiveNPCComponent>(quid) || HasComp<NFSalvageMobRestrictionsComponent>(quid))
+                                    continue;
+
+                                // Hostile ghost role, continue
+                                if (TryComp(quid, out NpcFactionMemberComponent? npcFaction))
+                                {
+                                    var hostileFactions = npcFaction.HostileFactions;
+                                    if (hostileFactions.Contains("NanoTrasen")) // TODO: move away from hardcoded faction
+                                        continue;
+
+                                }
+
+                                // If we got this far, we want to try and find a destination on their ship and warp them to it
+                                var strapQuery = EntityQueryEnumerator<StrapComponent, TransformComponent>();
+                                while (strapQuery.MoveNext(out var suid, out var strapComp, out var strapXform)) // find an unnocupied bed/chair
+                                {
+                                    if (Transform(quid).GridUid == shuttleUid)
+                                        break;
+                                    if (Transform(suid).GridUid != shuttleUid)
+                                        continue;
+                                    if (strapComp.BuckledEntities.Count > 0)
+                                        continue;
+                                    Log.Debug($"Strap point found: {suid}");
+                                    SafetyWarp(quid, strapXform.Coordinates);
+                                    _buckle.TryBuckle(quid, null, suid);
+                                }
+
+                                var warpQuery = EntityQueryEnumerator<WarpPointComponent, TransformComponent>();
+                                while (warpQuery.MoveNext(out var wuid, out var _, out var warpXform)) // then try to find the ships warp point
+                                {
+                                    if (Transform(quid).GridUid == shuttleUid)
+                                        break;
+                                    if (Transform(wuid).GridUid != shuttleUid)
+                                        continue;
+                                    Log.Debug($"Warp point found: {wuid}");
+                                    SafetyWarp(quid, warpXform.Coordinates);
+                                }
+
+                                // We're out of options, just try and dump them in space
+                                if (!_mapSystem.TryGetMap(_gameTicker.DefaultMap, out var mapUid))
+                                {
+                                    Log.Error($"Could not get DefaultMap EntityUID, entity {quid} may be deleted.");
+                                    return;
+                                    var fallback = new EntityCoordinates(mapUid.Value, _random.NextVector2(2000f, 2000f));
+                                    SafetyWarp(quid, fallback);
+                                }
+                            }
+                        }
+                    }
+                }
+            } // End AS
+
             if (remaining < TimeSpan.Zero)
             {
+                var playerQuery = EntityQueryEnumerator<MindContainerComponent, TransformComponent>(); // AS: No idea whats causing people to be RR, so I'm adding redudancies out the ass.
+                while (playerQuery.MoveNext(out var quid, out var mindContainer, out var mobXform)) // Yes, this is pretty much an exact duplicate of the above code but with only the fallback as the destination
+                {                                                                                   // I'd try and make it cleaner but I'm slightly exasperated.
+                    // If they aren't on the expedition map, don't want em
+                    if (mobXform.MapUid != uid)
+                        continue;
+
+                    // Not player controlled at any point
+                    if (!mindContainer.HasMind)
+                        continue;
+
+                    // NPC, definitely not a person
+                    if (HasComp<ActiveNPCComponent>(quid) || HasComp<NFSalvageMobRestrictionsComponent>(quid))
+                        continue;
+
+                    // Hostile ghost role, continue
+                    if (TryComp(quid, out NpcFactionMemberComponent? npcFaction))
+                    {
+                        var hostileFactions = npcFaction.HostileFactions;
+                        if (hostileFactions.Contains("NanoTrasen")) // TODO: move away from hardcoded faction
+                            continue;
+
+                    }
+                    if (!_mapSystem.TryGetMap(_gameTicker.DefaultMap, out var mapUid))
+                    {
+                        Log.Error($"Could not get DefaultMap EntityUID, entity {quid} may be deleted.");
+                        return;
+                        var fallback = new EntityCoordinates(mapUid.Value, _random.NextVector2(2000f, 2000f));
+                        SafetyWarp(quid, fallback);
+                    }
+                }
                 QueueDel(uid);
             }
         }
@@ -362,5 +506,97 @@ public sealed partial class SalvageSystem
             }
         }
         // End Frontier: mission-specific logic
+    }
+
+    // Coyote
+    /// <summary>
+    /// Checks if everyone on the map worth caring about is dead, and aborts the expedition if so.
+    /// </summary>
+    // Honestly, as long as one person is not in crit and not SSD, we consider the expedition salvageable.
+    private void AbortIfWiped(EntityUid mapUid, SalvageExpeditionComponent component)
+    {
+        // give it a 30 second grade after first check to avoid instant aborts
+        if (component.NextAutoAbortCheck == TimeSpan.Zero)
+        {
+            component.NextAutoAbortCheck = _timing.CurTime + TimeSpan.FromSeconds(30);
+            return;
+        }
+        // only check frequently in case of some method of revival and/or performance methods
+        if (_timing.CurTime < component.NextAutoAbortCheck)
+            return;
+        component.NextAutoAbortCheck = _timing.CurTime + TimeSpan.FromSeconds(15);
+
+        var query =
+            EntityQueryEnumerator<
+                HumanoidAppearanceComponent,
+                MindContainerComponent,
+                MobStateComponent,
+                TransformComponent>();
+        // prevent abort if:
+        // - anyone is alive AND connected
+        while (query.MoveNext(
+                   out var uid,
+                   out _,
+                   out var mindC,
+                   out var mobState,
+                   out var xform))
+        {
+            if (xform.MapUid != mapUid)
+                continue;
+            // unidentified humans (loot) dont count
+            if (!mindC.HasMind)
+                continue;
+            // if anyone is alive and not in crit, we are good
+            if (_mobState.IsAlive(uid, mobState))
+            {
+                // okay weve got something alive, is their session?
+                _players.TryGetSessionByEntity(uid, out var session);
+                // if no session, check if they are SSD
+                if (session == null)
+                    continue;
+                if (session.Status == SessionStatus.Disconnected)
+                    continue;
+                return; // alive and connected player found, expedition is salvageable
+            }
+        }
+        // everyone is dead or ssd, abort the expedition
+        const int departTime = 20;
+        Announce(mapUid, Loc.GetString("salvage-expedition-abort-wipe", ("departTime", departTime)));
+        component.NextAutoAbortCheck = TimeSpan.FromDays(1); // prevent further checks
+        var newEndTime = _timing.CurTime + TimeSpan.FromSeconds(departTime);
+
+        if (component.EndTime <= newEndTime)
+            return;
+
+        component.Stage = ExpeditionStage.FinalCountdown;
+        component.EndTime = newEndTime;
+    }
+
+    private void SafetyWarp(EntityUid mobUid, EntityCoordinates warpDestination) // AS
+    {
+        Log.Debug($"Attempting to teleport {mobUid}");
+
+        // first we teleport them
+        var mobXform = Transform(mobUid);
+        _transform.SetCoordinates(mobUid, mobXform, warpDestination);
+        _transform.AttachToGridOrMap(mobUid, mobXform);
+        Spawn("EffectFlashBluespaceQuiet", mobXform.Coordinates);
+
+        // then we ensure they are 
+        if (_mobState.IsAlive(mobUid))
+        {
+            // Apply a large bricks worth of damage
+            var damageAmount = new DamageSpecifier()
+            {
+                DamageDict = { ["Slash"] = 75, ["Blunt"] = 75, ["Heat"] = 75 }  // If you are still alive after this you deserve it
+            };
+            _damageable.TryChangeDamage(mobUid, damageAmount, true);
+        }
+        else if (TryComp<MobStateComponent>(mobUid, out var mobState))
+        {
+
+            var deathrattleEvent = new ReTriggerRattleImplantEvent(mobUid, mobState.CurrentState);
+            RaiseLocalEvent(mobUid, deathrattleEvent);
+        }
     }
 }
