@@ -7,7 +7,7 @@
   - type: Sprite
     sprite: _AS/Objects/Weapons/Guns/Rifles/nitroexpress.rsi
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
+    sprite: _AS/Objects/Weapons/Guns/Rifles/nitroexpress.rsi
   - type: Item
     size: Normal
     shape:
