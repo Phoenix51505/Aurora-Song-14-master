@@ -1,6 +1,6 @@
 - type: entity
   id: ASWeaponRifleNitroExpress
-  parent: [ NFBaseWeaponRifleChamber60, NFBaseWeaponFrameShotgunWieldable ]
+  parent: [ NFBaseWeaponRifleChamber60, NFBaseWeaponFrameShotgunWieldable, BaseC2ContrabandUnredeemable ]
   name: BW-5 Nitro Express Rifle
   description: A large-bore double-barreled anti material rifle. The recoil feels strong enough to break your shoulder.
   components:
@@ -11,13 +11,13 @@
   - type: Item
     size: Normal
     shape:
-    - 1,0,4,0
+    - 0,0,5,0 
   - type: Gun 
     soundGunshot: /Audio/_AS/Weapons/Guns/Gunshots/bw-5.ogg
     fireRate: 0.5
     maxAngle: 35
     angleIncrease: 20
-    angleDecay: 3
+    angleDecay: 7
   - type: GunWieldBonus
     minAngle: -0
     maxAngle: -0
@@ -29,4 +29,5 @@
     walkModifier: 0.8
     sprintModifier: 0.8
   - type: BallisticAmmoProvider
+    proto: NFCartridgeRifle60Frangible
     capacity: 2

@@ -68,6 +68,9 @@ uplink-security-wt550-desc = A fully automatic submachine gun. This design uses 
 uplink-security-energygun-name = Energy Gun
 uplink-security-energygun-desc = A semi-automatic energy gun capable of firing both non-lethal stun bolts, as well as overcharged lethal energy bolts. Has an internal battery, but requires using a security charging dock.
 
+uplink-security-nitro-express-name = BW-5 Nitro Express Rifle
+uplink-security-nitro-express-desc = A large-bore double-barreled anti material rifle, chambered in .60 calibre. Designed for breaching.
+
 uplink-security-emprpg-name = EMP Rocket Launcher
 uplink-security-emprpg-desc = A rocket propelled grenade launcher. Comes with 1 EMP round.
 
@@ -234,6 +237,12 @@ uplink-security-contraband-forensics-module-desc = A program for scanning and re
 
 uplink-security-lasercanon-name = Laser Cannon
 uplink-security-lasercanon-desc = A heavy duty, high powered laser sniper rifle.
+
+uplink-security-sixtyfrangible-name = .60 Frangile Box
+uplink-security-sixtyfrangible-desc = A box of lethal .60 calibre frangible cartridges.
+
+uplink-security-sixtyrubberlv-name = .60 Rubber, Low Velocity Box
+uplink-security-sixtyrubberlv-desc = A box of less-than-lethal .60 calibre low velocity rubber cartridges.
 
 # region Pirate
 uplink-pirate-hardsuit-name = Pirate Hardsuit

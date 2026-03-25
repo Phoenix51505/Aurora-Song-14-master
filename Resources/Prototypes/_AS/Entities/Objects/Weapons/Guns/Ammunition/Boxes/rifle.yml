@@ -1,0 +1,71 @@
+#region .60 rifle
+- type: entity
+  id: ASAmmunitionBoxRifle60Frangible
+  parent: NFBaseAmmunitionBoxRifle60
+  name: ammunition box (.60 rifle, frangible)
+  components:
+  - type: BallisticAmmoProvider
+    proto: ASCartridgeRifle60Frangible
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+      color: "#845c42"
+    - state: decal-01
+      color: "#333333"
+    - state: decal-calibre-60
+    - state: mag-60-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: ASAmmunitionBoxRifle60RubberLV
+  parent: NFBaseAmmunitionBoxRifle60
+  name: ammunition box (.60 rifle, rubber, low velocity)
+  components:
+  - type: BallisticAmmoProvider
+    proto: ASCartridgeRifle60RubberLV
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+      color: "#845c42"
+    - state: decal-01
+      color: "#00ffff"
+    - state: decal-calibre-60
+    - state: mag-60-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+#region .60 rifle big
+- type: entity
+  id: ASAmmunitionBoxBigRifle60Frangible
+  parent: NFBaseAmmunitionBoxBigRifle60
+  name: ammunition box (.60 rifle, frangible)
+  components:
+  - type: BallisticAmmoProvider
+    proto: ASCartridgeRifle60Frangible
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: decal-01
+      color: "#333333"
+    - state: decal-calibre-60
+    - state: mag-60-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: ASAmmunitionBoxBigRifle60RubberLV
+  parent: NFBaseAmmunitionBoxBigRifle60
+  name: ammunition box (.60 rifle, rubber, low velocity)
+  components:
+  - type: BallisticAmmoProvider
+    proto: ASCartridgeRifle60RubberLV
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: decal-01
+      color: "#00ffff"
+    - state: decal-calibre-60
+    - state: mag-60-1
+      map: ["enum.GunVisualLayers.Mag"]

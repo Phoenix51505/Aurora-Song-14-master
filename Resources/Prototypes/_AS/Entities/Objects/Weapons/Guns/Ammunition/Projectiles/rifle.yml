@@ -1,0 +1,26 @@
+#region .60 rifle
+- type: entity
+  id: ASBulletRifle60frangible
+  name: bullet (.60 rifle, frangible)
+  parent: NFBaseBulletAntiMateriel
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 25 # They aren't meant to kill soft things very well, but its still .60
+        Slashing: 15 # Frangible rounds kind of turn to dust when they hit you 
+        Structural: 300
+
+- type: entity
+  id: ASBulletRifle60RubberLV
+  name: bullet (.60 rifle, rubber, low velocity)
+  parent: NFBaseBulletAntiMateriel
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 25 # bit less efficient in terms of 'lethal' damage to 'stamina' damage compared to something like a beanbag. But also its .60 and its going to hurt no matter which way you look at it
+  - type: StaminaDamageOnCollide
+    damage: 50

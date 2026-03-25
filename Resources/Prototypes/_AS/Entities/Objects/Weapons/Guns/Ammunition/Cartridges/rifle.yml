@@ -1,0 +1,23 @@
+- type: entity
+  id: ASCartridgeRifle60Frangible
+  name: cartridge (.60 rifle, frangible)
+  parent: NFBaseCartridgeRifle60
+  components:
+  - type: CartridgeAmmo
+    proto: ASBulletRifle60Breaching
+  - type: Sprite
+    layers: # TODO: add tip
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+
+- type: entity
+  id: ASCartridgeRifle60RubberLV
+  name: cartridge (.60 rifle, rubber, low velocity)
+  parent: NFBaseCartridgeRifle60
+  components:
+  - type: CartridgeAmmo
+    proto: ASBulletRifle60RubberLV
+  - type: Sprite
+    layers: # TODO: add tip
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]

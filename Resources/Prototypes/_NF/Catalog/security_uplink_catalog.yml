@@ -771,6 +771,27 @@
         - Sergeant
         - Commissioner
 
+- type: listing
+  id: UplinkNitroExpress
+  name: uplink-security-nitro-express-name
+  description: uplink-security-nitro-express-desc
+  productEntity: ASWeaponRifleNitroExpress
+  icon: { sprite: _AS/Objects/Weapons/Guns/Rifles/nitroexpress.rsi, state: icon }
+  cost:
+    FrontierUplinkCoin: 8
+  categories:
+    - UplinkSecurityWeapons
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - SecurityUplink
+    - !type:BuyerJobCondition
+      whitelist: 
+        - Lieutenant
+        - Sergeant
+        - Commissioner
+
 #region bundles
 - type: listing
   id: UplinkSecurityThrusterKit
@@ -1481,6 +1502,38 @@
   description: uplink-security-trackingdart-ammo-desc
   productEntity: NFBoxDartsTracking
   icon: { sprite: _NF/Objects/Storage/boxes.rsi, state: icon-dart }
+  cost:
+    FrontierUplinkCoin: 1
+  categories:
+    - UplinkSecurityAmmo
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - SecurityUplink
+
+- type: listing
+  id: UplinkSecurityAntiMaterialFrangible
+  name:  uplink-security-sixtyfrangible-name
+  description: uplink-security-sixtyfrangible-desc
+  productEntity: ASAmmunitionBoxRifle60Frangible
+  icon: { sprite: /Textures/_NF/Objects/Weapons/Guns/Ammunition/Boxes/rifle.rsi, state: icon-frangible }
+  cost:
+    FrontierUplinkCoin: 1
+  categories:
+    - UplinkSecurityAmmo
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - SecurityUplink
+  
+- type: listing
+  id: UplinkSecurityAntiMaterialRubberLV
+  name:  uplink-security-sixtyrubberlv-name
+  description: uplink-security-sixtyrubberlv-desc
+  productEntity: ASAmmunitionBoxRifle60Frangible
+  icon: { sprite: /Textures/_NF/Objects/Weapons/Guns/Ammunition/Boxes/rifle.rsi, state: icon-rubberlv }
   cost:
     FrontierUplinkCoin: 1
   categories:
