@@ -11,4 +11,5 @@ as-holopad-general-damascus-science-artifact = Damascus, Sci. Artifact Chambers
 as-holopad-general-port-boreal-stc = Port Boreal, Traffic Control
 
 as-holopad-general-sle-outpost-commissioner = SLE Outpost, Commissioner
-as-holopad-general-sleo-outpost-bullpen = SLE Outpost, Bullpen
+as-holopad-general-sle-outpost-bullpen = SLE Outpost, Bullpen
+as-holopad-general-sle-outpost-reception = SLE Outpost, Reception

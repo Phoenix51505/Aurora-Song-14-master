@@ -64941,7 +64941,7 @@ entities:
     - type: Transform
       pos: -18.5,-6.5
       parent: 1
-- proto: ASHolopadFrontierOutpostSTC
+- proto: ASHolopadPortBorealSTC
   entities:
   - uid: 2684
     components:

@@ -87,4 +87,12 @@
   suffix: SLE Outpost Bullpen, POI
   components:
   - type: Label
-    currentLabel: as-holopad-general-sleo-outpost-bullpen
+    currentLabel: as-holopad-general-sle-outpost-bullpen
+
+- type: entity
+  parent: NFHolopadPoiBase
+  id: ASHolopadSLEOutpostReception
+  suffix: SLE Outpost Reception, POI
+  components:
+  - type: Label
+    currentLabel: as-holopad-general-sle-outpost-reception
