@@ -102,9 +102,6 @@
   - type: ContainerFill
     containers:
       key_slots:
-      - EncryptionKeyCommon
-      - EncryptionKeyEngineering
-      - EncryptionKeyCommand
       - EncryptionKeySiteManager
       - EncryptionKeyTraffic
       - EncryptionKeyShipboard
