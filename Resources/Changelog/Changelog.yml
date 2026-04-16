@@ -7319,3 +7319,240 @@ Entries:
   id: 9096
   time: '2026-04-07T12:23:47.0000000+00:00'
   url: https://github.com/AuroraSong14/Aurora-Song-14/pull/915
+- author: Zenixic
+  changes:
+    - type: Add
+      message: Added ship and intra ship prototypes for gloomy holopads for mapping
+  id: 9097
+  time: '2026-04-08T14:19:42.0000000+00:00'
+  url: https://github.com/AuroraSong14/Aurora-Song-14/pull/914
+- author: Vandanna
+  changes:
+    - type: Fix
+      message: Undo UI lock on Damascus Shipyard
+  id: 9098
+  time: '2026-04-09T07:10:01.0000000+00:00'
+  url: https://github.com/AuroraSong14/Aurora-Song-14/pull/917
+- author: LizArmchair
+  changes:
+    - type: Add
+      message: space movement speed to Avali
+    - type: Tweak
+      message: 'Ionstorm stun chance, thirst factor of reagents. '
+    - type: Fix
+      message: carriable component
+  id: 9099
+  time: '2026-04-09T21:33:33.0000000+00:00'
+  url: https://github.com/AuroraSong14/Aurora-Song-14/pull/922
+- author: ZigTag
+  changes:
+    - type: Add
+      message: New railings from delta
+    - type: Tweak
+      message: New stair texture from delta
+  id: 9100
+  time: '2026-04-10T11:37:12.0000000+00:00'
+  url: https://github.com/AuroraSong14/Aurora-Song-14/pull/884
+- author: Vandanna
+  changes:
+    - type: Fix
+      message: Admin access config now has correct card
+  id: 9101
+  time: '2026-04-10T19:51:47.0000000+00:00'
+  url: https://github.com/AuroraSong14/Aurora-Song-14/pull/928
+- author: Vandanna
+  changes:
+    - type: Fix
+      message: Petrel nacelle gantry lights were unpowered
+  id: 9102
+  time: '2026-04-10T20:46:48.0000000+00:00'
+  url: https://github.com/AuroraSong14/Aurora-Song-14/pull/931
+- author: Phoenix51505
+  changes:
+    - type: Fix
+      message: Fixes the ESS. Again.
+    - type: Tweak
+      message: Makes the ESS less zealous about rescuing you pre-maturely
+  id: 9103
+  time: '2026-04-10T21:27:00.0000000+00:00'
+  url: https://github.com/AuroraSong14/Aurora-Song-14/pull/926
+- author: Vandanna
+  changes:
+    - type: Fix
+      message: missing spray painter stuff for SLE
+    - type: Tweak
+      message: add paramed siren to medic armored hardsuit
+    - type: Tweak
+      message: switch logprobe icon
+    - type: Tweak
+      message: add forensic upgrade and shuttle records to SLEO
+  id: 9104
+  time: '2026-04-10T21:27:59.0000000+00:00'
+  url: https://github.com/AuroraSong14/Aurora-Song-14/pull/929
+- author: Vandanna
+  changes:
+    - type: Tweak
+      message: Undeprecates Cargo access, grants to STC, Valet, Mail Carrier
+  id: 9105
+  time: '2026-04-10T21:29:37.0000000+00:00'
+  url: https://github.com/AuroraSong14/Aurora-Song-14/pull/932
+- author: Vandanna
+  changes:
+    - type: Fix
+      message: switch ColRep dresser for proper one
+    - type: Tweak
+      message: adjust disposals to hopefully allow better trash flow
+    - type: Tweak
+      message: some decals
+    - type: Add
+      message: ATMs to cargo bays
+    - type: Fix
+      message: IFF marker
+  id: 9106
+  time: '2026-04-10T21:36:28.0000000+00:00'
+  url: https://github.com/AuroraSong14/Aurora-Song-14/pull/930
+- author: Vandanna
+  changes:
+    - type: Fix
+      message: Exped Falchions should be registerable now
+  id: 9107
+  time: '2026-04-10T21:36:50.0000000+00:00'
+  url: https://github.com/AuroraSong14/Aurora-Song-14/pull/927
+- author: Zenixic
+  changes:
+    - type: Fix
+      message: RPEDs no longer drop their parts when upgrading ore processors.
+  id: 9108
+  time: '2026-04-11T08:52:03.0000000+00:00'
+  url: https://github.com/AuroraSong14/Aurora-Song-14/pull/935
+- author: Phoenix51505
+  changes:
+    - type: Tweak
+      message: >-
+        Changed both the Shipmind's lawset and ghost role description to
+        disincentivize leaving your ship for minimal reason.
+  id: 9109
+  time: '2026-04-12T03:29:03.0000000+00:00'
+  url: https://github.com/AuroraSong14/Aurora-Song-14/pull/937
+- author: BudaLope
+  changes:
+    - type: Tweak
+      message: Fiber now fills you up the default amount
+  id: 9110
+  time: '2026-04-13T09:55:30.0000000+00:00'
+  url: https://github.com/AuroraSong14/Aurora-Song-14/pull/942
+- author: Phoenix51505
+  changes:
+    - type: Fix
+      message: Fixed inconsistent sprites on remote traffic consoles
+    - type: Fix
+      message: Mapped the correct consoles onto PB and TS for controlling traffic
+  id: 9111
+  time: '2026-04-13T10:50:56.0000000+00:00'
+  url: https://github.com/AuroraSong14/Aurora-Song-14/pull/939
+- author: Phoenix51505
+  changes:
+    - type: Fix
+      message: >-
+        Fixed the temperature damage values for tajaran's so being cold no
+        longer causes heat burns and vice versa
+  id: 9112
+  time: '2026-04-13T10:51:10.0000000+00:00'
+  url: https://github.com/AuroraSong14/Aurora-Song-14/pull/941
+- author: Zenixic
+  changes:
+    - type: Add
+      message: >-
+        Added the GT Dinghy into the scrapyard, an expedition capable "ship"
+        intended for custom shipbuilding
+  id: 9113
+  time: '2026-04-13T10:56:36.0000000+00:00'
+  url: https://github.com/AuroraSong14/Aurora-Song-14/pull/936
+- author: CombustibleToast
+  changes:
+    - type: Tweak
+      message: Scrubbers now scrub helium by default.
+  id: 9114
+  time: '2026-04-14T04:24:22.0000000+00:00'
+  url: https://github.com/AuroraSong14/Aurora-Song-14/pull/943
+- author: AvianMaiden
+  changes:
+    - type: Add
+      message: All holsters make a unique sound now!
+  id: 9115
+  time: '2026-04-14T04:24:51.0000000+00:00'
+  url: https://github.com/AuroraSong14/Aurora-Song-14/pull/938
+- author: assignedgod
+  changes:
+    - type: Add
+      message: 'Updated height and width sliders to be more convenient '
+    - type: Tweak
+      message: Made fairies bigger
+    - type: Tweak
+      message: Made Oni bigger
+    - type: Tweak
+      message: Made Sheleg bigger
+  id: 9116
+  time: '2026-04-16T03:15:44.0000000+00:00'
+  url: https://github.com/AuroraSong14/Aurora-Song-14/pull/889
+- author: entings
+  changes:
+    - type: Add
+      message: Added the scrambled speech accent, for fun and profit.
+  id: 9117
+  time: '2026-04-16T03:46:02.0000000+00:00'
+  url: https://github.com/AuroraSong14/Aurora-Song-14/pull/898
+- author: Oberonics
+  changes:
+    - type: Tweak
+      message: >-
+        Changed the emote system so that you are no longer restricted on the
+        emotes you can send in chat. Everyone can yap!
+  id: 9118
+  time: '2026-04-16T03:47:54.0000000+00:00'
+  url: https://github.com/AuroraSong14/Aurora-Song-14/pull/924
+- author: Phoenix51505
+  changes:
+    - type: Tweak
+      message: >-
+        Auroran Public Transit is proud to present a new engine for their buses,
+        presenting a 4 fold decrease in transit time.
+  id: 9119
+  time: '2026-04-16T03:51:27.0000000+00:00'
+  url: https://github.com/AuroraSong14/Aurora-Song-14/pull/950
+- author: BudaLope
+  changes:
+    - type: Add
+      message: Imp accessibility notifier
+  id: 9120
+  time: '2026-04-16T05:32:43.0000000+00:00'
+  url: https://github.com/AuroraSong14/Aurora-Song-14/pull/946
+- author: BudaLope
+  changes:
+    - type: Add
+      message: Ported nanochat from DeltaV
+  id: 9121
+  time: '2026-04-16T05:37:43.0000000+00:00'
+  url: https://github.com/AuroraSong14/Aurora-Song-14/pull/944
+- author: emergency-ketchup
+  changes:
+    - type: Tweak
+      message: Wooden railings to Little Byte Key in place of the old metal railings
+    - type: Tweak
+      message: Boardwalk layout changes on Little Byte Key
+    - type: Fix
+      message: Fixed missing floor tile on Little Byte Key
+  id: 9122
+  time: '2026-04-16T07:14:26.0000000+00:00'
+  url: https://github.com/AuroraSong14/Aurora-Song-14/pull/954
+- author: Zenixic
+  changes:
+    - type: Add
+      message: Added a ChemVend and a medical gun safe to the Caladrius.
+    - type: Tweak
+      message: Changed the power generator on the Caladrius to an AME.
+    - type: Tweak
+      message: Replaced thrusters on the Caladrius with their medic variant.
+  id: 9123
+  time: '2026-04-16T07:18:58.0000000+00:00'
+  url: https://github.com/AuroraSong14/Aurora-Song-14/pull/947

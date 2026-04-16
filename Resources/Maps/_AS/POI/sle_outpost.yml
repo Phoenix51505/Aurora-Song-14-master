@@ -4937,6 +4937,11 @@ entities:
     - type: Anchorable
       flags: Anchorable
     - type: DisableToolUse
+  - uid: 4864
+    components:
+    - type: Transform
+      pos: 9.682972,-26.498491
+      parent: 1
 - proto: ASBedsheetSLE
   entities:
   - uid: 4373
