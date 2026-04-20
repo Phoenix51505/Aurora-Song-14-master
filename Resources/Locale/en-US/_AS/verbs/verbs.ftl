@@ -1,2 +1,2 @@
-verb-deactivate-text = Deactivate
-verb-activate-text = Activate
+verb-deactivate-text = Disable Events
+verb-activate-text = Enable Events
