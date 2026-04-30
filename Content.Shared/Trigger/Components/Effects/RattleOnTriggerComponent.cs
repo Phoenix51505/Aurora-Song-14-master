@@ -18,7 +18,6 @@ public sealed partial class RattleOnTriggerComponent : BaseXOnTriggerComponent
     [DataField]
     public ProtoId<RadioChannelPrototype> RadioChannel = "Syndicate";
 
-
     /// <summary>
     /// The message to be send depending on the target's current mob state.
     /// </summary>
@@ -43,7 +42,6 @@ public sealed partial class RattleOnTriggerComponent : BaseXOnTriggerComponent
     [ViewVariables(VVAccess.ReadWrite), DataField]
     public TimeSpan NextTrigger = TimeSpan.Zero;
     
-
     // Aurora's Song.
     /// <summary>
     /// The delay between implant retriggers.

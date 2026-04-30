@@ -21,7 +21,6 @@ public sealed class ASRattleTriggerSystem : XOnTriggerSystem<RattleOnTriggerComp
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!; // Aurora's Song: Death Times & Retriggering
 
-
     // Have old functionality of rattle available for NF and Coyote functionality
     protected override void OnTrigger(Entity<RattleOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {
@@ -66,7 +65,7 @@ public sealed class ASRattleTriggerSystem : XOnTriggerSystem<RattleOnTriggerComp
             }
         }
         // Begin Aurora's Song: Death Times
-        var deathTime = $"";
+        var deathTime = "";
         if(mobstate.CurrentState == MobState.Dead)
         {
             if(ent.Comp.DeathTime == TimeSpan.Zero)
@@ -108,17 +107,17 @@ public sealed class ASRattleTriggerSystem : XOnTriggerSystem<RattleOnTriggerComp
             bool retrigger = false;
             foreach (var implant in implants.ImplantContainer.ContainedEntities)
             {
-                if(TryComp<RattleOnTriggerComponent>(implant, out var rattle))
+                if(!TryComp<RattleOnTriggerComponent>(implant, out var rattle))
+                    continue;
+
+                if(state.CurrentState == MobState.Alive && (rattle.NextTrigger != TimeSpan.Zero || rattle.DeathTime != TimeSpan.Zero)) // If they are alive, and any timers need to be reset, reset them then continue
                 {
-                    if(state.CurrentState == MobState.Alive && (rattle.NextTrigger != TimeSpan.Zero || rattle.DeathTime != TimeSpan.Zero)) // If they are alive, and any timers need to be reset, reset them then continue
-                    {
-                        rattle.DeathTime = TimeSpan.Zero;
-                        rattle.NextTrigger = TimeSpan.Zero;
-                    }
-                    else if (_timing.CurTime > rattle.NextTrigger && rattle.NextTrigger != TimeSpan.Zero)
-                    {
-                        retrigger = true;
-                    }
+                    rattle.DeathTime = TimeSpan.Zero;
+                    rattle.NextTrigger = TimeSpan.Zero;
+                }
+                else if (_timing.CurTime > rattle.NextTrigger && rattle.NextTrigger != TimeSpan.Zero)
+                {
+                    retrigger = true;
                 }
             }
 
