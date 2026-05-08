@@ -1,11 +1,13 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
+using Content.Server._AS.Shuttles.FTLWake; // Aurora's Song: FTL Wakes
 using Content.Server._NF.Shuttles.Components; // Frontier: FTL knockdown immunity
 using Content.Server._NF.PublicTransit.Components; // AS
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Station.Events;
+using Content.Shared._AS.Shuttles.Components; // Aurora's Song: FTL Wakes
 using Content.Shared.Body.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
@@ -35,12 +37,14 @@ using FTLMapComponent = Content.Shared.Shuttles.Components.FTLMapComponent;
 using Content.Server.Salvage.Expeditions; // AS
 using Content.Shared._Mono.Ships;
 using Robust.Shared.Prototypes; // Mono
+using Robust.Shared.Timing; // Aurora's Song: FTL Wakes
 
 namespace Content.Server.Shuttles.Systems;
 
 public sealed partial class ShuttleSystem
 {
     [Dependency] private readonly SharedPopupSystem _popup = default!; // AS
+    [Dependency] private readonly IGameTiming _timing = default!; // Aurora's Song: FTL Wakes
     /*
      * This is a way to move a shuttle from one location to another, via an intermediate map for fanciness.
      */
@@ -58,6 +62,7 @@ public sealed partial class ShuttleSystem
         Params = AudioParams.Default.WithVolume(-5f),
     };
 
+    private readonly EntProtoId _wakePrototype = "FTLWake"; // Aurora's Song: FTL Wakes
     private const float MassConstant = 50f; // Mono: Arbitrary, at this value massMultiplier = 0.65
     private const float MassMultiplierMin = 0.5f; // Mono
     private const float MassMultiplierMax = 5f; // Mono
@@ -1592,6 +1597,10 @@ public sealed partial class ShuttleSystem
                 clippedAudio.Value.Component.Flags |= AudioFlags.NoOcclusion;
         }
 
+        EntityCoordinates? oldCoordinates = null;
+        if (fromMapUid != null)
+            oldCoordinates = new EntityCoordinates(fromMapUid.Value, _mapSystem.GetGridPosition(entity.Owner)); // Aurora's Song: store our old coordinates so we can leave behind a wake there
+
         // Offset the start by buffer range just to avoid overlap.
         // Move main shuttle to FTL
         var ftlStart = new EntityCoordinates(ftlMap, new Vector2(_index + width / 2f, 0f) - shuttleCenter);
@@ -1651,6 +1660,18 @@ public sealed partial class ShuttleSystem
             _console.RefreshShuttleConsoles(dockedUid);
         }
 
+        if (!HasComp<TransitShuttleComponent>(entity.Owner) && oldCoordinates is { } WakeSpawn) // Aurora's Song: Leave an FTL wake if we aren't a bus
+        {
+            var wake = Spawn(_wakePrototype, WakeSpawn);
+            EnsureComp<FTLWakeComponent>(wake, out var wakeComp);
+
+            wakeComp.Destination = comp.TargetCoordinates;
+
+            if (TryComp<EngineSignatureComponent>(entity.Owner, out var sigComp))
+                wakeComp.Signature = sigComp.Signature;
+            
+            wakeComp.Age = _timing.CurTime;
+        };
         comp.StateTime = StartEndTime.FromCurTime(_gameTiming, comp.TravelTime - DefaultArrivalTime);
 
         Enable(uid, component: body);

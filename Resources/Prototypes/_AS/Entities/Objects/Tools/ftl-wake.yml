@@ -1,0 +1,37 @@
+- type: entity
+  id: WakeLocatorUnpowered
+  parent: AnomalyLocatorUnpowered
+  name: wake locator
+  description: A device designed to aid in the locating of anomalies. Did you check the gas miners?
+  suffix: Always Powered
+  components:
+  - type: ProximityDetector
+    range: 512
+    components:
+    - type: FTLWake
+  - type: Beeper
+    minBeepInterval: 0.15
+    maxBeepInterval: 4.00
+
+- type: entity
+  id: WakeLocator
+  parent: [ WakeLocatorUnpowered, PowerCellSlotSmallItem ]
+  suffix: ""
+  components:
+  - type: PowerCellDraw
+    drawRate: 1
+    useCharge: 0
+  - type: ToggleCellDraw
+
+- type: entity
+  id: WakeLocatorEmpty
+  parent: WakeLocator
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        blacklist: # TheDen
+          tags:
+          - MantisCaster

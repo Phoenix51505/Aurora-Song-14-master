@@ -49,6 +49,7 @@ using Content.Server._NF.GC.Components;
 using Content.Server._Mono.Shipyard;
 using Content.Shared._AS.Traits;
 using Content.Shared.Maps; // AS
+using Content.Shared._AS.Shuttles.Components; // Aurora's Song: FTL Wakes & Signatures
 
 namespace Content.Server._NF.Shipyard.Systems;
 
@@ -239,6 +240,8 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         }
 
         EnsureComp<DeletionCensusExemptComponent>(shuttleUid); // Ensure ship doesn't get deleted, though chunks should be.
+
+        EnsureComp<EngineSignatureComponent>(shuttleUid); // Aurora's Song: Add an engine signature to it
 
         // The following block of code is entirely to do with trying to sanely handle moving records from station to station.
         // it is ass.
