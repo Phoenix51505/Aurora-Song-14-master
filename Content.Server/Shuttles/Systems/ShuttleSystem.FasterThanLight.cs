@@ -8,13 +8,11 @@ using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Station.Events;
 using Content.Shared._AS.Shuttles.Components; // Aurora's Song: FTL Wakes
-using Content.Shared.Body.Components;
+using Content.Shared.Body;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
-using Content.Shared.Ghost;
 using Content.Shared.Implants; // Coyote
 using Content.Shared.Implants.Components; // Coyote
-using Content.Shared.Maps;
 using Content.Shared.Mobs.Components; // Coyote
 using Content.Shared.Parallax;
 using Content.Shared.Shuttles.Components;

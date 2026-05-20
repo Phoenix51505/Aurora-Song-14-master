@@ -1,0 +1,9 @@
+
+#region Materials/Tools
+
+- type: latheRecipe
+  id: ASBioGenMeatSheet
+  result: MaterialSheetMeat1
+  parent: BaseMaterialsNoDiscountRecipe
+  materials:
+    Biomass: 10

@@ -5,7 +5,7 @@
   prototype: MobGingerbread
   sprites: MobGingerbreadSprites
   markingLimits: MobHumanMarkingLimits
-  dollPrototype: MobGingerbreadDummy
+  dollPrototype: AppearanceGingerbread
   skinColoration: HumanAnimal # Aurora's Song - Replaced with HumanAnimal
   defaultSkinTone: "#9a7c5a"
 
