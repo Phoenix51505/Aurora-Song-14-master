@@ -44,7 +44,6 @@ namespace Content.Server.Shuttles.Systems;
 public sealed partial class ShuttleSystem
 {
     [Dependency] private readonly SharedPopupSystem _popup = default!; // AS
-    [Dependency] private readonly IGameTiming _timing = default!; // Aurora's Song: FTL Wakes
     /*
      * This is a way to move a shuttle from one location to another, via an intermediate map for fanciness.
      */
@@ -1670,7 +1669,7 @@ public sealed partial class ShuttleSystem
             if (TryComp<EngineSignatureComponent>(entity.Owner, out var sigComp))
                 wakeComp.Signature = sigComp.Signature;
             
-            wakeComp.Age = _timing.CurTime;
+            wakeComp.Age = _gameTiming.CurTime;
         };
         comp.StateTime = StartEndTime.FromCurTime(_gameTiming, comp.TravelTime - DefaultArrivalTime);
 
