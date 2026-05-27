@@ -2,6 +2,7 @@ using Content.Server.Power.Components;
 using Content.Shared.Power.Components;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Rejuvenate;
+using Content.Shared.Emp; // Frontier: Upstream - #28984
 using Robust.Shared.Utility;
 using Content.Server._NF.Power.Components; // Frontier
 
@@ -16,6 +17,8 @@ public sealed class BatterySystem : SharedBatterySystem
         SubscribeLocalEvent<PowerNetworkBatteryComponent, RejuvenateEvent>(OnNetBatteryRejuvenate);
         SubscribeLocalEvent<NetworkBatteryPreSync>(PreSync);
         SubscribeLocalEvent<NetworkBatteryPostSync>(PostSync);
+
+        SubscribeLocalEvent<BatteryComponent, EmpPulseEvent>(OnEmpPulse);
     }
 
     protected override void OnStartup(Entity<BatteryComponent> ent, ref ComponentStartup args)
@@ -65,5 +68,11 @@ public sealed class BatterySystem : SharedBatterySystem
         {
             SetCharge((uid, bat), netBat.NetworkBattery.CurrentStorage);
         }
+    }
+    private void OnEmpPulse(EntityUid uid, BatteryComponent component, ref EmpPulseEvent args)
+    {
+        args.Affected = true;
+        args.Disabled = true;
+        UseCharge((uid, component), args.EnergyConsumption);
     }
 }

@@ -11,6 +11,14 @@ namespace Content.Shared.Power.EntitySystems;
 
 public abstract class SharedPowerReceiverSystem : EntitySystem
 {
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<SharedApcPowerReceiverComponent, EmpPulseEvent>(OnEmpPulse);
+        SubscribeLocalEvent<SharedApcPowerReceiverComponent, EmpDisabledRemovedEvent>(OnEmpEnd);
+    }
+
     [Dependency] private readonly INetManager _netMan = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -121,5 +129,24 @@ public abstract class SharedPowerReceiverSystem : EntitySystem
                                 ("stateText", Loc.GetString(powered
                                     ? "power-receiver-component-on-examine-powered"
                                     : "power-receiver-component-on-examine-unpowered")));
+    }
+
+
+    private void OnEmpPulse(EntityUid uid, SharedApcPowerReceiverComponent component, ref EmpPulseEvent args)
+    {
+        if (!component.PowerDisabled)
+        {
+            args.Affected = true;
+            args.Disabled = true;
+            TogglePower(uid, false);
+        }
+    }
+
+    private void OnEmpEnd(EntityUid uid, SharedApcPowerReceiverComponent component, ref EmpDisabledRemovedEvent args)
+    {
+        if (component.PowerDisabled)
+        {
+            TogglePower(uid, false);
+        }
     }
 }
