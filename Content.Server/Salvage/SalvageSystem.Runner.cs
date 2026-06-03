@@ -624,7 +624,7 @@ public sealed partial class SalvageSystem
 
             Log.Debug($"Strap point found: {strapuid}");
             SafetyWarp(player, xform.Coordinates);
-            _buckle.TryBuckle(strapuid, null, strapuid);
+            _buckle.TryBuckle(player, null, strapuid);
             return;
         }
 
