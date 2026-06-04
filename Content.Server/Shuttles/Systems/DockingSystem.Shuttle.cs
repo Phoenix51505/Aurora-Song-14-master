@@ -139,12 +139,13 @@ public sealed partial class DockingSystem
         var gridDocks = GetDocks(targetGrid);
         var shuttleDocks = GetDocks(shuttleUid);
 
+        // Aurora's Song: Calculating dock configs scales quadratically(?) based on the number of docks involved
+        // So to avoid the server struggling to handle busses, we avoid calculating configs for docks that dont share our priority tag (if we have one)...
         var configs = GetDockingConfigs(shuttleUid, targetGrid, shuttleDocks, gridDocks, dockType, priorityTag); // Frontier: add dockType 
-                                                                                                                 // Aurora's Song: Calculating dock configs scales quadratically(?) based on the number of docks involved
-                                                                                                                 // So to avoid the server struggling to handle busses, we avoid calculating configs for docks that dont share our priority tag (if we have one)...
+
 
         if (configs.Count <= 0 && priorityTag != null)
-            configs = GetDockingConfigs(shuttleUid, targetGrid, shuttleDocks, gridDocks, dockType); // ... But if we can't find one while discriminating, we still need to try and find a place to go.
+            configs = GetDockingConfigs(shuttleUid, targetGrid, shuttleDocks, gridDocks, dockType); // Aurora's Song: ... But if we can't find one while discriminating, we still need to try and find a place to go.
 
 
         foreach (var config in configs)
@@ -336,16 +337,17 @@ public sealed partial class DockingSystem
         string? priorityTag = null,
         DockType dockType = DockType.Airlock) // Frontier
     {
-
+        // Aurora's Song: Calculating dock configs scales quadratically(?) based on the number of docks involved
+        // So to avoid the server struggling to handle busses, we avoid calculating configs for docks that dont share our priority tag (if we have one)...
         var validDockConfigs = GetDockingConfigs(shuttleUid, targetGrid, shuttleDocks, gridDocks, dockType, priorityTag); // Frontier: add dockType 
-                                                                                                                          // Aurora's Song: Calculating dock configs scales quadratically(?) based on the number of docks involved
-                                                                                                                          // So to avoid the server struggling to handle busses, we avoid calculating configs for docks that dont share our priority tag (if we have one)...
+
 
         if (validDockConfigs.Count <= 0 && priorityTag != null)
-            validDockConfigs = GetDockingConfigs(shuttleUid, targetGrid, shuttleDocks, gridDocks, dockType); // ... But if we can't find one while discriminating, we still need to try and find a place to go.
+            validDockConfigs = GetDockingConfigs(shuttleUid, targetGrid, shuttleDocks, gridDocks, dockType); // Aurora's Song: ... But if we can't find one while discriminating, we still need to try and find a place to go.
 
         if (validDockConfigs.Count <= 0)
             return null;
+
         var targetGridAngle = _transform.GetWorldRotation(targetGrid).Reduced();
 
         // Prioritise by priority docks, then by maximum connected ports, then by most similar angle.
