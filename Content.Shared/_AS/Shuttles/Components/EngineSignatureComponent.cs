@@ -9,5 +9,5 @@ namespace Content.Shared._AS.Shuttles.Components;
 public sealed partial class EngineSignatureComponent : Component
 {
     [DataField, AutoNetworkedField]
-    public string? Signature;
+    public string Signature = string.Empty;
 }

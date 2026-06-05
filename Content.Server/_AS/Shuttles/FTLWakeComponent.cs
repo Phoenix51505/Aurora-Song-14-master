@@ -9,13 +9,13 @@ namespace Content.Server._AS.Shuttles.FTLWake
         /// The 'fingerprint' of the vessel that left this wake
         /// </summary>
         [DataField]
-        public string? Signature;
+        public string Signature = string.Empty;
 
         /// <summary>
         /// The FTL Destiniation of the ship that left this wake
         /// </summary>
         [DataField]
-        public EntityCoordinates? Destination;
+        public EntityCoordinates Destination;
 
         /// <summary>
         /// How old this wake is. Error is calculated based on a ratio of Age to LifeSpan.

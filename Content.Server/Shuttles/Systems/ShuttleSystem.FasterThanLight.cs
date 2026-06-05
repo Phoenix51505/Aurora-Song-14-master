@@ -1666,7 +1666,7 @@ public sealed partial class ShuttleSystem
 
             if (TryComp<EngineSignatureComponent>(entity.Owner, out var sigComp))
                 wakeComp.Signature = sigComp.Signature;
-            
+
             wakeComp.Age = _gameTiming.CurTime;
         };
         comp.StateTime = StartEndTime.FromCurTime(_gameTiming, comp.TravelTime - DefaultArrivalTime);

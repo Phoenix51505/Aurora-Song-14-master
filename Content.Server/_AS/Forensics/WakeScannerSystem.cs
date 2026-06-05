@@ -35,6 +35,7 @@ using Content.Shared._AS.Shuttles.Components;
 using Content.Server.Shuttles.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Map;
+using Content.Shared._AS.Forensics;
 // todo: remove this stinky LINQy
 
 namespace Content.Server._AS.Forensics
@@ -83,7 +84,6 @@ namespace Content.Server._AS.Forensics
             base.Initialize();
 
             SubscribeLocalEvent<WakeScannerComponent, AfterInteractEvent>(OnAfterInteract);
-            SubscribeLocalEvent<WakeScannerComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
             SubscribeLocalEvent<WakeScannerComponent, BeforeActivatableUIOpenEvent>(OnBeforeActivatableUIOpen);
             SubscribeLocalEvent<WakeScannerComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
             SubscribeLocalEvent<WakeScannerComponent, WakeScannerPrintMessage>(OnPrint);
@@ -97,7 +97,10 @@ namespace Content.Server._AS.Forensics
         {
             var state = new WakeScannerBoundUserInterfaceState(
                 component.Signatures,
-                component.Coordinates);
+                component.Coordinates,
+                component.LastScannedName,
+                component.PrintCooldown,
+                component.PrintReadyAt);
 
             _uiSystem.SetUiState(uid, WakeScannerUiKey.Key, state);
         }
@@ -114,20 +117,21 @@ namespace Content.Server._AS.Forensics
             {
                 if (TryComp<FTLWakeComponent>(target, out var wake))
                 {
-                    scanner.Signatures = wake.Signature;
-                    var error = _random.NextVector2((_gameTiming.CurTime - wake.Age) / wake.LifeSpan * 1000); // Every minute of age adds 50m to the possible error range
-                    scanner.Coordinates = wake.Destination + error;
+                    scanner.Signatures = wake.Signature; // Todo: add some kind of distortion to the signature based on age.
+                    var error = (float)((_gameTiming.CurTime - wake.Age) / wake.LifeSpan * 1000); // Every minute of age adds 50m to the possible error range
+                    wake.Destination.Deconstruct(out _, out var coordinates);
+                    scanner.Coordinates = coordinates + _random.NextVector2(error);
                 }
                 else if (TryComp<ThrusterComponent>(args.Args.Target, out var _))
                 {
-                    scanner.Signatures = new();
+                    scanner.Signatures = string.Empty;
                     scanner.Coordinates = new();
                     if (TryComp<EngineSignatureComponent>(Transform(target).GridUid, out var signature))
                         scanner.Signatures = signature.Signature;
                 }
                 else
                 {
-                    scanner.Signatures = new();
+                    scanner.Signatures = string.Empty;
                     scanner.Coordinates = new();
                 }
 
@@ -214,35 +218,10 @@ namespace Content.Server._AS.Forensics
             var text = new StringBuilder();
 
             text.AppendLine(Loc.GetString("forensic-scanner-interface-fingerprints"));
-            foreach (var fingerprint in component.Fingerprints)
-            {
-                text.AppendLine(fingerprint);
-            }
+            text.AppendLine(component.Signatures);
             text.AppendLine();
             text.AppendLine(Loc.GetString("forensic-scanner-interface-fibers"));
-            foreach (var fiber in component.Fibers)
-            {
-                text.AppendLine(fiber);
-            }
-            text.AppendLine();
-            text.AppendLine(Loc.GetString("forensic-scanner-interface-dnas"));
-            foreach (var dna in component.TouchDNAs)
-            {
-                text.AppendLine(dna);
-            }
-            foreach (var dna in component.SolutionDNAs)
-            {
-                Log.Debug(dna);
-                if (component.TouchDNAs.Contains(dna))
-                    continue;
-                text.AppendLine(dna);
-            }
-            text.AppendLine();
-            text.AppendLine(Loc.GetString("forensic-scanner-interface-residues"));
-            foreach (var residue in component.Residues)
-            {
-                text.AppendLine(residue);
-            }
+            text.AppendLine(component.Coordinates.ToString());
 
             _paperSystem.SetContent((printed, paperComp), text.ToString());
             _audioSystem.PlayPvs(component.SoundPrint, uid,
@@ -257,11 +236,8 @@ namespace Content.Server._AS.Forensics
 
         private void OnClear(EntityUid uid, WakeScannerComponent component, WakeScannerClearMessage args)
         {
-            component.Fingerprints = new();
-            component.Fibers = new();
-            component.TouchDNAs = new();
-            component.SolutionDNAs = new();
-            component.LastScannedName = string.Empty;
+            component.Signatures = string.Empty;
+            component.Coordinates = new();
 
             UpdateUserInterface(uid, component);
         }
