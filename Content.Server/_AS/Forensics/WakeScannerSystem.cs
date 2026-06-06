@@ -1,43 +1,22 @@
-using System.Linq;
 using System.Text;
+using Content.Server._AS.Shuttles.FTLWake;
 using Content.Server.Popups;
+using Content.Server.Shuttles.Components;
+using Content.Shared._AS.Forensics;
+using Content.Shared._AS.Shuttles.Components;
 using Content.Shared.UserInterface;
 using Content.Shared.DoAfter;
-using Content.Shared.Forensics;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Paper;
 using Content.Shared.Verbs;
-using Content.Shared.Tag;
 using Robust.Shared.Audio.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Timing;
-using Content.Server.Chemistry.Containers.EntitySystems;
-using Robust.Shared.Prototypes;
-using Content.Shared._NF.SectorServices; // Frontier
-using Content.Server._NF.Smuggling; // Frontier
-using Content.Server._NF.Smuggling.Components; // Frontier
-using Content.Server.Radio.EntitySystems; // Frontier
-using Content.Server.Stack; // Frontier
-using Content.Shared._NF.Bank; // Frontier
-using Content.Shared._NF.Bank.Components; // Frontier
-using Content.Server._NF.Bank; // Frontier
-using Content.Shared._NF.Bank.BUI; // Frontier
-using Content.Shared._NF.CCVar; // Frontier
-using Content.Shared.Containers.ItemSlots; // Frontier
-using Content.Shared.FixedPoint; // Frontier
-using Content.Shared.Stacks; // Frontier
-using Content.Shared.Radio; // Frontier
-using Robust.Shared.Configuration; // Frontier
-using Content.Server._AS.Shuttles.FTLWake;
-using Content.Shared._AS.Shuttles.Components;
-using Content.Server.Shuttles.Components;
 using Robust.Shared.Random;
-using Robust.Shared.Map;
-using Content.Shared._AS.Forensics;
-// todo: remove this stinky LINQy
 
+// All of this is based upon the ForensicScannerSystem, which has been trimmed down and configured the new use case.
 namespace Content.Server._AS.Forensics
 {
     public sealed class ForensicScannerSystem : EntitySystem
@@ -50,34 +29,7 @@ namespace Content.Server._AS.Forensics
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
         [Dependency] private readonly MetaDataSystem _metaData = default!;
-        [Dependency] private readonly TagSystem _tag = default!;
-        [Dependency] private readonly StackSystem _stackSystem = default!; // Frontier
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!; // Frontier
-        [Dependency] private readonly RadioSystem _radio = default!; // Frontier
-        [Dependency] private readonly DeadDropSystem _deadDrop = default!; // Frontier
-        [Dependency] private readonly ItemSlotsSystem _itemSlots = default!; // Frontier
-        [Dependency] private readonly SectorServiceSystem _service = default!; // Frontier
-        [Dependency] private readonly IConfigurationManager _cfg = default!; // Frontier
-        [Dependency] private readonly BankSystem _bank = default!; // Frontier
         [Dependency] private readonly IRobustRandom _random = default!;
-
-        // Frontier: payout constants
-        // Temporary values, sane defaults, will be overwritten by CVARs.
-        private int _minFUCPayout = 2;
-
-        private SoundSpecifier _confirmSound = new SoundPathSpecifier("/Audio/Effects/Cargo/ping.ogg");
-
-        private const int ActiveUnusedDeadDropSpesoReward = 20000;
-        private const float ActiveUnusedDeadDropFUCReward = 2.0f;
-        private const int ActiveUsedDeadDropSpesoReward = 10000;
-        private const float ActiveUsedDeadDropFUCReward = 1.0f;
-        private const int InactiveUsedDeadDropSpesoReward = 5000;
-        private const float InactiveUsedDeadDropFUCReward = 0.5f;
-        private const int DropPodSpesoReward = 10000;
-        private const float DropPodFUCReward = 1.0f;
-        // End Frontier: payout constants
-
-        private static readonly ProtoId<TagPrototype> DNASolutionScannableTag = "DNASolutionScannable";
 
         public override void Initialize()
         {
@@ -95,6 +47,7 @@ namespace Content.Server._AS.Forensics
 
         private void UpdateUserInterface(EntityUid uid, WakeScannerComponent component)
         {
+            Log.Error($"{component.Signatures}, {component.Coordinates}, {component.LastScannedName}, {component.PrintCooldown}, {component.PrintReadyAt}");
             var state = new WakeScannerBoundUserInterfaceState(
                 component.Signatures,
                 component.Coordinates,
@@ -120,23 +73,24 @@ namespace Content.Server._AS.Forensics
                     scanner.Signatures = wake.Signature; // Todo: add some kind of distortion to the signature based on age.
                     var error = (float)((_gameTiming.CurTime - wake.Age) / wake.LifeSpan * 1000); // Every minute of age adds 50m to the possible error range
                     wake.Destination.Deconstruct(out _, out var coordinates);
-                    scanner.Coordinates = coordinates + _random.NextVector2(error);
+                    scanner.Coordinates = (coordinates + _random.NextVector2(error)).ToString();
                 }
                 else if (TryComp<ThrusterComponent>(args.Args.Target, out var _))
                 {
                     scanner.Signatures = string.Empty;
-                    scanner.Coordinates = new();
+                    scanner.Coordinates = string.Empty;
                     if (TryComp<EngineSignatureComponent>(Transform(target).GridUid, out var signature))
                         scanner.Signatures = signature.Signature;
                 }
                 else
                 {
                     scanner.Signatures = string.Empty;
-                    scanner.Coordinates = new();
+                    scanner.Coordinates = string.Empty;
                 }
-
+                scanner.LastScannedName = MetaData(args.Args.Target.Value).EntityName;
             }
 
+            Log.Error($"{args.Args.User}, ({uid}, {scanner}");
             OpenUserInterface(args.Args.User, (uid, scanner));
         }
 
@@ -213,15 +167,15 @@ namespace Content.Server._AS.Forensics
                 return;
             }
 
-            _metaData.SetEntityName(printed, Loc.GetString("forensic-scanner-report-title", ("entity", component.LastScannedName)));
+            _metaData.SetEntityName(printed, Loc.GetString("wake-scanner-report-title", ("entity", component.LastScannedName)));
 
             var text = new StringBuilder();
 
-            text.AppendLine(Loc.GetString("forensic-scanner-interface-fingerprints"));
+            text.AppendLine(Loc.GetString("wake-scanner-interface-signatures"));
             text.AppendLine(component.Signatures);
             text.AppendLine();
-            text.AppendLine(Loc.GetString("forensic-scanner-interface-fibers"));
-            text.AppendLine(component.Coordinates.ToString());
+            text.AppendLine(Loc.GetString("wake-scanner-interface-destinations"));
+            text.AppendLine(component.Coordinates);
 
             _paperSystem.SetContent((printed, paperComp), text.ToString());
             _audioSystem.PlayPvs(component.SoundPrint, uid,
@@ -237,7 +191,7 @@ namespace Content.Server._AS.Forensics
         private void OnClear(EntityUid uid, WakeScannerComponent component, WakeScannerClearMessage args)
         {
             component.Signatures = string.Empty;
-            component.Coordinates = new();
+            component.Coordinates = string.Empty;
 
             UpdateUserInterface(uid, component);
         }

@@ -3,6 +3,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
+// All of this is based upon the ForensicScannerComponent, which has been trimmed down and configured the new use case.
 namespace Content.Server._AS.Forensics
 {
     [RegisterComponent]
@@ -11,16 +12,16 @@ namespace Content.Server._AS.Forensics
         public CancellationTokenSource? CancelToken;
 
         /// <summary>
-        /// A list of fingerprint GUIDs that the forensic scanner found from the <see cref="ForensicsComponent"/> on an entity.
+        /// The signature that the wake scanner found from the <see cref="EngineSignatureComponent"/> on a grid or from a <see cref="FTLWakeComponent"/> on an entity.
         /// </summary>
         [ViewVariables(VVAccess.ReadOnly)]
         public string Signatures = string.Empty;
 
         /// <summary>
-        /// A list of glove fibers that the forensic scanner found from the <see cref="ForensicsComponent"/> on an entity.
+        /// The FTL Destination of the ship that the wake scanner found from the <see cref="FTLWakeComponent"/> on an entity.
         /// </summary>
         [ViewVariables(VVAccess.ReadOnly)]
-        public Vector2d Coordinates = new();
+        public string Coordinates = string.Empty;
 
 
         /// <summary>
@@ -56,13 +57,6 @@ namespace Content.Server._AS.Forensics
         /// </summary>
         [DataField("soundMatch")]
         public SoundSpecifier SoundMatch = new SoundPathSpecifier("/Audio/Machines/Nuke/angry_beep.ogg");
-
-        /// <summary>
-        /// The sound that's played when there's no match between a scan and an
-        /// inserted forensic pad.
-        /// </summary>
-        [DataField("soundNoMatch")]
-        public SoundSpecifier SoundNoMatch = new SoundPathSpecifier("/Audio/Machines/airlock_deny.ogg");
 
         /// <summary>
         /// The sound that's played when the scanner prints off a report.

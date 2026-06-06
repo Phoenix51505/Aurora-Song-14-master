@@ -5,6 +5,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Timing;
 using Content.Shared._AS.Forensics;
 
+// All of this is based upon the WakeScannerMenu.xaml.cs, which has been trimmed down and configured the new use case.
 namespace Content.Client._AS.Forensics
 {
     [GenerateTypedNameReferences]
@@ -42,34 +43,10 @@ namespace Content.Client._AS.Forensics
             var text = new StringBuilder();
 
             text.AppendLine(Loc.GetString("forensic-scanner-interface-fingerprints"));
-            foreach (var fingerprint in msg.Fingerprints)
-            {
-                text.AppendLine(fingerprint);
-            }
+            text.AppendLine(msg.Signatures);
             text.AppendLine();
             text.AppendLine(Loc.GetString("forensic-scanner-interface-fibers"));
-            foreach (var fiber in msg.Fibers)
-            {
-                text.AppendLine(fiber);
-            }
-            text.AppendLine();
-            text.AppendLine(Loc.GetString("forensic-scanner-interface-dnas"));
-            foreach (var dna in msg.TouchDNAs)
-            {
-                text.AppendLine(dna);
-            }
-            foreach (var dna in msg.SolutionDNAs)
-            {
-                if (msg.TouchDNAs.Contains(dna))
-                    continue;
-                text.AppendLine(dna);
-            }
-            text.AppendLine();
-            text.AppendLine(Loc.GetString("forensic-scanner-interface-residues"));
-            foreach (var residue in msg.Residues)
-            {
-                text.AppendLine(residue);
-            }
+            text.AppendLine(msg.Destinations.ToString());
             Diagnostics.Text = text.ToString();
         }
     }

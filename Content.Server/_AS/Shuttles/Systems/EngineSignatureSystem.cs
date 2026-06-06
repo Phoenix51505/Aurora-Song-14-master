@@ -16,13 +16,13 @@ public sealed class EngineSignatureSystem : EntitySystem
 
     private void OnComponentStartup(EntityUid uid, EngineSignatureComponent component, ComponentStartup args)
     {
-        component.Signature = _forensics.GenerateFingerprint(20);
+        component.Signature = _forensics.GenerateFingerprint(15);
     }
 
     private void RandomizeSignature(EntityUid uid)
     {
         if (!TryComp<EngineSignatureComponent>(uid, out var component))
             return;
-        component.Signature = _forensics.GenerateFingerprint(20);
+        component.Signature = _forensics.GenerateFingerprint(15);
     }
 }

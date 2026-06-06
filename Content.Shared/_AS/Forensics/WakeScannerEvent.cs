@@ -1,19 +1,19 @@
 using Robust.Shared.Serialization;
-
+// All of this is based upon the WakeScannerEvent, which has been trimmed down and configured the new use case.
 namespace Content.Shared._AS.Forensics
 {
     [Serializable, NetSerializable]
     public sealed class WakeScannerBoundUserInterfaceState : BoundUserInterfaceState
     {
         public readonly string Signatures = string.Empty;
-        public readonly Vector2d Destinations = new();
+        public readonly string Destinations = string.Empty;
         public readonly string LastScannedName = string.Empty;
         public readonly TimeSpan PrintCooldown = TimeSpan.Zero;
         public readonly TimeSpan PrintReadyAt = TimeSpan.Zero;
 
         public WakeScannerBoundUserInterfaceState(
             string signatures,
-            Vector2d destinations,
+            string destinations,
             string lastScannedName,
             TimeSpan printCooldown,
             TimeSpan printReadyAt)
