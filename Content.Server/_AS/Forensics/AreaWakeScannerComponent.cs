@@ -16,10 +16,9 @@ using Robust.Shared.Audio;
 using Robust.Shared.Timing;
 using Robust.Shared.Random;
 
-// All of this is based upon the ForensicScannerSystem, which has been trimmed down and configured the new use case.
 namespace Content.Server._AS.Forensics
 {
-    public sealed class WakeScannerSystem : EntitySystem
+    public sealed class AreaWakeScannerSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
@@ -35,63 +34,10 @@ namespace Content.Server._AS.Forensics
         {
             base.Initialize();
 
-            SubscribeLocalEvent<WakeScannerComponent, AfterInteractEvent>(OnAfterInteract);
-            SubscribeLocalEvent<WakeScannerComponent, BeforeActivatableUIOpenEvent>(OnBeforeActivatableUIOpen);
-            SubscribeLocalEvent<WakeScannerComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
-            SubscribeLocalEvent<WakeScannerComponent, WakeScannerPrintMessage>(OnPrint);
-            SubscribeLocalEvent<WakeScannerComponent, WakeScannerClearMessage>(OnClear);
-            SubscribeLocalEvent<WakeScannerComponent, WakeScannerDoAfterEvent>(OnDoAfter);
+            SubscribeLocalEvent<AreaWakeScannerComponent, AfterInteractEvent>(OnAfterInteract);
+            SubscribeLocalEvent<AreaWakeScannerComponent, GetVerbsEvent<ActivationVerb>>(AddPulseActivationVerb);
+            SubscribeLocalEvent<AreaWakeScannerComponent, GetVerbsEvent<InteractionVerb>>(AddToggleInteractionVerb);
 
-        }
-
-
-        private void UpdateUserInterface(EntityUid uid, WakeScannerComponent component)
-        {
-            Log.Error($"{component.Signatures}, {component.Coordinates}, {component.LastScannedName}, {component.PrintCooldown}, {component.PrintReadyAt}");
-            var state = new WakeScannerBoundUserInterfaceState(
-                component.Signatures,
-                component.Coordinates,
-                component.LastScannedName,
-                component.PrintCooldown,
-                component.PrintReadyAt);
-
-            _uiSystem.SetUiState(uid, WakeScannerUiKey.Key, state);
-        }
-
-        private void OnDoAfter(EntityUid uid, WakeScannerComponent component, DoAfterEvent args)
-        {
-            if (args.Handled || args.Cancelled)
-                return;
-
-            if (!TryComp(uid, out WakeScannerComponent? scanner))
-                return;
-
-            if (args.Args.Target is { } target)
-            {
-                if (TryComp<FTLWakeComponent>(target, out var wake))
-                {
-                    scanner.Signatures = wake.Signature; // Todo: add some kind of distortion to the signature based on age.
-                    var error = (float)((_gameTiming.CurTime - wake.Age) / wake.LifeSpan * 1000); // Every minute of age adds 50m to the possible error range
-                    wake.Destination.Deconstruct(out _, out var coordinates);
-                    scanner.Coordinates = (coordinates + _random.NextVector2(error)).ToString();
-                }
-                else if (TryComp<ThrusterComponent>(args.Args.Target, out var _))
-                {
-                    scanner.Signatures = string.Empty;
-                    scanner.Coordinates = string.Empty;
-                    if (TryComp<EngineSignatureComponent>(Transform(target).GridUid, out var signature))
-                        scanner.Signatures = signature.Signature;
-                }
-                else
-                {
-                    scanner.Signatures = string.Empty;
-                    scanner.Coordinates = string.Empty;
-                }
-                scanner.LastScannedName = MetaData(args.Args.Target.Value).EntityName;
-            }
-
-            Log.Error($"{args.Args.User}, ({uid}, {scanner}");
-            OpenUserInterface(args.Args.User, (uid, scanner));
         }
 
         /// <remarks>
@@ -99,11 +45,6 @@ namespace Content.Server._AS.Forensics
         /// </remarks>
         private void StartScan(EntityUid uid, WakeScannerComponent component, EntityUid user, EntityUid target)
         {
-            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, component.ScanDelay, new WakeScannerDoAfterEvent(), uid, target: target, used: uid)
-            {
-                BreakOnMove = true,
-                NeedHand = true
-            });
         }
 
         private void OnUtilityVerb(EntityUid uid, WakeScannerComponent component, GetVerbsEvent<UtilityVerb> args)

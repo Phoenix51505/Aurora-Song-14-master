@@ -1,5 +1,5 @@
 - type: entity
-  name: FTL Wake
+  name: FTL wake
   description: A temporary ripple in space left behind when a ship transits to FTL. 
   id: FTLWake
   components:
@@ -29,4 +29,4 @@
     sound:
       path: /Audio/Ambience/anomaly_drone.ogg
   - type: TimedDespawn
-    Lifetime: 1200
+    lifetime: 1200 # I don't think this was meant to be used for things this long lived.

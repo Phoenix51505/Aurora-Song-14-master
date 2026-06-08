@@ -1,0 +1,25 @@
+{
+    "version": 1,
+    "license": "CC 3.0 BY-SA",
+    "copyright": "Taken from ParadiseSS13 research.dmi 'tdoppler'",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states":
+        {
+            "name": "tdoppler",
+            "delays":
+            [
+            0.2,
+            0.8,
+            0.2,
+            0.8,
+            0.2,
+            0.8,
+            0.2,
+            0.8
+            ]
+        }
+}
+

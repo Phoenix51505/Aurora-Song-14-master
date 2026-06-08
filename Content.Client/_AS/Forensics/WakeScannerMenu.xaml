@@ -1,5 +1,5 @@
 <DefaultWindow xmlns="https://spacestation14.io"
-            Title="{Loc 'forensic-scanner-interface-title'}"
+            Title="{Loc 'wake-scanner-interface-title'}"
             MinSize="350 200"
             SetSize="350 500">
     <BoxContainer Orientation="Vertical">

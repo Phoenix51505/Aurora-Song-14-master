@@ -1,0 +1,68 @@
+- type: entity
+  id: MobileWakeAnalyzer
+  parent: [BaseStructureDisableToolUse, BaseC2ContrabandUnredeemable, BaseMachinePowered, ConstructibleMachine]
+  name: mobile wake analyzer
+  description: An advanced device used for tracking down and anaylzing FTL wakes. Capable of mass area analysis and location.
+  placement:
+    mode: AlignTileAny
+  components:
+  - type: StationAiWhitelist
+  - type: AmbientSound
+    enabled: false
+    volume: -6
+    range: 7
+    sound:
+      path: /Audio/Ambience/Objects/emf_buzz.ogg
+  - type: Transform
+    anchored: true
+  - type: ApcPowerReceiver
+    powerLoad: 2500
+  - type: ExtensionCableReceiver
+  - type: Physics
+    bodyType: Static
+  - type: Repairable
+    fuelCost: 10
+    doAfterDelay: 5
+  - type: Appearance
+  - type: PointLight
+    radius: 2.5
+    energy: 0.7
+    # Gravity generator is a large machine, not casting shadows is fine within the radius set above.
+    castShadows: false
+    color: "#85c6ff"
+  - type: Sprite
+    sprite: _AS/Structures/Machines/wake_analyzer.rsi
+    snapCardinals: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        density: 3125
+        mask:
+        - LargeMobMask
+        layer:
+        - WallLayer
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MachineFrameDestroyed:
+            min: 1
+            max: 1
+  - type: WiresPanel
+  - type: Machine
+    board: MobileWakeAnalyzerMachineCircuitboard
+  - type: StaticPrice
+    price: 300
+  - type: AreaWakeAnalyzer

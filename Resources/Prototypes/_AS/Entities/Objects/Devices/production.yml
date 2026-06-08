@@ -23,3 +23,19 @@
       state: sle
     - type: MachineBoard
       prototype: ASTechFabSLE
+
+  parent: BaseMachineCircuitboard
+  id: MobileWakeAnalyzerMachineCircuitboard
+  name: mobile wake analyzer machine board
+  description: A machine printed circuit board for a mobile wake analyzer.
+  components:
+  - type: Sprite
+    sprite: _NF/Objects/Misc/module.rsi
+    state: nfsd
+  - type: MachineBoard
+    prototype: MobileWakeAnalyzer
+    requirements:
+      Capacitor: 4
+    stackRequirements:
+      Steel: 5
+      Cable: 2

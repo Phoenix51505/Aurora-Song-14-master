@@ -1594,9 +1594,10 @@ public sealed partial class ShuttleSystem
                 clippedAudio.Value.Component.Flags |= AudioFlags.NoOcclusion;
         }
 
+        // Aurora's Song: store our old coordinates so we can leave behind a wake there
         EntityCoordinates? oldCoordinates = null;
         if (fromMapUid != null)
-            oldCoordinates = new EntityCoordinates(fromMapUid.Value, _mapSystem.GetGridPosition(entity.Owner)); // Aurora's Song: store our old coordinates so we can leave behind a wake there
+            oldCoordinates = new EntityCoordinates(fromMapUid.Value, _mapSystem.GetGridPosition(entity.Owner)); 
 
         // Offset the start by buffer range just to avoid overlap.
         // Move main shuttle to FTL
@@ -1657,7 +1658,8 @@ public sealed partial class ShuttleSystem
             _console.RefreshShuttleConsoles(dockedUid);
         }
 
-        if (!HasComp<TransitShuttleComponent>(entity.Owner) && oldCoordinates is { } WakeSpawn) // Aurora's Song: Leave an FTL wake if we aren't a bus
+        // Aurora's Song: Leave an FTL wake if we aren't a bus
+        if (!HasComp<TransitShuttleComponent>(entity.Owner) && oldCoordinates is { } WakeSpawn) 
         {
             var wake = Spawn(_wakePrototype, WakeSpawn);
             EnsureComp<FTLWakeComponent>(wake, out var wakeComp);

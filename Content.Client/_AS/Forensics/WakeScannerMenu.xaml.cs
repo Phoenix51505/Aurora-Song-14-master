@@ -42,11 +42,11 @@ namespace Content.Client._AS.Forensics
 
             var text = new StringBuilder();
 
-            text.AppendLine(Loc.GetString("forensic-scanner-interface-fingerprints"));
+            text.AppendLine(Loc.GetString("wake-scanner-interface-signatures"));
             text.AppendLine(msg.Signatures);
             text.AppendLine();
-            text.AppendLine(Loc.GetString("forensic-scanner-interface-fibers"));
-            text.AppendLine(msg.Destinations.ToString());
+            text.AppendLine(Loc.GetString("wake-scanner-interface-destination"));
+            text.AppendLine(msg.Destinations);
             Diagnostics.Text = text.ToString();
         }
     }
