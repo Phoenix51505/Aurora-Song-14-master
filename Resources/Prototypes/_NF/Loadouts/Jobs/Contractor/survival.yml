@@ -39,6 +39,26 @@
   storage:
     back:
     - ASBoxSurvivalFeroxi
+
+- type: loadout
+  id: ContractorASBoxSurvivalAvali
+  name: ammonia survival box
+  hideEffects:
+  - !type:GroupLoadoutEffect
+    proto: ASAmmoniaDrinker
+  storage:
+    back:
+    - ASBoxSurvivalAvali
+
+- type: loadout
+  id: ContractorASBoxSurvivalDecapoid
+  name: water vapor (pill) survival box
+  hideEffects:
+  - !type:GroupLoadoutEffect
+    proto: ASWaterVaporBreatherPill
+  storage:
+    back:
+    - ASBoxSurvivalDecapoid
 # End Aurora Song
 
 #T1
@@ -98,4 +118,32 @@
   storage:
     back:
     - ASBoxSurvivalExtendedFeroxi
+
+- type: loadout
+  id: ContractorASBoxSurvivalExtendedAvali
+  name: extended-oxygen survival box
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ContractorT1
+  hideEffects:
+  - !type:GroupLoadoutEffect
+    proto: ASAmmoniaDrinker
+  price: 1000
+  storage:
+    back:
+    - ASBoxSurvivalExtendedAvali
+
+- type: loadout
+  id: ContractorASBoxSurvivalExtendedDecapoid
+  name: extended-oxygen survival box
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ContractorT1
+  hideEffects:
+  - !type:GroupLoadoutEffect
+    proto: ASWaterVaporBreatherPill
+  price: 1000
+  storage:
+    back:
+    - ASBoxSurvivalExtendedDecapoid
 # End Aurora Song

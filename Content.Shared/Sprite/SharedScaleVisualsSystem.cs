@@ -3,9 +3,9 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Sprite;
 
-public abstract class SharedScaleVisualsSystem : EntitySystem
+public abstract partial class SharedScaleVisualsSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -27,6 +27,7 @@ public abstract class SharedScaleVisualsSystem : EntitySystem
 
     protected virtual void ResetScale(Entity<ScaleVisualsComponent> ent)
     {
+        _appearance.RemoveData(ent.Owner, ScaleVisuals.Scale);
         var ev = new ScaleEntityEvent(ent.Owner, Vector2.One);
         RaiseLocalEvent(ent.Owner, ref ev);
     }

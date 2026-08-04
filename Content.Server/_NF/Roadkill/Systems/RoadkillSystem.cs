@@ -1,6 +1,8 @@
 using Content.Server._NF.Roadkill.Components;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Item;
 using Content.Shared.Mobs;
@@ -16,13 +18,13 @@ namespace Content.Server._NF.Roadkill.Systems;
 /// <summary>
 /// Kills and/or gibs entities (useful for space mobs) when they collide with a quickly moving grid.
 /// </summary>
-public sealed class RoadkillSystem : EntitySystem
+public sealed partial class RoadkillSystem : EntitySystem
 {
-    [Dependency] private readonly PhysicsSystem _physics = default!;
-    [Dependency] private readonly AudioSystem _audio = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private PhysicsSystem _physics = default!;
+    [Dependency] private AudioSystem _audio = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private MobThresholdSystem _mobThreshold = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
 
     private readonly ProtoId<DamageTypePrototype> _bluntDamageType = "Blunt";
     private readonly FixedPoint2 _extraDamage = 20;
@@ -64,14 +66,15 @@ public sealed class RoadkillSystem : EntitySystem
             if (_mobState.IsDead(ent))
                 return;
 
+            var totalDamage = _damageable.GetTotalDamage(ent.Owner); // Aurora's Song - Damage refactor
+
             // Try to apply damage if this thing can take damage.
             if (_mobThreshold.TryGetThresholdForState(ent, MobState.Dead, out var threshold) &&
-                TryComp<DamageableComponent>(ent, out var damageableComponent) &&
-                damageableComponent.TotalDamage < threshold)
+                totalDamage < threshold) // Aurora's Song - Damage refactor
             {
                 var damage = new DamageSpecifier();
-                damage.DamageDict[_bluntDamageType] = threshold.Value - damageableComponent.TotalDamage + _extraDamage;
-                _damageable.TryChangeDamage(ent, damage, ignoreResistances: true);
+                damage.DamageDict[_bluntDamageType] = threshold.Value - totalDamage + _extraDamage; // Aurora's Song - Damage refactor
+                _damageable.TryChangeDamage(ent.Owner, damage, ignoreResistances: true);
             }
             _mobState.ChangeMobState(ent, MobState.Dead);
         }

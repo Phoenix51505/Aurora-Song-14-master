@@ -41,6 +41,8 @@
   - type: Lathe
     idleState: icon
     runningState: icon
+    unlitIdleState: unlit # Aurora Song - bringing techfab states into line w/ upstream
+    unlitRunningState: unlit-building # Aurora Song - bringing techfab states into line w/ upstream
     staticPacks:
     - NFLightsStatic
     - NFBasicToolsStatic
@@ -84,8 +86,11 @@
   - type: Lathe
     idleState: icon
     runningState: icon
+    unlitIdleState: unlit # Aurora Song - bringing techfab states into line w/ upstream
+    unlitRunningState: unlit-building # Aurora Song - bringing techfab states into line w/ upstream
     staticPacks:
     - NFLightsStatic
+    - NFLightsColoredStatic # Aurora's Song - Add colored lights
     - NFBasicToolsStatic
     - NFBasicStorageStatic
     - NFBasicPartsStatic
@@ -101,6 +106,7 @@
     - NFServiceStatic
     - NFPaperAndPaperAccessories
     - ReportingStatic # DeltaV
+    - LunchboxPack # Imp
   - type: EmagLatheRecipes
     emagStaticPacks:
     - NFServiceTechfabEmagStatic
@@ -133,6 +139,10 @@
   - type: Machine
     board: McServiceTechFabCircuitboard
   - type: Lathe
+    idleState: icon # Aurora Song
+    runningState: icon # Aurora Song
+    unlitIdleState: unlit # Aurora Song - bringing techfab states into line w/ upstream
+    unlitRunningState: unlit-building # Aurora Song - bringing techfab states into line w/ upstream
     staticPacks:
     - NFLightsStatic
     - NFBasicToolsStatic
@@ -179,6 +189,8 @@
   - type: Lathe
     idleState: icon
     runningState: icon
+    unlitIdleState: unlit # Aurora Song - bringing techfab states into line w/ upstream
+    unlitRunningState: unlit-building # Aurora Song - bringing techfab states into line w/ upstream
     staticPacks:
     - NFLightsStatic
     - NFBasicToolsStatic
@@ -227,6 +239,8 @@
   - type: Lathe
     idleState: icon
     runningState: icon
+    unlitIdleState: unlit # Aurora Song - bringing techfab states into line w/ upstream
+    unlitRunningState: unlit-building # Aurora Song - bringing techfab states into line w/ upstream
     staticPacks:
     - NFLightsStatic
     - NFBasicToolsStatic
@@ -277,6 +291,8 @@
   - type: Lathe
     idleState: icon
     runningState: icon
+    unlitIdleState: unlit # Aurora Song - bringing techfab states into line w/ upstream
+    unlitRunningState: unlit-building # Aurora Song - bringing techfab states into line w/ upstream
     staticPacks:
     - NFLightsStatic
     - NFBasicToolsStatic
@@ -295,6 +311,7 @@
     - NfsdToolsStatic
     - NfsdTargetsStatic
     - NfsdBoardsStatic
+    - NfsdReportingStatic
   - type: BlueprintReceiver
     whitelist:
       tags:
@@ -327,6 +344,8 @@
   - type: Lathe
     idleState: icon
     runningState: icon
+    unlitIdleState: unlit # Aurora Song - bringing techfab states into line w/ upstream
+    unlitRunningState: unlit-building # Aurora Song - bringing techfab states into line w/ upstream
     staticPacks:
     - NFLightsStatic
     - NFBasicToolsStatic
@@ -437,6 +456,9 @@
   - type: LitOnPowered
   - type: ApcPowerReceiver
     powerLoad: 200
+  - type: PowerState # Aurora's Song - Required for test
+    idlePowerDraw: 200
+    workingPowerDraw: 1000
   - type: DatasetVocalizer
     dataset: CuddlyCritterAds
   - type: PointLight

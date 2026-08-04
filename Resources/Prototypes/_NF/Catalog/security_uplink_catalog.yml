@@ -204,6 +204,7 @@
       whitelist: # Aurora's Song - Switched to SLE roles
         - Lieutenant
         - Sergeant
+        - OffDutyOfficer
         - Commissioner
 
 - type: listing
@@ -328,6 +329,7 @@
       whitelist: # Aurora's Song - Switched to SLE roles
         - Lieutenant
         - Sergeant
+        - OffDutyOfficer
         - Commissioner
 
 
@@ -438,12 +440,7 @@
     - !type:StoreWhitelistCondition
       whitelist:
         tags:
-          - SecurityUplink
-    - !type:BuyerJobCondition
-      whitelist: # Aurora's Song - Switched to SLE roles
-        - Lieutenant
-        - Sergeant
-        - Commissioner
+          - SecurityUplink # Aurora's Song: Removed rank whitelisting
 
 - type: listing
   id: UplinkSecurityStunbaton
@@ -496,6 +493,7 @@
       whitelist: # Aurora's Song - Switched NFSD to SLE roles
         - Lieutenant
         - Sergeant
+        - OffDutyOfficer
         - Commissioner
 
 - type: listing
@@ -517,6 +515,29 @@
       whitelist: # Aurora's Song - Switched NFSD to SLE roles
         - Lieutenant
         - Sergeant
+        - OffDutyOfficer
+        - Commissioner
+
+- type: listing # Aurora's Song - Added StarTech LDR
+  id: UplinkSecurityLDR
+  name:  uplink-security-ldr-name
+  description: uplink-security-ldr-desc
+  productEntity: ASWeaponRifleAssaultStarTechLDR
+  icon: { sprite: _AS/Objects/Weapons/Guns/Rifles/ldrifle.rsi, state: icon }
+  cost:
+    FrontierUplinkCoin: 4
+  categories:
+    - UplinkSecurityWeapons
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - SecurityUplink
+    - !type:BuyerJobCondition
+      whitelist: # Aurora's Song - Switched NFSD to SLE roles
+        - Lieutenant
+        - Sergeant
+        - OffDutyOfficer
         - Commissioner
 
 - type: listing
@@ -538,6 +559,7 @@
       whitelist: # Aurora's Song - Switched NFSD to SLE roles
         - Lieutenant
         - Sergeant
+        - OffDutyOfficer
         - Commissioner
 
 - type: listing
@@ -559,6 +581,7 @@
       whitelist: # Aurora's Song - Switched NFSD to SLE roles
         - Lieutenant
         - Sergeant
+        - OffDutyOfficer
         - Commissioner
 
 - type: listing
@@ -594,12 +617,7 @@
     - !type:StoreWhitelistCondition
       whitelist:
         tags:
-          - SecurityUplink
-    - !type:BuyerJobCondition
-      whitelist: # Aurora's Song - Switched NFSD to SLE roles
-        - Lieutenant
-        - Sergeant
-        - Commissioner
+          - SecurityUplink # Aurora's Song: Removed rank whitelisting
 
 - type: listing
   id: UplinkSecurityWT550
@@ -727,6 +745,7 @@
       whitelist: # Aurora's Song - Switched NFSD to SLE roles
         - Lieutenant
         - Sergeant
+        - OffDutyOfficer
         - Commissioner
 
 - type: listing
@@ -748,6 +767,7 @@
       whitelist: # Aurora's Song - Switched NFSD to SLE roles
         - Lieutenant
         - Sergeant
+        - OffDutyOfficer
         - Commissioner
 
 - type: listing
@@ -769,6 +789,7 @@
       whitelist: # Aurora's Song - Switched NFSD to SLE roles
         - Lieutenant
         - Sergeant
+        - OffDutyOfficer
         - Commissioner
 
 - type: listing
@@ -812,6 +833,7 @@
       whitelist: # Aurora's Song - Switched NFSD to SLE roles
         - Lieutenant
         - Sergeant
+        - OffDutyOfficer
         - Commissioner
 
 - type: listing
@@ -833,6 +855,7 @@
       whitelist: # Aurora's Song - Switched NFSD to SLE roles
         - Lieutenant
         - Sergeant
+        - OffDutyOfficer
         - Commissioner
 
 - type: listing
@@ -886,6 +909,7 @@
       whitelist: # Aurora's Song - Switched NFSD to SLE roles
         - Lieutenant
         - Sergeant
+        - OffDutyOfficer
         - Commissioner
 
 - type: listing
@@ -928,6 +952,28 @@
         - Lieutenant
         - Commissioner
         - Sergeant
+
+- type: listing # Aurora's Song - Added Off Duty Officer Bundle
+  id: UplinkSecurityOffDutyOfficerBundle
+  name: uplink-security-off-duty-officer-bundle-name
+  description: uplink-security-off-duty-officer-bundle-desc
+  productEntity: ASClothingBackpackDuffelSLEOffDutyOfficerBundle
+  icon: { sprite: _AS/Clothing/Back/Duffels/sle_navy.rsi, state: icon }
+  cost:
+    FrontierUplinkCoin: 20
+  categories:
+    - UplinkSecurityBundles
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - SecurityUplink
+    - !type:BuyerJobCondition
+      whitelist: # Aurora's Song - Switched NFSD to SLE roles
+        - Lieutenant
+        - Commissioner
+        - Sergeant
+        - OffDutyOfficer
 
 #region utililty
 - type: listing
@@ -996,6 +1042,7 @@
     - !type:BuyerJobCondition
       whitelist: # Aurora's Song - Switched Sheriff to Commissioner
         - Commissioner
+        - Lieutenant # Aurora's Song - Added it to Lt, they are the keeper of the armoury after all.
 
 - type: listing
   id: UplinkSecurityKey
@@ -1126,9 +1173,12 @@
       whitelist:
         tags:
           - SecurityUplink
-    - !type:BuyerJobCondition
-      whitelist: # Aurora's Song - Switched Sheriff to Commissioner
-        - Commissioner
+    # - !type:BuyerJobCondition # Aurora's Song - Removed job condition
+    #   whitelist: # Aurora's Song - Switched Sheriff to Commissioner, added LT and Sgt. to whitelist.
+    #     - Lieutenant
+    #     - Sergeant
+    #     - Commissioner
+    #     - OffDutyOfficer
 
 - type: listing
   id: UplinkSecurityTeleShield
@@ -1165,6 +1215,7 @@
       whitelist: # Aurora's Song - Switched NFSD to SLE roles
         - Lieutenant
         - Sergeant
+        - OffDutyOfficer
         - Commissioner
 
 - type: listing
@@ -1186,6 +1237,7 @@
       whitelist: # Aurora's Song - Switched NFSD to SLE roles
         - Lieutenant
         - Sergeant
+        - OffDutyOfficer
         - Commissioner
 
 - type: listing
@@ -1240,6 +1292,7 @@
       whitelist: # Aurora's Song - Switched NFSD to SLE roles
         - Lieutenant
         - Sergeant
+        - OffDutyOfficer
         - Commissioner
 
 - type: listing
@@ -1261,6 +1314,7 @@
       whitelist: # Aurora's Song - Switched NFSD to SLE roles
         - Lieutenant
         - Sergeant
+        - OffDutyOfficer
         - Commissioner
 
 - type: listing
@@ -1333,12 +1387,7 @@
     - !type:StoreWhitelistCondition
       whitelist:
         tags:
-          - SecurityUplink
-    - !type:BuyerJobCondition
-      whitelist: # Aurora's Song - Switched NFSD to SLE roles
-        - Lieutenant
-        - Sergeant
-        - Commissioner
+          - SecurityUplink # Aurora's Song: Removed rank whitelisting
 
 - type: listing
   id: UplinkSecurity30RifleMagazineRubber
@@ -1359,6 +1408,7 @@
         whitelist: # Aurora's Song - Switched NFSD to SLE roles
           - Lieutenant
           - Sergeant
+          - OffDutyOfficer
           - Commissioner
 
 - type: listing
@@ -1478,6 +1528,7 @@
       whitelist: # Aurora's Song - Switched NFSD to SLE roles
         - Lieutenant
         - Sergeant
+        - OffDutyOfficer
         - Commissioner
 
 - type: listing
@@ -1580,6 +1631,7 @@
       whitelist: # Aurora's Song - Switched NFSD to SLE roles
         - Lieutenant
         - Sergeant
+        - OffDutyOfficer
         - Commissioner
 
 - type: listing
@@ -1601,6 +1653,7 @@
       whitelist: # Aurora's Song - Switched NFSD to SLE roles
         - Lieutenant
         - Sergeant
+        - OffDutyOfficer
         - Commissioner
 
 - type: listing
@@ -1654,6 +1707,7 @@
       whitelist: # Aurora's Song - Switched NFSD to SLE roles
         - Lieutenant
         - Sergeant
+        - OffDutyOfficer
         - Commissioner
 
 - type: listing

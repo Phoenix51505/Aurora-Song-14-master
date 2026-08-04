@@ -76,7 +76,7 @@
       - EncryptionKeyCommon
 
 - type: entity
-  parent: [ ClothingHeadset, BaseCentcommCommandContraband ] # Frontier: Added BaseCentcommCommandContraband, removed BaseCentcommContraband.
+  parent: [ ClothingHeadset, BaseC3NanoTrasenContraband ] # Aurora's Song | BaseCentcommContraband<BaseC3NanoTrasenContraband
   id: ClothingHeadsetCentCom
   name: CentComm headset
   description: A headset used by the upper echelons of Nanotrasen.
@@ -304,3 +304,16 @@
       sprite: Clothing/Ears/Headsets/wizard.rsi
     - type: Clothing
       sprite: Clothing/Ears/Headsets/wizard.rsi
+
+- type: entity
+  parent: [ClothingHeadset, BaseC3WizardContraband, ContrabandClothing] # Frontier: BaseMagicalContraband<BaseC3WizardContraband, add ContrabandClothing
+  id: ClothingHeadsetNinja
+  name: green headset
+  description: Who could refuse to wear this stylish black and green headset?
+  components:
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/ninja.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/ninja.rsi
+  - type: EmpResistance
+    strengthMultiplier: 0

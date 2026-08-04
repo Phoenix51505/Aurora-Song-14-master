@@ -231,14 +231,14 @@
   - Assembler
 
 - type: microwaveMealRecipe
-  id: RecipeSausageRawStomachRat
+  id: RecipeSausageRawStomachAnimal # Aurora's Song - RecipeSausageRawStomachRat>RecipeSausageRawStomachAnimal
   name: raw stomach sausage recipe
   result: FoodSausageRaw
   resultCount: 3
   time: 10
   group: Savory # TODO: move to ingredients
   solids:
-    OrganRatStomach: 1
+    OrganAnimalStomach: 1 # Aurora's Song - OrganRatStomach>OrganAnimalStomach - There is no longer a rat stomach
   reagents:
     UncookedAnimalProteins: 9
   recipeType:
@@ -815,21 +815,22 @@
 
 # Other
 
-- type: microwaveMealRecipe
-  id: RecipeCatCrispy
-  name: cat crispy recipe
-  result: MobCatCrispy
-  time: 15
-  group: Savory
-  reagents:
-    Cornoil: 10
-    Cognizine: 5
-  solids:
-    FoodMealFries: 1
-    FoodOnionRings: 1
-    OrganAnimalHeart: 1
-  recipeType:
-  - Assembler
+# Aurora's Song - Disable crispy cat for now
+# - type: microwaveMealRecipe
+#   id: RecipeCatCrispy
+#   name: cat crispy recipe
+#   result: MobCatCrispy
+#   time: 15
+#   group: Savory
+#   reagents:
+#     Cornoil: 10
+#     Cognizine: 5
+#   solids:
+#     FoodMealFries: 1
+#     FoodOnionRings: 1
+#     OrganAnimalHeart: 1
+#   recipeType:
+#   - Assembler
 
 - type: microwaveMealRecipe
   id: RecipeDragonOmelette
@@ -1028,8 +1029,9 @@
   result: FoodRiceNoodlesSheet
   time: 15
   group: Pasta
+  solids:
+    FoodRiceDough: 1
   reagents:
-    Rice: 45
     TableSalt: 10
     Cornoil: 10
   recipeType: Assembler
@@ -1453,6 +1455,136 @@
   reagents:
     Salsa: 2
   recipeType: Oven
+
+- type: microwaveMealRecipe
+  id: RecipeMochi
+  name: mochi
+  result: FoodFrozenMochi
+  time: 5
+  group: Dessert
+  solids:
+    FoodRiceDoughSlice: 1
+  reagents:
+    IceCream: 5
+  recipeType:
+  - Assembler
+
+- type: microwaveMealRecipe
+  id: RecipeMochiCherry
+  name: cherry mochi
+  result: FoodFrozenMochiCherry
+  time: 5
+  group: Dessert
+  solids:
+    FoodFrozenMochi: 1
+  reagents:
+    JuiceCherry: 2
+  recipeType:
+  - Assembler
+
+- type: microwaveMealRecipe
+  id: RecipeMochiBungo
+  name: bungo mochi
+  result: FoodFrozenMochiBungo
+  time: 5
+  group: Dessert
+  solids:
+    FoodFrozenMochi: 1
+  reagents:
+    JuiceBungo: 2
+  recipeType:
+  - Assembler
+
+- type: microwaveMealRecipe
+  id: RecipeMochiChocolate
+  name: chocolate mochi
+  result: FoodFrozenMochiChocolate
+  time: 5
+  group: Dessert
+  solids:
+    FoodFrozenMochi: 1
+  reagents:
+    CocoaPowder: 2
+  recipeType:
+  - Assembler
+
+- type: microwaveMealRecipe
+  id: RecipeMochiFiber
+  name: fiber mochi
+  result: FoodFrozenMochiFiber
+  time: 5
+  group: Dessert
+  solids:
+    FoodFrozenMochi: 1
+  reagents:
+    Fiber: 2
+  recipeType:
+  - Assembler
+
+- type: microwaveMealRecipe
+  id: RecipeMochiMoth
+  name: rosy mochi
+  result: FoodFrozenMochiMoth
+  time: 5
+  group: Dessert
+  solids:
+    FoodFrozenMochi: 1
+  reagents:
+    PinkDrink: 2
+  recipeType:
+  - Assembler
+
+- type: microwaveMealRecipe
+  id: RecipeMochiSpice
+  name: spice mochi
+  result: FoodFrozenMochiSpice
+  time: 5
+  group: Dessert
+  solids:
+    FoodFrozenMochi: 1
+  reagents:
+    Everyspice: 2
+  recipeType:
+  - Assembler
+
+- type: microwaveMealRecipe
+  id: RecipeMochiTea
+  name: tea mochi
+  result: FoodFrozenMochiTea
+  time: 5
+  group: Dessert
+  solids:
+    FoodFrozenMochi: 1
+  reagents:
+    Tea: 2
+  recipeType:
+  - Assembler
+
+- type: microwaveMealRecipe
+  id: RecipeMochiUbe
+  name: ube mochi
+  result: FoodFrozenMochiUbe
+  time: 5
+  group: Dessert
+  solids:
+    FoodFrozenMochi: 1
+  reagents:
+    PolypyryliumOligomers: 2
+  recipeType:
+  - Assembler
+
+- type: microwaveMealRecipe
+  id: RecipeMochiPumpkin
+  name: pumpkin mochi # Aurora Song: This was incorrectly named "ube mochi"
+  result: FoodFrozenMochiPumpkin
+  time: 5
+  group: Dessert
+  solids:
+    FoodFrozenMochi: 1
+  reagents:
+    PumpkinFlesh: 2
+  recipeType:
+  - Assembler
 
 # NOT ACTUAL FOOD
 

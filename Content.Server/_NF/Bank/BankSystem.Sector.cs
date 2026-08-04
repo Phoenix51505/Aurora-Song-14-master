@@ -1,5 +1,5 @@
 using System.Runtime.InteropServices;
-using Content.Server._NF.SectorServices;
+using Content.Shared._NF.SectorServices;
 using Content.Shared._NF.Bank.BUI;
 using Content.Shared._NF.Bank;
 using Content.Shared._NF.Bank.Components;
@@ -9,7 +9,7 @@ namespace Content.Server._NF.Bank;
 
 public sealed partial class BankSystem : SharedBankSystem
 {
-    [Dependency] private readonly SectorServiceSystem _sectorService = default!;
+    [Dependency] private SectorServiceSystem _sectorService = default!;
 
     // The interval between sector account increases, in seconds.
     private const float AccountIncreaseInterval = 10.0f;

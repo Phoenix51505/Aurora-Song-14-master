@@ -11,7 +11,6 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Serilog;
 
 
 namespace Content.Client._Floof.Examine;
@@ -20,7 +19,7 @@ namespace Content.Client._Floof.Examine;
 [GenerateTypedNameReferences]
 public sealed partial class CustomExaminePart : Control
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public string? Title { get; set; }
     public int MaxContentLength { get; set; }

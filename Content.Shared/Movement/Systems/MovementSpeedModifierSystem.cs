@@ -1,3 +1,4 @@
+
 using Content.Shared.CCVar;
 using Content.Shared.Inventory;
 using Content.Shared.Movement.Components;
@@ -7,10 +8,10 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Movement.Systems
 {
-    public sealed class MovementSpeedModifierSystem : EntitySystem
+    public sealed partial class MovementSpeedModifierSystem : EntitySystem
     {
-        [Dependency] private readonly IGameTiming _timing = default!;
-        [Dependency] private readonly IConfigurationManager _configManager = default!;
+        [Dependency] private IGameTiming _timing = default!;
+        [Dependency] private IConfigurationManager _configManager = default!;
 
         private float _frictionModifier;
         private float _airDamping;
@@ -52,6 +53,21 @@ namespace Content.Shared.Movement.Systems
         {
             RefreshFrictionModifiers(entity);
             RefreshMovementSpeedModifiers(entity);
+        }
+
+        /// <summary>
+        /// Copy this component's datafields from one entity to another.
+        /// This needs to refresh the modifiers after using CopyComp.
+        /// <summary>
+        public void CopyComponent(Entity<MovementSpeedModifierComponent?> source, EntityUid target)
+        {
+            if (!Resolve(source, ref source.Comp))
+                return;
+
+            CopyComp(source, target, source.Comp);
+            RefreshWeightlessModifiers(target);
+            RefreshMovementSpeedModifiers(target);
+            RefreshFrictionModifiers(target);
         }
 
         public void RefreshWeightlessModifiers(EntityUid uid, MovementSpeedModifierComponent? move = null)

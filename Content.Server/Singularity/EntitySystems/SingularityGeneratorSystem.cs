@@ -11,15 +11,15 @@ using Content.Server._NF.DangerTether; // Frontier
 
 namespace Content.Server.Singularity.EntitySystems;
 
-public sealed class SingularityGeneratorSystem : SharedSingularityGeneratorSystem
+public sealed partial class SingularityGeneratorSystem : SharedSingularityGeneratorSystem
 {
     #region Dependencies
-    [Dependency] private readonly IViewVariablesManager _vvm = default!;
-    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
-    [Dependency] private readonly PhysicsSystem _physics = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly MetaDataSystem _metadata = default!;
-    [Dependency] private readonly DangerTetherSystem _dangerTether = default!; // Frontier
+    [Dependency] private IViewVariablesManager _vvm = default!;
+    [Dependency] private SharedTransformSystem _transformSystem = default!;
+    [Dependency] private PhysicsSystem _physics = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private DangerTetherSystem _dangerTether = default!; // Frontier
+    [Dependency] private EntityQuery<ContainmentFieldComponent> _containmentFieldQuery = default!;
     #endregion Dependencies
 
     public override void Initialize()
@@ -55,6 +55,9 @@ public sealed class SingularityGeneratorSystem : SharedSingularityGeneratorSyste
             return;
 
         SetPower(uid, 0, comp);
+
+        // Other particle entities from the same wave could trigger additional teslas to spawn, so we must block the generator
+        comp.Inert = true;
         Spawn(comp.SpawnPrototype, Transform(uid).Coordinates);
     }
 
@@ -114,7 +117,8 @@ public sealed class SingularityGeneratorSystem : SharedSingularityGeneratorSyste
         if (!TryComp<SingularityGeneratorComponent>(args.OtherEntity, out var generatorComp))
             return;
 
-        if (_timing.CurTime < _metadata.GetPauseTime(uid) + generatorComp.NextFailsafe && !generatorComp.FailsafeDisabled)
+        if (generatorComp.Inert ||
+            _timing.CurTime < generatorComp.NextFailsafe && !generatorComp.FailsafeDisabled)
         {
             QueueDel(uid);
             return;
@@ -123,7 +127,7 @@ public sealed class SingularityGeneratorSystem : SharedSingularityGeneratorSyste
         // Frontier: check tether
         if (generatorComp.RequiresTether && !_dangerTether.AnyTetherInRange(args.OtherEntity))
         {
-            EntityManager.QueueDeleteEntity(uid);
+            QueueDel(uid);
             PopupSystem.PopupEntity(Loc.GetString("comp-generator-tether", ("target", args.OtherEntity)), args.OtherEntity, PopupType.LargeCaution);
             return;
         }
@@ -181,15 +185,15 @@ public sealed class SingularityGeneratorSystem : SharedSingularityGeneratorSyste
 
         var ray = new CollisionRay(worldPosition, dirRad.ToVec(), component.CollisionMask);
         var rayCastResults = _physics.IntersectRay(transform.MapID, ray, component.FailsafeDistance, generator, false);
-        var genQuery = GetEntityQuery<ContainmentFieldComponent>();
 
         RayCastResults? closestResult = null;
 
         foreach (var result in rayCastResults)
         {
-            if (genQuery.HasComponent(result.HitEntity))
-                closestResult = result;
+            if (!_containmentFieldQuery.HasComponent(result.HitEntity))
+                continue;
 
+            closestResult = result;
             break;
         }
 

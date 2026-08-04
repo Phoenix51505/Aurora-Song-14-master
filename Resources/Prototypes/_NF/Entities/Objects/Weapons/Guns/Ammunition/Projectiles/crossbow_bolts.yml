@@ -1,12 +1,12 @@
 ﻿# Base
 - type: entity
   id: BaseBoltLiquidInjector
+  parent: SolutionInjector # Aurora's Song - Add SolutionInjector
   abstract: true
   components:
-  - type: SolutionContainerManager
-    solutions:
-      injector:
-        maxVol: 2
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      maxVol: 2
   - type: RefillableSolution
     solution: injector
   - type: InjectableSolution
@@ -16,13 +16,19 @@
     solution: injector
   - type: SolutionTransfer
     maxTransferAmount: 2
-  - type: Injector
-    injectOnly: false
-    ignoreMobs: true
-    minTransferAmount: 2
-    maxTransferAmount: 2
-    transferAmount: 2
-    toggleState: Draw
+  - type: Injector # Aurora's Song - Replace with updated Injector
+    currentTransferAmount: null
+    activeModeProtoId: SyringeDrawMode
+    allowedModes:
+    - SyringeDrawMode
+  # Aurora's Song - Comment out nonfunctional injector
+#  - type: Injector
+#    injectOnly: false
+#    ignoreMobs: true
+#    minTransferAmount: 2
+#    maxTransferAmount: 2
+#    transferAmount: 2
+#    toggleState: Draw
   - type: ExaminableSolution
     solution: injector
   - type: MeleeChemicalInjector
@@ -70,7 +76,7 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 10
-  - type: Damageable
+  - type: Injurable # Aurora's Song - Extract damageContainer to Injurable
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
@@ -191,10 +197,9 @@
       types:
         Piercing: 20
     deleteOnCollide: true
-  - type: SolutionContainerManager
-    solutions:
-      injector:
-        maxVol: 5
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      maxVol: 5
   - type: RefillableSolution
     solution: injector
   - type: InjectableSolution
@@ -204,13 +209,11 @@
     solution: injector
   - type: SolutionTransfer
     maxTransferAmount: 5
-  - type: Injector
-    injectOnly: false
-    ignoreMobs: true
-    minTransferAmount: 5
-    maxTransferAmount: 5
-    transferAmount: 5
-    toggleState: Draw
+  - type: Injector # Aurora's Song - Replace with updated Injector
+    currentTransferAmount: null
+    activeModeProtoId: SyringeDrawMode
+    allowedModes:
+    - SyringeDrawMode
 
 # Craftable variations
 - type: Tag
@@ -331,6 +334,7 @@
     - state: solutionSyringe1
       map: ["enum.SolutionContainerLayers.Fill"]
       visible: false
+  - type: Appearance # Aurora's Song
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     fillBaseName: solutionSyringe
@@ -545,7 +549,7 @@
     deleteOnCollide: true
   - type: SpawnOnTrigger
     proto: CrossbowBoltShrapnelSpread
-    mapCoords: true # shouldn't be parented to colliding object
+    useMapCoords: true # shouldn't be parented to colliding object # Aurora's Song - useMapCoords
   - type: Construction
     graph: CraftCrossbowBoltShrapnel
     node: CraftCrossbowBoltShrapnel

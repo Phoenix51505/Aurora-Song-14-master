@@ -16,8 +16,9 @@
     availableModes:
       - SemiAuto
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Electronic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
@@ -94,7 +95,7 @@
           tags:
             - PowerCell
             - PowerCellSmall
-  - type: HitscanBatteryAmmoProvider
+  - type: BatteryAmmoProvider
     proto: NFRedLightLaser # Frontier: use NF prefix
     fireCost: 50
 
@@ -150,7 +151,7 @@
         whitelist:
           tags:
             - PowerCage
-  - type: HitscanBatteryAmmoProvider
+  - type: BatteryAmmoProvider
     proto: NFRedShuttleLaser # Frontier: use NF variant
     fireCost: 150
 
@@ -284,8 +285,9 @@
     containers:
       ballistic-ammo: !type:Container
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:

@@ -1,0 +1,22 @@
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCaptaineveningattire
+  name: captain's evening attire
+  description: A comfortable captain's uniform with a low-cut collar and rolled-up sleeves, complete with a sword belt.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/captaineveningattire.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/captaineveningattire.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, ClothingUniformFoldableBase]
+  id: ClothingUniformAtmosFlightSuit
+  name: atmospheric technician flightsuit
+  description: A harnessed, secure flightsuit for all the flying atmos techs do.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/atmos_flightsuit.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/atmos_flightsuit.rsi

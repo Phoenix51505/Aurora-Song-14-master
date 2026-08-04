@@ -28,6 +28,50 @@
     back:
     - CigPackGreen
 
+# Aurora Song- Mantis drip merge start
+- type: loadout
+  id: ContractorCaseMantisCandles
+  price: 500
+  storage:
+    back:
+    - MantisCaseCandles
+
+- type: loadout
+  id: ContractorCaseMantisTools
+  price: 500
+  storage:
+    back:
+    - MantisCaseTools
+
+- type: loadout
+  id: ContractorFlippoLighterMantis
+  price: 200
+  storage:
+    back:
+    - FlippoLighterMantis
+
+- type: loadout
+  id: ContractorSyringeMantis
+  price: 250
+  storage:
+    back:
+    - SyringeMantis
+
+- type: loadout
+  id: ContractorKnifeRavel
+  price: 650
+  storage:
+    back:
+    - MantisTailorsKnife
+# Aurora Song- Mantis drip merge end
+
+- type: loadout
+  id: ContractorHoloprojectorPrivate
+  price: 200
+  storage:
+    back:
+    - HoloprojectorPrivate
+
 #T1
 - type: loadout
   id: ContractorCigarCase
@@ -47,7 +91,7 @@
   price: 500
   storage:
     back:
-    - holocigar
+    - Holocigar
 
 - type: loadout
   id: ContractorNFAshtray
@@ -244,9 +288,6 @@
 #T1
 - type: loadout # Aurora Song: Add AAC Tablet to contractor backpack items
   id: ContractorAACTablet
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: ContractorT1
   price: 500
   storage:
     back:

@@ -2204,7 +2204,7 @@ entities:
     - type: Transform
       pos: 3.5,-0.5
       parent: 2
-- proto: ComputerTabletopShuttle
+- proto: ComputerTabletopShuttleSLE
   entities:
   - uid: 198
     components:
@@ -3626,7 +3626,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -3.5,-11.5
       parent: 2
-- proto: HandheldHealthAnalyzerUnpowered
+- proto: HandheldHealthAnalyzer
   entities:
   - uid: 449
     components:

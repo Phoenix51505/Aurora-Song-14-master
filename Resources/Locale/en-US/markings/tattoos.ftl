@@ -35,6 +35,12 @@ marking-TattooEyeMothRight = Right Eye
 marking-TattooEyeMothLeft-tattoo_eye_moth_l = Left Eye
 marking-TattooEyeMothLeft = Left Eye
 
+marking-TattooEyeVulpkaninRight-tattoo_eye_vulpkanin_r = Right Eye
+marking-TattooEyeVulpkaninRight = Right Eye
+
+marking-TattooEyeVulpkaninLeft-tattoo_eye_vulpkanin_l = Left Eye
+marking-TattooEyeVulpkaninLeft = Left Eye
+
 marking-TattooEyeVoxRight-tattoo_eye_vox_r = Right Eye
 marking-TattooEyeVoxRight = Right Eye
 
@@ -61,3 +67,9 @@ marking-TattooEyeshadowVoxLarge = Eyeshadow (Large)
 
 marking-TattooVoxTailRing-tattoo_vox_tail_ring = Tail Ring
 marking-TattooVoxTailRing = Tail Ring
+
+# Aurora's Song - Seperates slime markings from head to overlay
+marking-TattooSlimeEyeLeft = Left Eye
+marking-TattooSlimeEyeLeft-tattoo_eye_l = Eye
+marking-TattooSlimeEyeRight = Right Eye
+marking-TattooSlimeEyeRight-tattoo_eye-2 = Eye

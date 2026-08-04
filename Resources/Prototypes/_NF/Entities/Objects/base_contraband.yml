@@ -67,7 +67,7 @@
   components:
   - type: Contraband
     severity: Class2Expedition
-    turnInValues: 
+    turnInValues:
       FrontierUplinkCoin: 1
       ExchangeCoin: 1 # AS
       Doubloon: 1
@@ -81,6 +81,17 @@
     turnInValues: &noFUCs
       FrontierUplinkCoin: 0
       Doubloon: 0
+
+- type: entity # Aurora's Song - For things that are generally worthless to the public but hold niche value to security, I.E. supply crates for smuggler events.
+  parent: BaseC2ContrabandUnredeemable
+  id: BaseC2ContrabandSecure
+  abstract: true
+  components:
+  - type: Contraband
+    turnInValues:
+      FrontierUplinkCoin: 1
+      Doubloon: 1 # To give them a reason to fight over it if they desire
+    allowedDepartments: [ Security ]
 # endregion
 
 # region Class 3 Objects
@@ -110,7 +121,7 @@
   abstract: true
   components:
   - type: Contraband
-    turnInValues: 
+    turnInValues:
       FrontierUplinkCoin: 1
       ExchangeCoin: 1 # AS
       Doubloon: 1
@@ -192,7 +203,7 @@
   abstract: true
   components:
   - type: Contraband
-    turnInValues: 
+    turnInValues:
       FrontierUplinkCoin: 1
       ExchangeCoin: 1 # AS
       Doubloon: 1
@@ -212,7 +223,7 @@
   components:
   - type: Contraband
     severity: Class3Wizard
-    turnInValues: 
+    turnInValues:
       FrontierUplinkCoin: 1
       ExchangeCoin: 1 # AS
       Doubloon: 1

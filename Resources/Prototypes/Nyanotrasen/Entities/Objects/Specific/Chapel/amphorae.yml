@@ -1,0 +1,66 @@
+# SPDX-FileCopyrightText: 2023 Fluffiest Floofers <thebluewulf@gmail.com>
+# SPDX-FileCopyrightText: 2024 DEATHB4DEFEAT <77995199+DEATHB4DEFEAT@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Debug <49997488+DebugOk@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 sleepyyapril <123355664+sleepyyapril@users.noreply.github.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
+- type: entity
+  parent: [SolutionDrink, SolutionNormal, BaseItem] # Aurora's Song - Convert to solution
+  id: BaseAmphora
+  name: amphora
+  description: It's an earthenware jar suitable for carrying liquids, an example of ancient technology.
+  abstract: true
+  components:
+  - type: StaticPrice
+    price: 150
+  - type: Edible  # Aurora's Song - Convert to edible from Drink
+    edible: Drink
+    solution: drink # Aurora's Song - jar>drink
+    destroyOnEmpty: false # Aurora's Song: DO NOT EAT IT
+  - type: Spillable
+    solution: drink # Aurora's Song - jar>drink
+  - type: RefillableSolution
+    solution: drink # Aurora's Song - jar>drink
+  - type: DrainableSolution
+    solution: drink # Aurora's Song - jar>drink
+  - type: ExaminableSolution
+    solution: drink # Aurora's Song - jar>drink
+  - type: DrawableSolution
+    solution: drink # Aurora's Song - jar>drink
+  - type: InjectableSolution
+    solution: drink # Aurora's Song - jar>drink
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+  - type: UserInterface
+    interfaces:
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpillBehavior
+        solution: drink # Aurora's Song - Convert to solution
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 5
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 5
+  - type: DamageOnHighSpeedImpact
+    minimumSpeed: 2
+    damage:
+      types:
+        Blunt: 5

@@ -4,7 +4,7 @@ using Content.Server._DV.Cargo.Components;
 using Content.Server._DV.Cargo.Systems;
 using Content.Server._DV.Mail.Components;
 using Content.Server.Destructible.Thresholds.Behaviors;
-using Content.Server.Destructible.Thresholds.Triggers;
+using Content.Shared.Destructible.Thresholds.Triggers;
 using Content.Server.Destructible.Thresholds;
 using Content.Server.Destructible;
 using Content.Server.Mind;
@@ -41,43 +41,45 @@ using System.Linq;
 using System.Threading;
 using Timer = Robust.Shared.Timing.Timer;
 using Content.Server._NF.Bank; // Frontier
-using Content.Server._NF.SectorServices; // Frontier
-using Content.Server.Station.Components; // Frontier
+using Content.Shared._NF.SectorServices; // Frontier
+using Content.Shared.Station.Components; // Frontier
 using Robust.Shared.Enums; // Frontier
 using Content.Shared._NF.Bank.Components; // Frontier
 using Content.Shared._NF.Bank.BUI; // Frontier
 using Content.Shared.SSDIndicator; // Frontier
 using Content.Server.Power.EntitySystems; // Frontier
-using Content.Server._NF.Mail.Components; // Frontier
+using Content.Server._NF.Mail.Components;
+using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems; // Frontier
 using Robust.Server.Player; // Frontier
 
 namespace Content.Server._DV.Mail.EntitySystems
 {
-    public sealed class MailSystem : EntitySystem
+    public sealed partial class MailSystem : EntitySystem
     {
-        [Dependency] private readonly AccessReaderSystem _accessSystem = default!;
-        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-        [Dependency] private readonly EntityLookupSystem _lookup = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly IdCardSystem _idCardSystem = default!;
-        [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
-        // [Dependency] private readonly MindSystem _mindSystem = default!; // Frontier: warning suppression
-        [Dependency] private readonly OpenableSystem _openable = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
-        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-        [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
-        [Dependency] private readonly StationSystem _stationSystem = default!;
-        [Dependency] private readonly TagSystem _tagSystem = default!;
-        [Dependency] private readonly LogisticStatsSystem _logisticsStatsSystem = default!;
-        [Dependency] private readonly EmagSystem _emag = default!;
-        [Dependency] private readonly SectorServiceSystem _sectorService = default!; // Frontier
-        [Dependency] private readonly BankSystem _bank = default!; // Frontier
-        [Dependency] private readonly PowerReceiverSystem _powerReceiver = default!; // Frontier
-        [Dependency] private readonly IPlayerManager _player = default!; // Frontier
+        [Dependency] private AccessReaderSystem _accessSystem = default!;
+        [Dependency] private DamageableSystem _damageableSystem = default!;
+        [Dependency] private EntityLookupSystem _lookup = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private IRobustRandom _random = default!;
+        [Dependency] private IdCardSystem _idCardSystem = default!;
+        [Dependency] private MetaDataSystem _metaDataSystem = default!;
+        // [Dependency] private MindSystem _mindSystem = default!; // Frontier: warning suppression
+        [Dependency] private OpenableSystem _openable = default!;
+        [Dependency] private PopupSystem _popupSystem = default!;
+        [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
+        [Dependency] private SharedAudioSystem _audioSystem = default!;
+        [Dependency] private SharedContainerSystem _containerSystem = default!;
+        [Dependency] private SharedHandsSystem _handsSystem = default!;
+        [Dependency] private SharedSolutionContainerSystem _solution = default!;
+        [Dependency] private StationSystem _stationSystem = default!;
+        [Dependency] private TagSystem _tagSystem = default!;
+        [Dependency] private LogisticStatsSystem _logisticsStatsSystem = default!;
+        [Dependency] private EmagSystem _emag = default!;
+        [Dependency] private SectorServiceSystem _sectorService = default!; // Frontier
+        [Dependency] private BankSystem _bank = default!; // Frontier
+        [Dependency] private PowerReceiverSystem _powerReceiver = default!; // Frontier
+        [Dependency] private IPlayerManager _player = default!; // Frontier
 
         private ISawmill _sawmill = default!;
         private static readonly ProtoId<TagPrototype> MailTag = "Mail"; // Frontier
@@ -470,7 +472,7 @@ namespace Content.Server._DV.Mail.EntitySystems
             var mailComp = EnsureComp<MailComponent>(uid);
 
             var container = _containerSystem.EnsureContainer<Container>(uid, "contents");
-            foreach (var entity in EntitySpawnCollection.GetSpawns(mailComp.Contents, _random).Select(item => EntityManager.SpawnEntity(item, Transform(uid).Coordinates)))
+            foreach (var entity in EntitySpawnCollection.GetSpawns(mailComp.Contents, _random).Select(item => Spawn(item, Transform(uid).Coordinates)))
             {
                 if (!_containerSystem.Insert(entity, container))
                 {
@@ -619,7 +621,7 @@ namespace Content.Server._DV.Mail.EntitySystems
                 string stationName;
                 if (_stationSystem.GetOwningStation(receiverUid) is { Valid: true } station
                     && TryComp<StationDataComponent>(station, out var stationData)
-                    && _stationSystem.GetLargestGrid(stationData) is { Valid: true } stationGrid
+                    && _stationSystem.GetLargestGrid((station, stationData)) is { Valid: true } stationGrid
                     && TryName(stationGrid, out var gridName)
                     && gridName != null)
                 {
@@ -783,7 +785,7 @@ namespace Content.Server._DV.Mail.EntitySystems
                 var index = _random.Next(validTeleporters.Count);
 
                 var coordinates = Transform(validTeleporters[index].Entity).Coordinates;
-                var mail = EntityManager.SpawnEntity(chosenParcel, coordinates);
+                var mail = Spawn(chosenParcel, coordinates);
                 SetupMail(mail, component, candidate);
                 validTeleporters[index].HadMail = true;
 

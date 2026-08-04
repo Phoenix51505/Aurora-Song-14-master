@@ -1,10 +1,14 @@
-using Content.Server.Radio.Components;
+using Content.Shared.Radio.Components;
+using Content.Shared.NameModifier.Components;
 using Content.Server.Silicons.Laws;
 using Content.Server.Chat.Managers;
+using Content.Server.Ghost.Roles; // AS
+using Content.Server.Ghost.Roles.Components; // AS
 using Content.Shared._Corvax.Silicons.Borgs;
 using Content.Shared._Corvax.Silicons.Borgs.Components;
 using Content.Shared.Actions;
 using Content.Shared.Mind;
+using Content.Shared.Mind.Components; // AS
 using Content.Shared.Chat;
 using Content.Shared.Silicons.Laws.Components;
 using Content.Shared.Silicons.StationAi;
@@ -18,17 +22,19 @@ using Robust.Shared.Audio.Systems;
 
 namespace Content.Server._Corvax.Silicons.Borgs;
 
-public sealed class AiRemoteControlSystem : SharedAiRemoteControlSystem
+public sealed partial class AiRemoteControlSystem : SharedAiRemoteControlSystem
 {
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly SiliconLawSystem _lawSystem = default!;
-    [Dependency] private readonly SharedStationAiSystem _stationAiSystem = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
-    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
-    [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    private EntityCoordinates? _coordinates;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private SiliconLawSystem _lawSystem = default!;
+    [Dependency] private SharedStationAiSystem _stationAiSystem = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
+    [Dependency] private UserInterfaceSystem _userInterface = default!;
+    [Dependency] private SharedTransformSystem _xformSystem = default!;
+    [Dependency] private IChatManager _chatManager = default!;
+    // [Dependency] private SharedAudioSystem _audio = default!; // Aurora's Song
+    [Dependency] private MetaDataSystem _metaSystem = default!; // AS
+    [Dependency] private GhostRoleSystem _ghostSystem = default!; // AS
+    // private EntityCoordinates? _coordinates; // Aurora's Song
 
     public override void Initialize()
     {
@@ -36,6 +42,7 @@ public sealed class AiRemoteControlSystem : SharedAiRemoteControlSystem
 
         SubscribeLocalEvent<AiRemoteControllerComponent, ReturnMindIntoAiEvent>(OnReturnMindIntoAi);
         SubscribeLocalEvent<AiRemoteControllerComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<AiRemoteControllerComponent, MindRemovedMessage>(OnMindRemoved); // AS
         SubscribeLocalEvent<AiRemoteControllerComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<AiRemoteControllerComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
         SubscribeLocalEvent<StationAiHeldComponent, AiRemoteControllerComponent.RemoteDeviceActionMessage>(OnUiRemoteAction);
@@ -86,12 +93,25 @@ public sealed class AiRemoteControlSystem : SharedAiRemoteControlSystem
         args.Verbs.Add(verb);
     }
 
-    private void OnReturnMindIntoAi(Entity<AiRemoteControllerComponent> entity, ref ReturnMindIntoAiEvent args) =>
+    private void OnReturnMindIntoAi(Entity<AiRemoteControllerComponent> entity, ref ReturnMindIntoAiEvent args)
+    {
+        ResetName(entity); // Aurora's Song
         ReturnMindIntoAi(entity);
-
+    }
+    // Aurora's Song Start
+    private void ResetName(Entity<AiRemoteControllerComponent> entity)
+    {
+        string name = TryComp<NameModifierComponent>(entity, out var borgNameModifierComponent) ? borgNameModifierComponent.BaseName : MetaData(entity).EntityName;// storage for name, only needed because we can't be sure if the entity has an NMC or not
+        if (name == entity.Comp.CurrentName) // Checks if name has changed during time controlling chassis
+            _metaSystem.SetEntityName(entity, entity.Comp.PreviousName); // Sets the name to what it was before being controlled
+    }
+    // Aurora's Song End
     public void AiTakeControl(EntityUid ai, EntityUid entity)
     {
         if (!_mind.TryGetMind(ai, out var mindId, out var mind))
+            return;
+
+        if (_mind.TryGetMind(entity, out _, out _)) // Aurora's Song - Prevent taking over an entity with a mind
             return;
 
         if (!TryComp<StationAiHeldComponent>(ai, out var stationAiHeldComp))
@@ -99,8 +119,9 @@ public sealed class AiRemoteControlSystem : SharedAiRemoteControlSystem
 
         if (!TryComp<AiRemoteControllerComponent>(entity, out var aiRemoteComp))
             return;
+
         if (_stationAiSystem.TryGetCore(ai, out var stationAiCore) && stationAiCore.Comp?.RemoteEntity != null
-                && (Transform(stationAiCore).Coordinates.Position - Transform(entity).Coordinates.Position).Length() > 5
+                && (Transform(stationAiCore).WorldPosition - Transform(entity).WorldPosition).Length() > 256 // AS: Changed range and made this use world position
             )
         {
             var msg = Loc.GetString("ai-remote-out-of-range");
@@ -126,12 +147,19 @@ public sealed class AiRemoteControlSystem : SharedAiRemoteControlSystem
                 activeRadio.Channels = [.. stationAiActiveRadio.Channels];
         }
 
+        stationAiHeldComp.CurrentConnectedEntity = entity; // AS: Moved because it was causing problems with ghost roles
         _mind.ControlMob(ai, entity);
         aiRemoteComp.AiHolder = ai;
         aiRemoteComp.LinkedMind = mindId;
-
-        stationAiHeldComp.CurrentConnectedEntity = entity;
-
+        // Aurora's Song Start - This section does a few things!
+        // First it gets the borg's name and saves it to aiRemoteComp
+        aiRemoteComp.PreviousName = TryComp<NameModifierComponent>(entity, out var borgNMC) ? borgNMC.BaseName : MetaData(entity).EntityName;
+        // Then, it gets and saves the AI's name
+        string aiName = TryComp<NameModifierComponent>(ai, out var nameModifierComponent) ? nameModifierComponent.BaseName : MetaData(ai).EntityName;
+        //Then it sets the borg's name to a combination of the AI's name and the borg's name, to allow identification.
+        aiRemoteComp.CurrentName = aiName + " // " + aiRemoteComp.PreviousName;
+        _metaSystem.SetEntityName(entity, aiRemoteComp.CurrentName);
+        // Aurora's Song End
         _stationAiSystem.SwitchRemoteEntityMode(stationAiCore, false);
 
         RewriteLaws(ai, entity);
@@ -145,7 +173,7 @@ public sealed class AiRemoteControlSystem : SharedAiRemoteControlSystem
 
         _userInterface.TryToggleUi(uid, RemoteDeviceUiKey.Key, actor.PlayerSession);
 
-        var query = EntityManager.EntityQueryEnumerator<AiRemoteControllerComponent>();
+        var query = EntityQueryEnumerator<AiRemoteControllerComponent>();
         var remoteDevices = new List<RemoteDevicesData>();
 
         while (query.MoveNext(out var queryUid, out var comp))
@@ -154,11 +182,13 @@ public sealed class AiRemoteControlSystem : SharedAiRemoteControlSystem
             {
                 NetEntityUid = GetNetEntity(queryUid),
                 DisplayName = Comp<MetaDataComponent>(queryUid).EntityName,
-                DevicePosX = Transform(queryUid).Coordinates.X,
-                DevicePosY = Transform(queryUid).Coordinates.Y
+                DevicePosX = Transform(queryUid).WorldPosition.X,
+                DevicePosY = Transform(queryUid).WorldPosition.Y,
+                DeviceDistance = (Transform(uid).WorldPosition - Transform(queryUid).WorldPosition).Length() // AS: World position over relative and device distance.
             };
             if (_stationAiSystem.TryGetCore(uid, out var stationAiCore) && stationAiCore.Comp?.RemoteEntity != null
-                    && (Transform(stationAiCore).Coordinates.Position - Transform(queryUid).Coordinates.Position).Length() < 3000
+                    && (Transform(stationAiCore).WorldPosition - Transform(queryUid).WorldPosition).Length() < 4096 // AS: World position over relative
+                    && !_mind.TryGetMind(queryUid, out _, out _) // Aurora's Song - Hide any bodies currently in use
                 )
             {
                 remoteDevices.Add(data);
@@ -207,5 +237,28 @@ public sealed class AiRemoteControlSystem : SharedAiRemoteControlSystem
 
         var fromLaws = _lawSystem.GetLaws(from);
         _lawSystem.SetLawsSilent(fromLaws.Laws, to);
+    }
+
+    private void OnMindRemoved(EntityUid uid, AiRemoteControllerComponent component, MindRemovedMessage args) // AS: Logic to handle ghosting while connected to a borg
+    {
+        if (component.AiHolder == null || component.LinkedMind == null) // If these are null, then the mind removal was likely from the AI returning to their core and we don't need to do anything
+            return;
+
+        if (!TryComp<StationAiHeldComponent>(component.AiHolder.Value, out var stationAiHeldComp)) // Somehow, what we were connected to wasn't an AI. Don't want to mess with it
+            return;
+
+        if (stationAiHeldComp.CurrentConnectedEntity == uid) // The AI still shows as connected to us, which means we probably ghosted, so we should try and re-register the ghost role if it exists.
+        {
+            if (!TryComp(component.AiHolder.Value, out GhostRoleComponent? ghostRole)) // Same logic as OnMindRemoved from GhostRoleSystem
+                return;
+
+            if (!ghostRole.ReregisterOnGhost || component.LifeStage > ComponentLifeStage.Running)
+                return;
+
+            _ghostSystem.ReRegisterGhostRole(component.AiHolder.Value, ghostRole);
+            ResetName((uid, component)); // Aurora's Song - Without this, ghosting leaves the controller's name attached to the chassis
+            component.AiHolder = null;
+            component.LinkedMind = null; // Null these out to set them up for later
+        }
     }
 }

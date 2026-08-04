@@ -18,12 +18,12 @@ namespace Content.Shared._NF.Interaction.Systems;
 /// </summary>
 public sealed partial class HandPlaceholderSystem : EntitySystem
 {
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private readonly MetaDataSystem _metadata = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private MetaDataSystem _metadata = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
 
     public readonly EntProtoId<HandPlaceholderComponent> Placeholder = "HandPlaceholder";
 
@@ -133,7 +133,7 @@ public sealed partial class HandPlaceholderSystem : EntitySystem
     private void TryToPickUpTarget(Entity<HandPlaceholderComponent> ent, EntityUid target, EntityUid user)
     {
         // require items regardless of the whitelist
-        if (!ent.Comp.AllowNonItems && !HasComp<ItemComponent>(target) || _whitelist.IsWhitelistFail(ent.Comp.Whitelist, target) || _whitelist.IsBlacklistPass(ent.Comp.Blacklist, target))
+        if (!ent.Comp.AllowNonItems && !HasComp<ItemComponent>(target) || _whitelist.IsWhitelistFail(ent.Comp.Whitelist, target) || _whitelist.IsWhitelistPass(ent.Comp.Blacklist, target))
             return;
 
         if (!TryComp<HandsComponent>(user, out var hands))

@@ -3,7 +3,6 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Audio;
 using Content.Server.Cargo.Systems;
-using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Construction;
 using Content.Server.DoAfter;
 using Content.Server.Fluids.EntitySystems;
@@ -57,34 +56,37 @@ using Content.Shared._NF.Kitchen.Components; // Frontier
 using Content.Shared.Cargo; // Frontier
 using Content.Shared.NameModifier.EntitySystems; // Frontier
 using Content.Shared.Construction.Components; // Frontier
+using Content.Shared.Damage.Components; // Aurora's Song
+using Content.Shared.Damage.Systems; // Aurora's Song
 using Content.Shared.Nutrition.Components; // Frontier
+using Content.Shared.Temperature.Components; // Aurora's Song
 
 namespace Content.Server.Nyanotrasen.Kitchen.EntitySystems;
 
 public sealed partial class DeepFryerSystem : SharedDeepfryerSystem
 {
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogManager = default!;
-    [Dependency] private readonly IGameTiming _gameTimingSystem = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly PowerReceiverSystem _powerReceiverSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
-    [Dependency] private readonly SolutionTransferSystem _solutionTransferSystem = default!;
-    [Dependency] private readonly PuddleSystem _puddleSystem = default!;
-    [Dependency] private readonly TemperatureSystem _temperature = default!;
-    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly AmbientSoundSystem _ambientSoundSystem = default!;
-    [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
-    [Dependency] private readonly NameModifierSystem _nameModifier = default!; // Frontier
+    [Dependency] private DamageableSystem _damageableSystem = default!;
+    [Dependency] private DoAfterSystem _doAfterSystem = default!;
+    [Dependency] private IAdminLogManager _adminLogManager = default!;
+    [Dependency] private IGameTiming _gameTimingSystem = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private PopupSystem _popupSystem = default!;
+    [Dependency] private PowerReceiverSystem _powerReceiverSystem = default!;
+    [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
+    [Dependency] private SharedAudioSystem _audioSystem = default!;
+    [Dependency] private SharedContainerSystem _containerSystem = default!;
+    [Dependency] private SharedHandsSystem _handsSystem = default!;
+    [Dependency] private MobStateSystem _mobStateSystem = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private SolutionTransferSystem _solutionTransferSystem = default!;
+    [Dependency] private PuddleSystem _puddleSystem = default!;
+    [Dependency] private TemperatureSystem _temperature = default!;
+    [Dependency] private UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private AmbientSoundSystem _ambientSoundSystem = default!;
+    [Dependency] private MetaDataSystem _metaDataSystem = default!;
+    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private NameModifierSystem _nameModifier = default!; // Frontier
 
     private static readonly string CookingDamageType = "Heat";
     private static readonly float CookingDamageAmount = 10.0f;
@@ -105,7 +107,7 @@ public sealed partial class DeepFryerSystem : SharedDeepfryerSystem
 
         _sawmill = Logger.GetSawmill("deepfryer");
 
-        SubscribeLocalEvent<DeepFryerComponent, ComponentInit>(OnInitDeepFryer);
+        SubscribeLocalEvent<DeepFryerComponent, MapInitEvent>(OnInitDeepFryer); // Aurora's song - Use map init instead
         SubscribeLocalEvent<DeepFryerComponent, PowerChangedEvent>(OnPowerChange);
         SubscribeLocalEvent<DeepFryerComponent, RefreshPartsEvent>(OnRefreshParts);
         SubscribeLocalEvent<DeepFryerComponent, MachineDeconstructedEvent>(OnDeconstruct);
@@ -135,7 +137,7 @@ public sealed partial class DeepFryerSystem : SharedDeepfryerSystem
             GetOilLevel(uid, component),
             GetOilPurity(uid, component),
             component.FryingOilThreshold,
-            EntityManager.GetNetEntityArray(component.Storage.ContainedEntities.ToArray()));
+            GetNetEntityArray(component.Storage.ContainedEntities.ToArray()));
 
         _uiSystem.SetUiState(uid, DeepFryerUiKey.Key, state);
     }
@@ -217,24 +219,21 @@ public sealed partial class DeepFryerSystem : SharedDeepfryerSystem
                 _temperature.ChangeHeat(item, delta, false, tempComp);
         }
 
-        if (TryComp<SolutionContainerManagerComponent>(item, out var solutions) && solutions.Solutions != null)
+        // Aurora's Song - Simplify to use SolutionComponent
+        if (TryComp<SolutionComponent>(item, out var solutionComponent))
         {
-            foreach (var (_, solution) in solutions.Solutions)
-            {
-                if (_solutionContainerSystem.TryGetSolution(item, solution.Name, out var solutionRef))
-                    _solutionContainerSystem.SetTemperature(solutionRef!.Value, component.PoweredTemperature);
-            }
+            _solutionContainerSystem.SetTemperature((item, solutionComponent), component.PoweredTemperature);
         }
 
         // Damage non-food items and mobs.
-        if ((!HasComp<FoodComponent>(item) || HasComp<MobStateComponent>(item)) &&
+        if ((!HasComp<EdibleComponent>(item) || HasComp<MobStateComponent>(item)) && // Aurora's Song
             TryComp<DamageableComponent>(item, out var damageableComponent))
         {
             var damage = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>(CookingDamageType),
                 CookingDamageAmount);
 
             var result = _damageableSystem.TryChangeDamage(item, damage, origin: uid);
-            if (result?.GetTotal() > FixedPoint2.Zero)
+            if (result) // Aurora's Song
             {
                 // TODO: Smoke, waste, sound, or some indication.
             }
@@ -246,7 +245,7 @@ public sealed partial class DeepFryerSystem : SharedDeepfryerSystem
     /// </summary>
     private void BurnItem(EntityUid uid, DeepFryerComponent component, EntityUid item)
     {
-        if (HasComp<FoodComponent>(item) &&
+        if (HasComp<EdibleComponent>(item) && // Aurora's Song
             !HasComp<MobStateComponent>(item) &&
             MetaData(item).EntityPrototype?.ID != component.CharredPrototype)
         {
@@ -357,7 +356,7 @@ public sealed partial class DeepFryerSystem : SharedDeepfryerSystem
         // just in case the attempt is relevant to any system in the future.
         //
         // The blacklist overrides all.
-        if (_whitelistSystem.IsBlacklistPass(component.Blacklist, item))
+        if (_whitelistSystem.IsWhitelistPass(component.Blacklist, item)) // Aurora's Song
         {
             _popupSystem.PopupEntity(
                 Loc.GetString("deep-fryer-blacklist-item-failed",
@@ -427,7 +426,7 @@ public sealed partial class DeepFryerSystem : SharedDeepfryerSystem
     }
     // End Frontier
 
-    private void OnInitDeepFryer(EntityUid uid, DeepFryerComponent component, ComponentInit args)
+    private void OnInitDeepFryer(EntityUid uid, DeepFryerComponent component, MapInitEvent args) // Aurora's song - Use map init instead
     {
         component.Storage =
             _containerSystem.EnsureContainer<Container>(uid, component.StorageName, out var containerExisted);
@@ -436,32 +435,34 @@ public sealed partial class DeepFryerSystem : SharedDeepfryerSystem
             _sawmill.Warning(
                 $"{ToPrettyString(uid)} did not have a {component.StorageName} container. It has been created.");
 
-        if (_solutionContainerSystem.EnsureSolution(uid, component.SolutionName, out var solutionExisted, out var solution))
-            component.Solution = solution;
-
-        if (!solutionExisted)
+        // Aurora's Song Start - Reorganize to use new EnsureSolution
+        if (!_solutionContainerSystem.EnsureSolution(uid, component.SolutionName, out var solution))
             _sawmill.Warning(
                 $"{ToPrettyString(uid)} did not have a {component.SolutionName} solution container. It has been created.");
-        foreach (var reagent in component.Solution.Contents.ToArray())
-        {
-            //JJ Comment - not sure this works. Need to check if Reagent.ToString is correct.
-            _prototypeManager.TryIndex<ReagentPrototype>(reagent.Reagent.ToString(), out var proto);
 
-            var effectsArgs = new EntityEffectReagentArgs(uid,
-                EntityManager,
-                null,
-                component.Solution,
-                reagent.Quantity,
-                proto!,
-                null,
-                1f);
-            foreach (var effect in component.UnsafeOilVolumeEffects)
-            {
-                if (!effect.ShouldApply(effectsArgs, _random))
-                    continue;
-                effect.Effect(effectsArgs);
-            }
-        }
+        component.Solution = solution.Comp.Solution;
+        // Aurora's Song End
+
+        // Aurora's Song - Seemingly unused
+        // foreach (var reagent in component.Solution.Contents.ToArray())
+        // {
+        //     //JJ Comment - not sure this works. Need to check if Reagent.ToString is correct.
+        //     _prototypeManager.TryIndex<ReagentPrototype>(reagent.Reagent.ToString(), out var proto);
+        //
+        //     var adjust = new AddReagentToSolution
+        //     {
+        //         Solution = component.SolutionName,
+        //         Reagent = reagent.Reagent.Prototype,
+        //     };
+        //
+        //
+        //     foreach (var effect in component.UnsafeOilVolumeEffects)
+        //     {
+        //         if (!effect.ShouldApply(effectsArgs, _random))
+        //             continue;
+        //         _effectsSystem.TryApplyEffect(effect);
+        //     }
+        // }
     }
 
     /// <summary>
@@ -513,11 +514,12 @@ public sealed partial class DeepFryerSystem : SharedDeepfryerSystem
     /// </summary>
     private void OnThrowHitBy(EntityUid uid, DeepFryerComponent component, ThrowHitByEvent args)
     {
-        if (args.Handled)
-            return;
+        // Aurora's Song
+        // if (args.Handled)
+        //     return;
 
         // Chefs never miss this. :)
-        var missChance = HasComp<ProfessionalChefComponent>(args.User) ? 0f : ThrowMissChance;
+        var missChance = HasComp<ProfessionalChefComponent>(args.Thrown) ? 0f : ThrowMissChance; // Aurora's Song
 
         if (!CanInsertItem(uid, component, args.Thrown) ||
             _random.Prob(missChance) ||
@@ -527,11 +529,9 @@ public sealed partial class DeepFryerSystem : SharedDeepfryerSystem
                 Loc.GetString("deep-fryer-thrown-missed"),
                 uid);
 
-            if (args.User != null)
-            {
-                _adminLogManager.Add(LogType.Action, LogImpact.Low,
-                    $"{ToPrettyString(args.User.Value)} threw {ToPrettyString(args.Thrown)} at {ToPrettyString(uid)}, and it missed.");
-            }
+            // Aurora's Song
+            _adminLogManager.Add(LogType.Action, LogImpact.Low,
+                $"{ToPrettyString(args.Thrown)} threw {ToPrettyString(args.Thrown)} at {ToPrettyString(uid)}, and it missed.");
 
             return;
         }
@@ -549,19 +549,21 @@ public sealed partial class DeepFryerSystem : SharedDeepfryerSystem
                 uid);
         }
 
-        if (args.User != null)
-        {
-            _adminLogManager.Add(LogType.Action, LogImpact.Low,
-                $"{ToPrettyString(args.User.Value)} threw {ToPrettyString(args.Thrown)} at {ToPrettyString(uid)}, and it landed inside.");
-        }
+        // Aurora's Song
+        _adminLogManager.Add(LogType.Action, LogImpact.Low,
+            $"{ToPrettyString(args.Thrown)} threw {ToPrettyString(args.Thrown)} at {ToPrettyString(uid)}, and it landed inside.");
 
         AfterInsert(uid, component, args.Thrown);
 
-        args.Handled = true;
+        // args.Handled = true; // Aurora's Song
     }
 
     private void OnSolutionChange(EntityUid uid, DeepFryerComponent component, SolutionChangedEvent args)
     {
+        // Aurora's Song - We do not want this to run before we've initialized the solutions
+        if (LifeStage(uid) == EntityLifeStage.MapInitialized)
+            return;
+
         UpdateUserInterface(uid, component);
         UpdateAmbientSound(uid, component);
     }
@@ -589,7 +591,7 @@ public sealed partial class DeepFryerSystem : SharedDeepfryerSystem
 
     private void OnRemoveItem(EntityUid uid, DeepFryerComponent component, DeepFryerRemoveItemMessage args)
     {
-        var removedItem = EntityManager.GetEntity(args.Item);
+        var removedItem = GetEntity(args.Item);
         if (removedItem.Valid)
         {
             //JJ Comment - This line should be unnecessary. Some issue is keeping the UI from updating when converting straight to a Burned Mess while the UI is still open. To replicate, put a Raw Meat in the fryer with no oil in it. Wait until it sputters with no effect. It should transform to Burned Mess, but doesn't.
@@ -655,15 +657,22 @@ public sealed partial class DeepFryerSystem : SharedDeepfryerSystem
                 out var transferAmount))
             return;
 
-        if (!_solutionContainerSystem.TryGetSolution(uid, component.Solution.Name, out var solution))
+        if (!_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var solution)) // Aurora's Song - Use component.SolutionName
             return;
 
-        _solutionTransferSystem.Transfer(user,
-            uid,
-            solution.Value,
-            heldItem.Value,
-            heldSolution.Value,
-            transferAmount);
+        // Start Aurora's Song - Convert to new system
+        var solutionTransfer = new SolutionTransferData
+        {
+            User = user,
+            SourceEntity = uid,
+            Source = solution.Value,
+            TargetEntity = heldItem.Value,
+            Target = heldSolution.Value,
+            Amount = transferAmount,
+        };
+
+        _solutionTransferSystem.Transfer(solutionTransfer);
+        // End Aurora's Song
 
         // UI update is not necessary here, because the solution change event handles it.
     }
@@ -689,7 +698,7 @@ public sealed partial class DeepFryerSystem : SharedDeepfryerSystem
 
         var delay = TimeSpan.FromSeconds(Math.Clamp((float)wasteVolume * 0.1f, 1f, 5f));
 
-        var ev = new ClearSlagDoAfterEvent(heldSolution.Value.Comp.Solution, transferAmount);
+        var ev = new ClearSlagDoAfterEvent(heldSolution.Value.Comp.Solution, heldSolution.Value.Comp.Id, transferAmount); // Aurora's Song - Pass name too
 
         //JJ Comment - not sure I have DoAfterArgs configured correctly.
         var doAfterArgs = new DoAfterArgs(EntityManager, user, delay, ev, uid, uid, heldItem)
@@ -737,7 +746,7 @@ public sealed partial class DeepFryerSystem : SharedDeepfryerSystem
         if (!_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var solution))
             return;
 
-        if (!_solutionContainerSystem.TryGetSolution(args.Used!.Value, args.Solution.Name, out var targetSolution))
+        if (!_solutionContainerSystem.TryGetSolution(args.Used!.Value, args.SolutionName, out var targetSolution)) // Aurora's Song - Pass name too
             return;
 
         _solutionContainerSystem.UpdateChemicals(solution.Value);

@@ -568,7 +568,7 @@
   cost: 5000
   recipeUnlocks:
   - BorgModuleAdvancedParamedic
-  - BorgModuleAdvancedChemical
+  - BorgModuleAdvancedTopical # Aurora Song: BorgModuleAdvancedChemical: BorgModuleAdvancedTopical
   technologyPrerequisites:
   - NFBluespaceChemistry
   position: 2, 10
@@ -874,6 +874,7 @@
   cost: 2500
   recipeUnlocks:
   - NFHolopadShipMachineCircuitboard
+  - NFHolopadGridMachineCircuitboard
   technologyPrerequisites:
   - NFAudioVisualCommunication
   position: 0, 20

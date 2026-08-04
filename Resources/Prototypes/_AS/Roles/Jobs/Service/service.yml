@@ -13,12 +13,12 @@
   supervisors: job-supervisors-sr
   weight: 170
   displayWeight: 55 # Second from the top
-  canBeAntag: false
   access:
   - Maintenance
   - External # Frontier
   - Service
   - Aurora # Aurora Song - Changed from Frontier to Aurora
+  - Janitor
   special:
   - !type:AddImplantSpecial
     implants: [ TrackingImplant ]

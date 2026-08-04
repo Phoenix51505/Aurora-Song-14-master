@@ -12,11 +12,11 @@ using Content.Shared._NF.Standing; // Frontier
 
 namespace Content.Shared.Standing;
 
-public sealed class StandingStateSystem : EntitySystem
+public sealed partial class StandingStateSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
 
     // If StandingCollisionLayer value is ever changed to more than one layer, the logic needs to be edited.
     public const int StandingCollisionLayer = (int) CollisionGroup.MidImpassable;
@@ -101,17 +101,6 @@ public sealed class StandingStateSystem : EntitySystem
 
         if (!standingState.Standing)
             return true;
-
-        // This is just to avoid most callers doing this manually saving boilerplate
-        // 99% of the time you'll want to drop items but in some scenarios (e.g. buckling) you don't want to.
-        // We do this BEFORE downing because something like buckle may be blocking downing but we want to drop hand items anyway
-        // and ultimately this is just to avoid boilerplate in Down callers + keep their behavior consistent.
-        if (dropHeldItems && hands != null
-            && !HasComp<PreventDropOnDownedComponent>(uid)) // Frontier
-        {
-            var ev = new DropHandItemsEvent();
-            RaiseLocalEvent(uid, ref ev, false);
-        }
 
         if (!force)
         {
@@ -245,22 +234,8 @@ public sealed class DownedEvent : EntityEventArgs, IInventoryRelayEvent
 }
 
 /// <summary>
-/// Raised after an entity falls down.
-/// </summary>
-public sealed class FellDownEvent : EntityEventArgs
-{
-    public EntityUid Uid { get; }
-
-    public FellDownEvent(EntityUid uid)
-    {
-        Uid = uid;
-    }
-}
-
-/// <summary>
-/// Raised on the entity being thrown due to the holder falling down.
+/// Raised on an inhand entity being held by an entity who is dropping items as part of an attempted state change to down.
+/// If cancelled the inhand entity will not be dropped.
 /// </summary>
 [ByRefEvent]
 public record struct FellDownThrowAttemptEvent(EntityUid Thrower, bool Cancelled = false);
-
-

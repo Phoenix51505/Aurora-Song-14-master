@@ -1,7 +1,9 @@
-<DefaultWindow
+<controls:FancyWindow
     xmlns="https://spacestation14.io"
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime"
     xmlns:ui="clr-namespace:Content.Client.Materials.UI"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     Title="{Loc 'lathe-menu-title'}"
     MinSize="550 450"
     SetSize="750 500">
@@ -20,7 +22,7 @@
                 HorizontalExpand="True"
                 SeparationOverride="5">
                 <BoxContainer Orientation="Horizontal"
-                    HorizontalExpand="True">
+                              HorizontalExpand="True">
                     <LineEdit
                         Name="SearchBar"
                         PlaceHolder="{Loc 'lathe-menu-search-designs'}"
@@ -32,15 +34,16 @@
                         StyleClasses="ButtonSquare"/>
                 </BoxContainer>
                 <BoxContainer Orientation="Vertical"
-                    MinHeight="225"
-                    VerticalExpand="True"
-                    HorizontalExpand="True"
-                    SizeFlagsStretchRatio="4">
+                              MinHeight="225"
+                              VerticalExpand="True"
+                              HorizontalExpand="True"
+                              SizeFlagsStretchRatio="4">
                     <PanelContainer VerticalExpand="True">
                         <PanelContainer.PanelOverride>
-                            <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
+                            <gfx:StyleBoxFlat BackgroundColor="#1B1B1E"/>
                         </PanelContainer.PanelOverride>
-                        <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
+                        <ScrollContainer VerticalExpand="True"
+                                HScrollEnabled="False">
                             <BoxContainer
                                 Name="RecipeList"
                                 Orientation="Vertical"
@@ -52,14 +55,18 @@
                     </PanelContainer>
                 </BoxContainer>
                 <BoxContainer Orientation="Horizontal"
-                    HorizontalExpand="True">
-                    <Label Margin="8 0 8 0" Text="{Loc 'lathe-menu-amount'}" />
+                              HorizontalExpand="True">
+                    <Label Margin="8 0 8 0"
+                            Text="{Loc 'lathe-menu-amount'}"/>
                     <LineEdit
                         Name="AmountLineEdit"
                         PlaceHolder="0"
                         Text="1"
-                        HorizontalExpand="True" />
-                    <Label Name="RecipeCount" Margin="8 0 8 0" MinWidth="90" Align="Right" />
+                        HorizontalExpand="True"/>
+                    <Label Name="RecipeCount"
+                            Margin="8 0 8 0"
+                            MinWidth="90"
+                            Align="Right"/>
                 </BoxContainer>
             </BoxContainer>
         </BoxContainer>
@@ -70,7 +77,8 @@
             VerticalExpand="True"
             HorizontalExpand="True"
             SeparationOverride="5">
-            <BoxContainer Orientation="Vertical" MinHeight="225">
+            <BoxContainer Orientation="Vertical"
+                    MinHeight="225">
                 <BoxContainer
                     Orientation="Horizontal"
                     Align="End"
@@ -82,7 +90,9 @@
                         Mode="Press">
                     </Button>
                 </BoxContainer>
-                <Label Text="{Loc 'lathe-menu-queue-title'}" Margin="5 5 5 5" HorizontalAlignment="Center"/>
+                <Label Text="{Loc 'lathe-menu-queue-title'}"
+                        Margin="5 5 5 5"
+                        HorizontalAlignment="Center"/>
                 <BoxContainer
                     Name="FabricatingContainer"
                     Orientation="Horizontal"
@@ -93,7 +103,7 @@
                         HorizontalExpand="True"
                         SizeFlagsStretchRatio="3">
                         <PanelContainer.PanelOverride>
-                            <gfx:StyleBoxFlat BackgroundColor="#408040" />
+                            <gfx:StyleBoxFlat BackgroundColor="#408040"/>
                         </PanelContainer.PanelOverride>
                         <Label
                             RectClipContent="False"
@@ -110,19 +120,22 @@
                             HorizontalAlignment="Left"
                             Margin="130 0 0 0">
                         </Label>
-                        <!-- Frontier: delete button -->
                         <Button
                             Name="DeleteFabricating"
                             Margin="0"
-                            StyleClasses="Caution"
                             Text="✖"
                             SetSize="38 32"
                             HorizontalAlignment="Right"
-                            />
-                        <!-- End Frontier: delete button -->
+                            ToolTip="{Loc 'lathe-menu-delete-fabricating-tooltip'}">
+                            <Button.StyleClasses>
+                                <system:String>Caution</system:String>
+                                <system:String>OpenLeft</system:String>
+                            </Button.StyleClasses>
+                        </Button>
                     </PanelContainer>
                 </BoxContainer>
-                <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
+                <ScrollContainer VerticalExpand="True"
+                        HScrollEnabled="False">
                     <BoxContainer
                         Name="QueueList"
                         Orientation="Vertical"
@@ -133,24 +146,33 @@
                 </ScrollContainer>
             </BoxContainer>
             <BoxContainer
-            VerticalExpand="True"
-            HorizontalExpand="True"
-            Orientation="Vertical">
-            <Label Text="{Loc 'lathe-menu-materials-title'}" Margin="5 5 5 5" HorizontalAlignment="Center"/>
-            <PanelContainer VerticalExpand="True">
-                <PanelContainer.PanelOverride>
-                    <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
-                </PanelContainer.PanelOverride>
-                <BoxContainer
-                    Orientation="Vertical"
-                    VerticalExpand="True"
-                    HorizontalExpand="True">
-                    <ui:MaterialStorageControl Name="MaterialsList" SizeFlagsStretchRatio="8"/>
-                </BoxContainer>
-            </PanelContainer>
-        </BoxContainer>
+                VerticalExpand="True"
+                HorizontalExpand="True"
+                Orientation="Vertical">
+                <Label Text="{Loc 'lathe-menu-materials-title'}"
+                        Margin="5 5 5 5"
+                        HorizontalAlignment="Center"/>
+                <PanelContainer VerticalExpand="True">
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat BackgroundColor="#1B1B1E"/>
+                    </PanelContainer.PanelOverride>
+                    <BoxContainer
+                        Orientation="Vertical"
+                        VerticalExpand="True"
+                        HorizontalExpand="True">
+                        <!-- Coyote: Biomass buffer display row -->
+                    <BoxContainer Name="BufferContainer" Orientation="Horizontal" Margin="5">
+                        <Label Text="Biomass Buffer: " />
+                        <Label Name="BufferLabel" Text="0" HorizontalAlignment="Right" />
+                    </BoxContainer>
+                    <!-- End Coyote-->
+                    <ui:MaterialStorageControl Name="MaterialsList"
+                                SizeFlagsStretchRatio="8"/>
+                    </BoxContainer>
+                </PanelContainer>
+            </BoxContainer>
         </BoxContainer>
 
     </BoxContainer>
 
-</DefaultWindow>
+</controls:FancyWindow>

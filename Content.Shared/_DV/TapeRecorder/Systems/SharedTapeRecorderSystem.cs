@@ -8,6 +8,8 @@ using Content.Shared.Labels.Components;
 using Content.Shared.Toggleable;
 using Content.Shared.UserInterface;
 using Content.Shared.Whitelist;
+using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Events;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
@@ -15,19 +17,20 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
+using Content.Shared.Damage.Systems;
 
 namespace Content.Shared._DV.TapeRecorder.Systems;
 
-public abstract class SharedTapeRecorderSystem : EntitySystem
+public abstract partial class SharedTapeRecorderSystem : EntitySystem
 {
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
-    [Dependency] protected readonly IGameTiming Timing = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] protected readonly SharedAudioSystem Audio = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly ItemSlotsSystem _slots = default!;
-    [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
+    [Dependency] protected IGameTiming Timing = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] protected SharedAudioSystem Audio = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private ItemSlotsSystem _slots = default!;
+    [Dependency] private SharedUserInterfaceSystem _ui = default!;
 
     protected const string SlotName = "cassette_tape";
 
@@ -41,6 +44,7 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
         SubscribeLocalEvent<TapeRecorderComponent, ExaminedEvent>(OnRecorderExamined);
         SubscribeLocalEvent<TapeRecorderComponent, ChangeModeTapeRecorderMessage>(OnChangeModeMessage);
         SubscribeLocalEvent<TapeRecorderComponent, AfterActivatableUIOpenEvent>(OnUIOpened);
+        SubscribeLocalEvent<TapeRecorderComponent, SignalReceivedEvent>(OnSignalReceived);
 
         SubscribeLocalEvent<TapeCassetteComponent, ExaminedEvent>(OnTapeExamined);
         SubscribeLocalEvent<TapeCassetteComponent, DamageChangedEvent>(OnDamagedChanged);
@@ -408,6 +412,26 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
             cooldown);
 
         _ui.SetUiState(uid, TapeRecorderUIKey.Key, state);
+    }
+
+    private void OnSignalReceived(Entity<TapeRecorderComponent> ent, ref SignalReceivedEvent args)
+    {
+        if (args.Port == ent.Comp.PausePort)
+        {
+            SetMode(ent, TapeRecorderMode.Stopped);
+        }
+        else if (args.Port == ent.Comp.RecordPort)
+        {
+            SetMode(ent, TapeRecorderMode.Recording);
+        }
+        else if (args.Port == ent.Comp.PlaybackPort)
+        {
+            SetMode(ent, TapeRecorderMode.Playing);
+        }
+        else if (args.Port == ent.Comp.RewindPort)
+        {
+            SetMode(ent, TapeRecorderMode.Rewinding);
+        }
     }
 }
 

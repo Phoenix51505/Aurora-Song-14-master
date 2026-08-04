@@ -56,6 +56,11 @@
   - type: TechnologyDatabase
   - type: MaterialStorageMagnetPickup # Frontier
     range: 0.30 # Frontier
+  - type: ApcPowerReceiver
+    powerLoad: 150
+  - type: PowerState
+    idlePowerDraw: 150
+    workingPowerDraw: 1000
 
 # a lathe that can be sped up with space lube / slowed down with glue
 - type: entity
@@ -68,16 +73,20 @@
     modifiers:
       SpaceLube: 0.5 # Frontier: 0.25<0.5 (we double dip on time with lube and machine parts)
       SpaceGlue: 5
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      lube:
-        maxVol: 250
+    - SolutionLatheLube
   - type: Spillable
     solution: lube
   - type: RefillableSolution
     solution: lube
   - type: ExaminableSolution
     solution: lube
+
+- type: entity
+  parent: [SolutionLube, SolutionLarge]
+  id: SolutionLatheLube # Its own prototype since some lathes might interface with solutions in other ways
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   abstract: true
@@ -114,7 +123,7 @@
   - type: Machine
     board: AutolatheMachineCircuitboard
   - type: MaterialStorage
-    whitelist:
+    whitelist: &StandardMaterialWhitelist
       tags:
         - Sheet
         - RawMaterial
@@ -154,9 +163,11 @@
     - ASBlueMagentaColorFlashlights # Aurora
     - SexAS # Aurora
     - ASBlueMagentaLights # Aurora
+    - ConsentProjectors # Aurora
   - type: EmagLatheRecipes
     emagStaticPacks:
     - NfsdAmmoStatic # Frontier: SecurityAmmoStatic<NfsdAmmoStatic
+#    - SyndicateAmmoStatic # Aurora's Song - Disable extras
   - type: BlueprintReceiver
     whitelist:
       tags:
@@ -205,11 +216,7 @@
   - type: Machine
     board: ProtolatheMachineCircuitboard
   - type: MaterialStorage
-    whitelist:
-      tags:
-        - Sheet
-        - RawMaterial
-        - Ingot
+    whitelist: *StandardMaterialWhitelist
   - type: OreSiloClient
   - type: Lathe
     idleState: icon
@@ -219,6 +226,7 @@
     staticPacks:
     - NFChemistryBasicStatic # Frontier
     - NFSurgeryBasicStatic # Frontier
+    - ImpProtoStatic # Impstation
     dynamicPacks:
     - AdvancedTools
     - ScienceEquipment
@@ -233,7 +241,6 @@
     - Janitor
     - Instruments
     - Equipment
-    - FauxTiles
     - NFMedical # Frontier
     - NFEngineering # Frontier
     - NFHardsuits # Frontier
@@ -300,7 +307,6 @@
     - CargoBoardsStatic
     - MedicalBoardsStatic
     - EngineeringBoardsStatic
-    - CircuitFloorsStatic
     - NFScienceBoardsStatic # Frontier
     - NFServiceBoardsStatic # Frontier
     - NFSalvageBoardsStatic # Frontier
@@ -321,11 +327,7 @@
     emagDynamicPacks: [] # Frontier: empty list
     # - SecurityBoards # Frontier
   - type: MaterialStorage
-    whitelist:
-      tags:
-        - Sheet
-        - RawMaterial
-        - Ingot
+    whitelist: *StandardMaterialWhitelist
   - type: OreSiloClient
   - type: RequireProjectileTarget
 
@@ -371,11 +373,7 @@
     - MechParts
     - MechEquipment
   - type: MaterialStorage
-    whitelist:
-      tags:
-      - Sheet
-      - RawMaterial
-      - Ingot
+    whitelist: *StandardMaterialWhitelist
   - type: OreSiloClient
   - type: GuideHelp
     guides:
@@ -447,6 +445,8 @@
   - type: Lathe
     idleState: icon
     runningState: icon
+    unlitIdleState: unlit
+    unlitRunningState: unlit-building
     staticPacks:
     - SecurityEquipmentStatic
     - NfsdPracticeStatic # Frontier: SecurityPracticeStatic<NfsdPracticeStatic
@@ -461,12 +461,12 @@
     # - SecurityAmmo # Frontier
     # - SecurityWeapons # Frontier
     # - SecurityDisablers # Frontier
+    # Aurora's Song - Disable extra emag recipies
+#  - type: EmagLatheRecipes
+#    emagStaticPacks:
+#    - SyndicateAmmoStatic
   - type: MaterialStorage
-    whitelist:
-      tags:
-        - Sheet
-        - RawMaterial
-        - Ingot
+    whitelist: *StandardMaterialWhitelist
   - type: OreSiloClient
   # - type: LatheAnnouncing # Frontier: spammy
   #   channels: [Security] # Frontier
@@ -496,16 +496,18 @@
     - type: Lathe
       idleState: icon
       runningState: icon
+      unlitIdleState: unlit
+      unlitRunningState: unlit-building
       staticPacks:
       - SLEAmmoStatic # Frontier: SecurityAmmoStatic<NfsdAmmoStatic, Aurora's Song - NFSD to SLE
       - NFMercenaryMagazineStatic
       - NFPaperAndPaperAccessories # Aurora's Song - for paper and cardboard
+    # Aurora's Song - Disable extra emag recipies
+#    - type: EmagLatheRecipes
+#      emagStaticPacks:
+#      - SyndicateAmmoStatic
     - type: MaterialStorage
-      whitelist:
-        tags:
-          - Sheet
-          - RawMaterial
-          - Ingot
+      whitelist: *StandardMaterialWhitelist
     - type: OreSiloClient
     - type: EmagLatheRecipes
       emagStaticPacks:
@@ -539,6 +541,8 @@
   - type: Lathe
     idleState: icon
     runningState: icon
+    unlitIdleState: unlit
+    unlitRunningState: unlit-building
     staticPacks:
     #- TopicalsStatic # Frontier
     #- ChemistryStatic # Frontier
@@ -604,6 +608,7 @@
     idleState: icon
     runningState: building
     staticPacks:
+    - TowelsStatic
     - ClothingCivilian
     - ClothingCargo
     - ClothingCommand
@@ -631,12 +636,8 @@
     # - ClothingCentComm # Frontier
     - ClothingSyndie
   - type: MaterialStorage
-    whitelist:
-      tags:
-        - Sheet
-        - RawMaterial
-        - Ingot
-  - type: OreSiloClient # Frontier
+    whitelist: *StandardMaterialWhitelist
+  - type: OreSiloClient
 
 - type: entity
   id: Biogenerator
@@ -691,11 +692,15 @@
     - NFBioGenSeedsMedicalStatic # Frontier
     - NFBioGenSoil # Frontier
     - NFBioGenAnimalCubesStatic #Frontier
-  # Frontier: emag lathe recipes, item mapper
+    - ASBioGenMaterialsStatic # Aurora's Song
+    - ASBioGenAnimalCubesStatic # Aurora's Song
+    - ASBioGenSeedsStatic # Aurora's Song
   - type: EmagLatheRecipes
     emagStaticPacks:
+    - BioGenEmagStatic
     - HostileCubesStatic
-    - NFBioGenIngredientsDangerous
+    - NFBioGenIngredientsDangerous # Frontier
+  # Frontier: item mapper
   - type: ItemMapper
     mapLayers:
       beaker:
@@ -704,7 +709,14 @@
     - beaker_slot
     spriteLayers:
     - beaker
-  # End Frontier: emag lathe recipes, item mapper
+  # End Frontier: item mapper
+  # Coyote Start: Biogenerator Buffer System
+  - type: BiogeneratorBuffer
+    current: 0
+    max: 200
+    regenAmount: 5
+    regenInterval: 15 # Wayfarer: 10<15
+  # End Coyote
 
 - type: entity
   parent: BaseLathe
@@ -802,8 +814,6 @@
   name: cutter machine
   description: This is a cutter. It cuts. Add variety to your station floor with eye-pleasing patterns! Don't stick your fingers in.
   components:
-  - type: Transform
-    noRot: false
   - type: Sprite
     sprite: Structures/Machines/cuttermachine.rsi
     snapCardinals: true
@@ -822,24 +832,38 @@
     idleState: icon
     runningState: building
     staticPacks:
-    - FloorTilesStatic
+    - FloorDarkTilesStatic
+    - FloorSteelTilesStatic
+    - FloorWhiteTilesStatic
+    - FloorMaintsTilesStatic
+    - FloorIndustrialTilesStatic
+    - FloorWoodTilesStatic
+    - FloorConcreteTilesStatic
+    - CircuitFloorsStatic
+    - FloorMarbleTilesStatic
+    - FloorShuttleTilesStatic
+    - PlasticTilesStatic
+    - CarpetTilesStatic
+    - PreciousTilesStatic
     - Carpets # Frontier
-    - CircuitFloorsStatic # Frontier
     - NFFloorsMiscStatic # Frontier
     - NFFloorTiles # Frontier
     - NFFloorTilesCarpet # Frontier
-    dynamicPacks: # Frontier
-    - FauxTiles # Frontier
+    - CorvaxWoodTiles # Aurora's Song
+    - XenoTiles # Aurora's Song
+    - N14Tiles # Aurora's Song
+    dynamicPacks:
+    - FauxTiles
   - type: EmagLatheRecipes # Frontier
     emagStaticPacks: # Frontier
     - NFFloorTilesStrange # Frontier
   - type: MaterialStorage
     whitelist:
-      tags:
+      tags: # Frontier
         - Sheet
         - Metal
         - Wooden
         - RawMaterial
         - Plastic
-        - Ingot # Frontier
-  - type: OreSiloClient # Frontier
+        - Ingot
+  - type: OreSiloClient

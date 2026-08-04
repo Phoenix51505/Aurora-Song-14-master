@@ -9,9 +9,9 @@ using Content.Shared.Storage;
 
 namespace Content.Server._DV.Storage.EntitySystems;
 
-public sealed class MouthStorageSystem : SharedMouthStorageSystem
+public sealed partial class MouthStorageSystem : SharedMouthStorageSystem
 {
-    [Dependency] private readonly ReplacementAccentSystem _replacement = default!;
+    [Dependency] private ReplacementAccentSystem _replacement = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -38,6 +38,6 @@ public sealed class MouthStorageSystem : SharedMouthStorageSystem
 
         var firstItem = storage.Container.ContainedEntities[0];
         args.Blocker = firstItem;
-        args.Cancel();
+        args.Cancelled = true; // Aurora's Song - Replace with Cancelled
     }
 }

@@ -1,0 +1,22 @@
+﻿- type: entity
+  id: ASBaseCartridgeRifle30Long
+  name: cartridge (.30 Long rifle)
+  parent: CartridgeAntiMateriel
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+    - Cartridge
+    - ASCartridgeRifle30Long
+
+- type: entity
+  id: ASCartridgeRifle30Long
+  name: cartridge (.30 Long rifle)
+  parent: ASBaseCartridgeRifle30Long
+  components:
+  - type: CartridgeAmmo
+    proto: ASBulletRifle30Long
+  - type: Sprite
+    layers: # TODO: add tip
+    - state: base
+      map: [ "enum.AmmoVisualLayers.Base" ]

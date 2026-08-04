@@ -1,113 +1,101 @@
 - type: entity
   name: reinforced jug
-  parent: Jug
+  parent: [SolutionHuge, Jug] # Aurora's Song - Convert to solution
   id: ReinforcedJug
   description: The sterile plastic of this jug has been reinforced with a metallic shell allowing it to contain an impressive amount of liquid.
   components:
-    - type: SolutionContainerVisuals
-      inHandsMaxFillLevels: 4
-    - type: SolutionContainerManager
-      solutions:
-        beaker:
-          maxVol: 400
-    - type: Sprite
-      sprite: _NF/Objects/Specific/Chemistry/reinforced_jug.rsi
-      layers:
-      - state: icon
-      - state: stopper
-        visible: true
-        map: ["enum.OpenableVisuals.Layer"]
-      - state: jug1
+  - type: SolutionContainerVisuals
+    inHandsMaxFillLevels: 4
+  - type: Sprite
+    sprite: _NF/Objects/Specific/Chemistry/reinforced_jug.rsi
+    layers:
+    - state: icon
+    - state: stopper
+      visible: true
+      map: ["enum.OpenableVisuals.Layer"]
+    - state: fill-1
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+      visible: false
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,3,3 # Aurora's Song - Make larger for solution refactor
+    sprite: _NF/Objects/Specific/Chemistry/reinforced_jug.rsi
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      - state: inhand-left-fill-1
         map: [ "enum.SolutionContainerLayers.Fill" ]
         visible: false
-    - type: Item
-      size: Large
-      shape:
-      - 0,0,2,2
-      sprite: _NF/Objects/Specific/Chemistry/reinforced_jug.rsi
-      inhandVisuals:
-        left:
-        - state: inhand-left
-        - state: inhand-left-fill-1
-          map: [ "enum.SolutionContainerLayers.Fill" ]
-          visible: false
-        right:
-        - state: inhand-right
-        - state: inhand-right-fill-1
-          map: [ "enum.SolutionContainerLayers.Fill" ]
-          visible: false
-    - type: Openable
-      sound:
-        collection: bottleOpenSounds
-      closeable: true
-      closeSound:
-        collection: bottleCloseSounds
-    - type: StaticPrice
-      price: 30 # Consistent with BaseBeakerMetallic
-    - type: Destructible # Hacky - takes damage, but shouldn't be destructible
-      thresholds: []
-    - type: GenericVisualizer
-      visuals:
-        enum.OpenableVisuals.Opened:
-          enum.OpenableVisuals.Layer:
-            True: { visible: false }
-            False: { visible: true }
+      right:
+      - state: inhand-right
+      - state: inhand-right-fill-1
+        map: [ "enum.SolutionContainerLayers.Fill" ]
+        visible: false
+  - type: Openable
+    sound:
+      collection: bottleOpenSounds
+    closeable: true
+    closeSound:
+      collection: bottleCloseSounds
+  - type: StaticPrice
+    price: 30 # Consistent with BaseBeakerMetallic
+  - type: Destructible # Hacky - takes damage, but shouldn't be destructible
+    thresholds: []
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: { visible: false }
+          False: { visible: true }
 
 - type: entity
   name: bluespace jug
-  parent: Jug
+  parent: [Solution1920, Jug] # Aurora's Song - Use Solution1920, 240u a tile
   id: JugBluespace
   description: Uses bluespace technology to contain an impossible amount of liquid.
   components:
-    - type: SolutionContainerManager
-      solutions:
-        beaker:
-          maxVol: 5000 # Aurora Song
-    - type: Sprite
-      sprite: _NF/Objects/Specific/Chemistry/jug_bluespace.rsi
-      layers:
-        - state: jug
-        - state: jug-unlit
-          shader: unshaded
-        - state: jug1
-          map: [ "enum.SolutionContainerLayers.Fill" ]
-          visible: false
-    - type: Item
-      sprite: _NF/Objects/Specific/Chemistry/jug_bluespace.rsi
-      inhandVisuals:
-        left:
-        - state: inhand-left
-        - state: inhand-left-unlit
-          shader: unshaded
-        - state: inhand-left-fill-1
-          map: [ "enum.SolutionContainerLayers.Fill" ]
-          visible: false
-        right:
-        - state: inhand-right
-        - state: inhand-right-unlit
-          shader: unshaded
-        - state: inhand-right-fill-1
-          map: [ "enum.SolutionContainerLayers.Fill" ]
-          visible: false
-    - type: SolutionTransfer # Aurora Song: Max transfer to 1k
-      canChangeTransferAmount: true
-      maxTransferAmount: 1000
-    - type: StaticPrice
-      price: 30 # Consistent with BaseBeakerMetallic
-    - type: Destructible # Hacky - takes damage, but shouldn't be destructible
-      thresholds: []
+  - type: Sprite
+    sprite: _NF/Objects/Specific/Chemistry/jug_bluespace.rsi
+    layers:
+      - state: jug
+      - state: jug-unlit
+        shader: unshaded
+      - state: fill-1
+        map: [ "enum.SolutionContainerLayers.Fill" ]
+        visible: false
+  - type: Item
+    sprite: _NF/Objects/Specific/Chemistry/jug_bluespace.rsi
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      - state: inhand-left-unlit
+        shader: unshaded
+      - state: inhand-left-fill-1
+        map: [ "enum.SolutionContainerLayers.Fill" ]
+        visible: false
+      right:
+      - state: inhand-right
+      - state: inhand-right-unlit
+        shader: unshaded
+      - state: inhand-right-fill-1
+        map: [ "enum.SolutionContainerLayers.Fill" ]
+        visible: false
+  - type: SolutionTransfer # Aurora Song: Max transfer to 1k
+    canChangeTransferAmount: true
+    maxTransferAmount: 1000
+  - type: StaticPrice
+    price: 30 # Consistent with BaseBeakerMetallic
+  - type: Destructible # Hacky - takes damage, but shouldn't be destructible
+    thresholds: []
 
 # Frontier: an unspillable jug for welding fuel.
 - type: entity
   name: jerry can
-  parent: BaseItem
+  parent: [SolutionBeaker, SolutionLarge, BaseItem] # Aurora's Song - Convert to solution
   id: JerryCan
   description: A plastic jerry can with a spill-proof nozzle.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        maxVol: 200
   - type: Sprite
     sprite: _NF/Objects/Specific/Chemistry/jerrycan.rsi
     layers:
@@ -138,10 +126,12 @@
     interfaces:
       enum.TransferAmountUiKey.Key:
         type: TransferAmountBoundUserInterface
-  - type: Drink
+  - type: Edible  # Aurora's Song - Convert to edible from Drink
+    edible: Drink
     solution: beaker
     delay: 1.5
     forceFeedDelay: 5
+    destroyOnEmpty: false # Aurora's Song: DO NOT EAT IT
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 5
@@ -150,7 +140,7 @@
     inHandsFillBaseName: -fill-
   - type: StaticPrice
     price: 10
-  - type: Damageable
+  - type: Injurable # Aurora's Song - Extract damageContainer to Injurable
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
@@ -169,7 +159,7 @@
           collection: MetalBreak
           params:
             volume: -4
-      - !type:SpillBehavior { }
+#      - !type:SpillBehavior { } # Aurora's Song - "Unspillable?"
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetPlastic1:
@@ -190,12 +180,11 @@
   components:
   - type: Label
     currentLabel: reagent-name-welding-fuel
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        reagents:
-        - ReagentId: WeldingFuel
-          Quantity: 200
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: WeldingFuel
+        Quantity: 240
   - type: StaticPrice
     vendPrice: 500
   - type: NFFuel
@@ -351,12 +340,11 @@
   components:
   - type: Label
     currentLabel: reagent-name-carbon
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        reagents:
-        - ReagentId: Carbon
-          Quantity: 400
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: Carbon
+        Quantity: 480
 
 - type: entity
   parent: ReinforcedJug
@@ -366,12 +354,11 @@
   components:
   - type: Label
     currentLabel: reagent-name-chlorine
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        reagents:
-        - ReagentId: Chlorine
-          Quantity: 400
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: Chlorine
+        Quantity: 480
 
 - type: entity
   parent: ReinforcedJug
@@ -381,12 +368,11 @@
   components:
   - type: Label
     currentLabel: reagent-name-ethanol
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        reagents:
-        - ReagentId: Ethanol
-          Quantity: 400
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: Ethanol
+        Quantity: 480
 
 - type: entity
   parent: ReinforcedJug
@@ -396,12 +382,11 @@
   components:
   - type: Label
     currentLabel: reagent-name-sugar
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        reagents:
-        - ReagentId: Sugar
-          Quantity: 400
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: Sugar
+        Quantity: 480
 
 - type: entity
   parent: ReinforcedJug
@@ -411,12 +396,11 @@
   components:
   - type: Label
     currentLabel: reagent-name-hydrogen
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        reagents:
-        - ReagentId: Hydrogen
-          Quantity: 400
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: Hydrogen
+        Quantity: 480
 
 - type: entity
   parent: ReinforcedJug
@@ -426,12 +410,11 @@
   components:
   - type: Label
     currentLabel: reagent-name-lithium
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        reagents:
-        - ReagentId: Lithium
-          Quantity: 400
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: Lithium
+        Quantity: 480
 
 - type: entity
   parent: ReinforcedJug
@@ -441,12 +424,11 @@
   components:
   - type: Label
     currentLabel: reagent-name-nitrogen
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        reagents:
-        - ReagentId: Nitrogen
-          Quantity: 400
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: Nitrogen
+        Quantity: 480
 
 - type: entity
   parent: ReinforcedJug
@@ -456,12 +438,11 @@
   components:
   - type: Label
     currentLabel: reagent-name-oxygen
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        reagents:
-        - ReagentId: Oxygen
-          Quantity: 400
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: Oxygen
+        Quantity: 480
 
 - type: entity
   parent: ReinforcedJug
@@ -471,12 +452,11 @@
   components:
   - type: Label
     currentLabel: reagent-name-phosphorus
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        reagents:
-        - ReagentId: Phosphorus
-          Quantity: 400
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: Phosphorus
+        Quantity: 480
 
 - type: entity
   parent: ReinforcedJug
@@ -486,12 +466,11 @@
   components:
   - type: Label
     currentLabel: reagent-name-potassium
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        reagents:
-        - ReagentId: Potassium
-          Quantity: 400
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: Potassium
+        Quantity: 480
 
 - type: entity
   parent: ReinforcedJug
@@ -501,9 +480,8 @@
   components:
   - type: Label
     currentLabel: reagent-name-silicon
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        reagents:
-        - ReagentId: Silicon
-          Quantity: 400
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: Silicon
+        Quantity: 480

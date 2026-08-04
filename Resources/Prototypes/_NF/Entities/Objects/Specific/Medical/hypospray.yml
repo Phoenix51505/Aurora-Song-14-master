@@ -1,6 +1,6 @@
 - type: entity
   name: NTCS-101 hypospray
-  parent: BaseItem
+  parent: [SolutionHyposprayTiny, BaseHypospray] # Aurora's Song - Add BaseHypospray, and SolutionHypoSprayTiny
   description: A commercial hypospray designed by Nanotrasen Chemical Supply. It has two built in safety features for the consumer market, a small chemical reservoir and an injection delay.
   id: HypoMini
   components:
@@ -14,16 +14,13 @@
       visible: false
   - type: Item
     sprite: _NF/Objects/Specific/Medical/hypomini.rsi
-  - type: SolutionContainerManager
-    solutions:
-      hypospray:
-        maxVol: 10
   - type: RefillableSolution
     solution: hypospray
-  - type: ExaminableSolution
-    solution: hypospray
-  - type: Hypospray
-    onlyAffectsMobs: false
+  # Aurora's Song - Inheritance
+#  - type: ExaminableSolution
+#    solution: hypospray
+#  - type: Hypospray
+#    onlyAffectsMobs: false
   - type: UseDelay
     delay: 2.5
   - type: StaticPrice
@@ -92,6 +89,8 @@
       - state: base-colorA-inhand-right
         color: "#666865"
       - state: base-colorB-inhand-right
+  - type: SpaceGarbage # Aurora's Song
+
 
 - type: entity
   parent: ChemicalMedipen
@@ -105,11 +104,12 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     changeColor: false
-  - type: Hypospray
-    solutionName: pen
-    onlyAffectsMobs: false
-    injectOnly: true
-    transferAmount: 15 # Explicitly redefined in case parent changes
+  # Aurora's Song - Use inheritance
+#  - type: Hypospray
+#    solutionName: pen
+#    onlyAffectsMobs: false
+#    injectOnly: true
+#    transferAmount: 15 # Explicitly redefined in case parent changes
   - type: Tag
     tags: []
 
@@ -137,17 +137,16 @@
       map: ["enum.SolutionContainerLayers.Fill"]
   - type: SolutionContainerVisuals
     emptySpriteName: hemostasispen_empty
-  - type: Hypospray
-    transferAmount: 20
-  - type: SolutionContainerManager
-    solutions:
-      pen:
-        maxVol: 20
-        reagents:
-        - ReagentId: TranexamicAcid
-          Quantity: 5
-        - ReagentId: Saline
-          Quantity: 15
+  # Aurora's Song - Use inheritance
+#  - type: Hypospray
+#    transferAmount: 20
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: TranexamicAcid
+        Quantity: 5
+      - ReagentId: Saline
+        Quantity: 15
 
 - type: entity
   name: stimulant auto-injector
@@ -174,17 +173,16 @@
       map: ["enum.SolutionContainerLayers.Fill"]
   - type: SolutionContainerVisuals
     emptySpriteName: stimulantpen_empty
-  - type: Hypospray
-    transferAmount: 20
-  - type: SolutionContainerManager
-    solutions:
-      pen:
-        maxVol: 20
-        reagents:
-        - ReagentId: Desoxyephedrine
-          Quantity: 10
-        - ReagentId: Dylovene
-          Quantity: 10
+  # Aurora's Song - Use inheritance
+#  - type: Hypospray
+#    transferAmount: 20
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: Desoxyephedrine
+        Quantity: 10
+      - ReagentId: Dylovene
+        Quantity: 10
 
 - type: entity
   name: crisis auto-injector
@@ -211,17 +209,16 @@
       map: ["enum.SolutionContainerLayers.Fill"]
   - type: SolutionContainerVisuals
     emptySpriteName: crisispen_empty
-  - type: Hypospray
-    transferAmount: 20
-  - type: SolutionContainerManager
-    solutions:
-      pen:
-        maxVol: 20
-        reagents:
-        - ReagentId: Inaprovaline
-          Quantity: 10
-        - ReagentId: DexalinPlus
-          Quantity: 10
+  # Aurora's Song - Use inheritance
+#  - type: Hypospray
+#    transferAmount: 20
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: Inaprovaline
+        Quantity: 10
+      - ReagentId: DexalinPlus
+        Quantity: 10
 
 - type: entity
   name: ephedrine auto-injector
@@ -248,15 +245,14 @@
       map: ["enum.SolutionContainerLayers.Fill"]
   - type: SolutionContainerVisuals
     emptySpriteName: ephedrinepen_empty
-  - type: Hypospray
-    transferAmount: 10
-  - type: SolutionContainerManager
-    solutions:
-      pen:
-        maxVol: 10
-        reagents:
-        - ReagentId: Ephedrine
-          Quantity: 10
+  # Aurora's Song - Use inheritance
+#  - type: Hypospray
+#    transferAmount: 10
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: Ephedrine
+        Quantity: 10
 
 - type: entity
   name: lacerinol auto-injector
@@ -283,15 +279,13 @@
       map: ["enum.SolutionContainerLayers.Fill"]
   - type: SolutionContainerVisuals
     emptySpriteName: lacerpen_empty
-  - type: SolutionContainerManager
-    solutions:
-      pen:
-        maxVol: 15
-        reagents:
-        - ReagentId: Lacerinol
-          Quantity: 10
-        - ReagentId: TranexamicAcid
-          Quantity: 5
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: Lacerinol
+        Quantity: 10
+      - ReagentId: TranexamicAcid
+        Quantity: 5
 
 - type: entity
   name: bruizine auto-injector
@@ -318,15 +312,13 @@
       map: ["enum.SolutionContainerLayers.Fill"]
   - type: SolutionContainerVisuals
     emptySpriteName: bruizpen_empty
-  - type: SolutionContainerManager
-    solutions:
-      pen:
-        maxVol: 15
-        reagents:
-        - ReagentId: Bruizine
-          Quantity: 10
-        - ReagentId: TranexamicAcid
-          Quantity: 5
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: Bruizine
+        Quantity: 10
+      - ReagentId: TranexamicAcid
+        Quantity: 5
 
 - type: entity
   name: polypyrylium oligomers auto-injector
@@ -353,13 +345,11 @@
       map: ["enum.SolutionContainerLayers.Fill"]
   - type: SolutionContainerVisuals
     emptySpriteName: polypen_empty
-  - type: SolutionContainerManager
-    solutions:
-      pen:
-        maxVol: 15
-        reagents:
-        - ReagentId: PolypyryliumOligomers
-          Quantity: 15
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: PolypyryliumOligomers
+        Quantity: 15
 
 - type: entity
   name: barkeeper's friend auto-injector
@@ -386,22 +376,21 @@
       map: ["enum.SolutionContainerLayers.Fill"]
   - type: SolutionContainerVisuals
     emptySpriteName: barkeepersfriend_empty
-  - type: Hypospray
-    transferAmount: 20
-  - type: SolutionContainerManager
-    solutions:
-      pen:
-        maxVol: 20
-        reagents:
-        - ReagentId: Ethylredoxrazine
-          Quantity: 15
-        - ReagentId: Dylovene
-          Quantity: 5
+  # Aurora's Song - Use inheritance
+#  - type: Hypospray
+#    transferAmount: 20
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: Ethylredoxrazine
+        Quantity: 15
+      - ReagentId: Dylovene
+        Quantity: 5
   - type: StaticPrice #to sell in the booze-o-mat
     price: 225
 
 - type: entity
-  parent: BaseItem
+  parent: [SolutionHypospray, SolutionToolSmall, BaseItem, BaseHypospray] # Aurora's Song - Add BaseHypospray # Aurora's Song - Convert to solution
   id: BorgHypoNoRefill
   abstract: true
   components:
@@ -415,15 +404,15 @@
       map: [ enum.SolutionContainerLayers.Fill ]
   - type: Item
     sprite: Objects/Specific/Medical/hypospray.rsi
-  - type: SolutionContainerManager
-    solutions:
-      hypospray:
-        maxVol: 30
   - type: ExaminableSolution
     solution: hypospray
-  - type: Hypospray
-    onlyAffectsMobs: false
-    injectOnly: true
+  - type: Injector # Aurora's Song - Make inject only
+    allowedModes:
+    - HyposprayInjectMode
+  # Aurora's Song - Use inheritance
+#  - type: Hypospray
+#    onlyAffectsMobs: false
+#    injectOnly: true
   - type: UseDelay
     delay: 0.5
   - type: Appearance
@@ -445,8 +434,7 @@
     - state: fill-1
       visible: false
       map: [ enum.SolutionContainerLayers.Fill ]
-  - type: SolutionRegeneration
-    solution: hypospray
+  - type: SolutionRegeneration # Aurora's Song - Removed solution property
     generated:
       reagents:
       - ReagentId: Tricordrazine
@@ -467,8 +455,7 @@
     - state: fill-1
       visible: false
       map: [ enum.SolutionContainerLayers.Fill ]
-  - type: SolutionRegeneration
-    solution: hypospray
+  - type: SolutionRegeneration # Aurora's Song - Removed solution property
     generated:
       reagents:
       - ReagentId: Inaprovaline

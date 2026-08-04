@@ -55,16 +55,19 @@
   id: MobRogueSiliconBase
   components:
   - type: Damageable
-    damageContainer: Silicon
     damageModifierSet: MobRogueSiliconDamageModifierSet
+  - type: Injurable # Aurora's Song - Extract damageContainer to Injurable
+    damageContainer: Silicon
   - type: NpcFactionMember
     factions:
     - SiliconsExpeditionNF
   - type: NameIdentifier
     group: Silicon
   - type: Bloodstream
-    bloodReagent: WeldingFuel
-    bloodMaxVolume: 60
+    bloodReferenceSolution: # Aurora's Song - Update bloodstream yml
+      reagents:
+      - ReagentId: WeldingFuel
+        Quantity: 60
   - type: MobState
     allowedStates:
     - Alive
@@ -97,7 +100,6 @@
     doAfterDelay: 10
     allowSelfRepair: true
   - type: BatterySelfRecharger
-    autoRecharge: true
     autoRechargeRate: 100
   - type: Battery
     maxCharge: 300
@@ -193,7 +195,7 @@
   id: MobRogueSiliconProjectileBatteryAmmo
   abstract: true
   components:
-  - type: ProjectileBatteryAmmoProvider
+  - type: BatteryAmmoProvider # Aurora's Song - ProjectileBatteryAmmoProvider>BatteryAmmoProvider
     proto: NFBulletLaserLow
     fireCost: 100
 
@@ -201,7 +203,7 @@
   id: MobRogueSiliconHitscanBatteryAmmo
   abstract: true
   components:
-  - type: HitscanBatteryAmmoProvider
+  - type: BatteryAmmoProvider # Aurora's Song - HitscanBatteryAmmoProvider>BatteryAmmoProvider
     proto: NFRedLightLaser
     fireCost: 100
 
@@ -233,8 +235,10 @@
     defaultRotation: 90
     horizontalRotation: 90
   - type: Bloodstream
-    bloodReagent: WeldingFuel
-    bloodMaxVolume: 6
+    bloodReferenceSolution: # Aurora's Song - Update bloodstream yml
+      reagents:
+      - ReagentId: WeldingFuel
+        Quantity: 6
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -460,7 +464,7 @@
   id: MobRogueSiliconScrapThrustersRanged
   categories: [ HideSpawnMenu ]
   components:
-  - type: HitscanBatteryAmmoProvider
+  - type: BatteryAmmoProvider # Aurora's Song - HitscanBatteryAmmoProvider>BatteryAmmoProvider
     proto: NFRedLightLaser
     fireCost: 100
   - type: Gun
@@ -586,7 +590,7 @@
       state: base_eyes
       shader: unshaded
       color: "#0055cc"
-  - type: ProjectileBatteryAmmoProvider
+  - type: BatteryAmmoProvider # Aurora's Song - ProjectileBatteryAmmoProvider>BatteryAmmoProvider
     proto: NFBulletDisablerLow
     fireCost: 100
 
@@ -612,7 +616,7 @@
       state: base_eyes
       shader: unshaded
       color: "#ffff00"
-  - type: ProjectileBatteryAmmoProvider
+  - type: BatteryAmmoProvider # Aurora's Song - ProjectileBatteryAmmoProvider>BatteryAmmoProvider
     proto: NFBulletKineticLowPower
     fireCost: 100
 
@@ -877,14 +881,13 @@
     availableModes:
     - FullAuto
     soundGunshot: /Audio/Weapons/Guns/Gunshots/rpgfire.ogg
-  - type: ProjectileBatteryAmmoProvider
+  - type: BatteryAmmoProvider # Aurora's Song - ProjectileBatteryAmmoProvider>BatteryAmmoProvider
     proto: SpawnMobViscerator
     fireCost: 100
   - type: Battery
     maxCharge: 100
     startingCharge: 100
   - type: BatterySelfRecharger
-    autoRecharge: true
     autoRechargeRate: 5
 
 #region Tier 3
@@ -930,11 +933,10 @@
     speedModifierThresholds:
       54: 0.7
       70: 0.5
-  - type: ProjectileBatteryAmmoProvider
+  - type: BatteryAmmoProvider # Aurora's Song - ProjectileBatteryAmmoProvider>BatteryAmmoProvider
     proto: NFTeslaGunBullet
     fireCost: 100
   - type: BatterySelfRecharger
-    autoRecharge: true
     autoRechargeRate: 30
   - type: Battery
     maxCharge: 300
@@ -1006,7 +1008,7 @@
     speedModifierThresholds:
       96: 0.7
       130: 0.5
-  - type: HitscanBatteryAmmoProvider
+  - type: BatteryAmmoProvider # Aurora's Song - HitscanBatteryAmmoProvider>BatteryAmmoProvider
     proto: NFRedLaserPractice
     fireCost: 10
   - type: Gun
@@ -1339,7 +1341,7 @@
   - type: Loadout
     prototypes:
     - MobRogueSiliconLootT1
-  - type: HitscanBatteryAmmoProvider
+  - type: BatteryAmmoProvider # Aurora's Song - HitscanBatteryAmmoProvider>BatteryAmmoProvider
     proto: NFRedLightLaser
     fireCost: 100
   - type: Gun

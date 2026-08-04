@@ -4,8 +4,8 @@ meta:
   engineVersion: 267.4.0
   forkId: ""
   forkVersion: ""
-  time: 03/09/2026 09:56:45
-  entityCount: 731
+  time: 04/10/2026 19:47:26
+  entityCount: 733
 maps: []
 grids:
 - 1
@@ -54,7 +54,7 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: petrel
+      name: Petrel
     - type: Transform
       pos: -0.47916666,-0.46351686
       parent: invalid
@@ -659,7 +659,7 @@ entities:
     - type: GasTileOverlay
     - type: RadiationGridResistance
     - type: BecomesStation
-      id: petrel
+      id: Petrel
     - type: NavMap
 - proto: AirAlarm
   entities:
@@ -1056,12 +1056,19 @@ entities:
     - type: Transform
       pos: -0.5,7.5
       parent: 1
-- proto: ASPosterAuroraSector
+- proto: ASPosterLegitAuroraSector
   entities:
   - uid: 598
     components:
     - type: Transform
       pos: -0.5,11.5
+      parent: 1
+- proto: ASSpawnerRandomPosterCNS
+  entities:
+  - uid: 484
+    components:
+    - type: Transform
+      pos: -1.5,10.5
       parent: 1
 - proto: AtmosDeviceFanDirectional
   entities:
@@ -1909,6 +1916,16 @@ entities:
     components:
     - type: Transform
       pos: -5.5,7.5
+      parent: 1
+  - uid: 732
+    components:
+    - type: Transform
+      pos: -5.5,8.5
+      parent: 1
+  - uid: 733
+    components:
+    - type: Transform
+      pos: 7.5,8.5
       parent: 1
 - proto: CableHV
   entities:
@@ -4205,11 +4222,6 @@ entities:
     components:
     - type: Transform
       pos: 8.5,5.5
-      parent: 1
-  - uid: 484
-    components:
-    - type: Transform
-      pos: -1.5,10.5
       parent: 1
   - uid: 592
     components:

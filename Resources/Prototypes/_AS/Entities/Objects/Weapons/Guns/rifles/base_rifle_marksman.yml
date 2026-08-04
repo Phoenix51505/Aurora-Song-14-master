@@ -61,3 +61,45 @@
         startingItem: NFCartridgeRifle30Overpressure
         priority: 1
         whitelist: *chamber30Whitelist
+
+- type: entity
+  id: ASBaseWeaponRifleEnblocChamber30Long
+  parent: NFBaseWeaponRifleAssaultChamber30
+  abstract: true
+  components:
+  - type: Gun
+    examineCaliber: gun-examine-caliber-30-long
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: ASMagazineEnblocRifle30Long
+        insertSound: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+          - ASMagazineEnblocRifle30Long
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: ASCartridgeRifle30Long
+        priority: 1
+        whitelist:
+          tags:
+          - ASCartridgeRifle30Long
+
+- type: entity
+  id: ASBaseWeaponRifleChamber30Long # Currently unused, but any 30Long rifle that doesn't use a magazine (enbloc or otherwise) can use this chamber component
+  parent: NFBaseWeaponRifleChamber
+  abstract: true
+  components:
+  - type: Gun
+    examineCaliber: gun-examine-caliber-30-long
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/rifle2.ogg
+  - type: BallisticAmmoProvider
+    proto: ASCartridgeRifle30Long
+    whitelist:
+      tags:
+      - ASCartridgeRifle30Long

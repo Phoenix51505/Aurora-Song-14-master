@@ -4,14 +4,13 @@
   name: astrotame jug
   description: The sweetness of a thousand sugars but none of the calories. Put it in your coffee.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 150
-        reagents:
-        - ReagentId: Astrotame
-          Quantity: 150
-  - type: Drink
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: Astrotame
+        Quantity: 120
+  - type: Edible  # Aurora's Song - Convert to edible from Drink
+    edible: Drink
   - type: Label
     currentLabel: reagent-name-astrotame
 
@@ -21,14 +20,13 @@
   name: bbq sauce jug
   description: Finally, ketchup for grownups.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 150
-        reagents:
-        - ReagentId: BbqSauce
-          Quantity: 150
-  - type: Drink
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: BbqSauce
+        Quantity: 120
+  - type: Edible  # Aurora's Song - Convert to edible from Drink
+    edible: Drink
   - type: Label
     currentLabel: reagent-name-bbq-sauce
 
@@ -38,14 +36,13 @@
   name: coldsauce jug
   description: Something to make every meal a little cooler.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 150
-        reagents:
-        - ReagentId: Coldsauce
-          Quantity: 150
-  - type: Drink
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: Coldsauce
+        Quantity: 120
+  - type: Edible  # Aurora's Song - Convert to edible from Drink
+    edible: Drink
   - type: Label
     currentLabel: reagent-name-coldsauce
 
@@ -55,14 +52,13 @@
   name: horseradish sauce jug
   description: Now with 50% more horse.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 150
-        reagents:
-        - ReagentId: HorseradishSauce
-          Quantity: 150
-  - type: Drink
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: HorseradishSauce
+        Quantity: 120
+  - type: Edible  # Aurora's Song - Convert to edible from Drink
+    edible: Drink
   - type: Label
     currentLabel: reagent-name-horseradish-sauce
 
@@ -72,14 +68,13 @@
   name: hotsauce jug
   description: The antithesis of no more tears shampoo.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 150
-        reagents:
-        - ReagentId: Hotsauce
-          Quantity: 150
-  - type: Drink
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: Hotsauce
+        Quantity: 120
+  - type: Edible  # Aurora's Song - Convert to edible from Drink
+    edible: Drink
   - type: Label
     currentLabel: reagent-name-hotsauce
 
@@ -89,14 +84,13 @@
   name: ketchup jug
   description: Someone filled a tomato with sugar until it burst. Delicious.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 150
-        reagents:
-        - ReagentId: Ketchup
-          Quantity: 150
-  - type: Drink
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: Ketchup
+        Quantity: 120
+  - type: Edible  # Aurora's Song - Convert to edible from Drink
+    edible: Drink
   - type: Label
     currentLabel: reagent-name-ketchup
 
@@ -106,14 +100,13 @@
   name: mustard jug
   description: All of the implications of real mustard with none of the flavor.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 150
-        reagents:
-        - ReagentId: Mustard
-          Quantity: 150
-  - type: Drink
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: Mustard
+        Quantity: 120
+  - type: Edible  # Aurora's Song - Convert to edible from Drink
+    edible: Drink
   - type: Label
     currentLabel: reagent-name-mustard
 
@@ -123,14 +116,13 @@
   name: soy sauce jug
   description: You can only dream of putting some of this on a bowl of rice.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 150
-        reagents:
-        - ReagentId: Soysauce
-          Quantity: 150
-  - type: Drink
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: Soysauce
+        Quantity: 120
+  - type: Edible  # Aurora's Song - Convert to edible from Drink
+    edible: Drink
   - type: Label
     currentLabel: reagent-name-soysauce
 
@@ -140,14 +132,13 @@
   name: mayonnaise jug
   description: When this jug is emptied it will fall to you to fill it. Will you have the strength. Will you have the resolve.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 150
-        reagents:
-        - ReagentId: Mayo
-          Quantity: 150
-  - type: Drink
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: Mayo
+        Quantity: 120
+  - type: Edible  # Aurora's Song - Convert to edible from Drink
+    edible: Drink
   - type: Label
     currentLabel: reagent-name-mayo
 
@@ -159,14 +150,13 @@
   suffix: For Drinks, Full
   description: A small portion of galaxythistle-derived sweetener. 5u in a coffee cup will prevent poisoning in animals!
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 150
-        reagents:
-        - ReagentId: Caramexinin
-          Quantity: 80
-  - type: Drink
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: Caramexinin
+        Quantity: 120
+  - type: Edible  # Aurora's Song - Convert to edible from Drink
+    edible: Drink
   - type: Label
     currentLabel: reagent-name-caramexinin
 
@@ -177,31 +167,13 @@
   suffix: For Drinks, Full
   description: A jug of cocoa powder.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 150
-        reagents:
-        - ReagentId: CocoaPowder
-          Quantity: 150
-  - type: Drink
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: CocoaPowder
+        Quantity: 120
+  - type: Edible  # Aurora's Song - Convert to edible from Drink
+    edible: Drink
   - type: Label
     currentLabel: reagent-name-cocoapowder
 
-- type: entity
-  parent: DrinkBottlePlasticBaseFull
-  id: JugWater
-  name: water powder jug
-  suffix: For Drinks, Full
-  description: A jug of water. Also probably microplastics.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 300
-        reagents:
-        - ReagentId: Water
-          Quantity: 300
-  - type: Drink
-  - type: Label
-    currentLabel: reagent-name-water

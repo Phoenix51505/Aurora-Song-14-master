@@ -1,0 +1,39 @@
+﻿- type: entity
+  id: ASBluespaceNanoTrasenCrash
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-bluespace-generic-ftl-start-announcement
+    startAudio:
+      path: /Audio/Misc/notice1.ogg
+    warningAnnouncement: station-event-bluespace-generic-ftl-warning-announcement
+    endAnnouncement: station-event-bluespace-generic-ftl-end-announcement
+    earliestStart: 80
+    minimumPlayers: 15
+    weight: 1
+    duration: 1800
+    maxDuration: 2400
+    reoccurrenceDelay: 360 #6 hours
+  - type: BluespaceErrorRule
+    groups:
+      grid: !type:GridSpawnGroup
+        nameLoc:
+        - station-event-bluespace-name-UnidentifiedVessel
+        minCount: 2
+        maxCount: 4
+        minimumDistance: 1500
+        maximumDistance: 2500
+        addComponents:
+        - type: Gravity
+          enabled: true
+          inherent: true
+        - type: IFF
+          color: "#E10F9B"
+        - type: LinkedLifecycleGridParent
+        - type: ProtectedGrid
+          preventArtifactTriggers: true
+        - type: PreventPilot
+        - type: DeletionCensusExempt
+        - type: ForceAnchor
+        paths:
+        - /Maps/_AS/Bluespace/NTMaul.yml

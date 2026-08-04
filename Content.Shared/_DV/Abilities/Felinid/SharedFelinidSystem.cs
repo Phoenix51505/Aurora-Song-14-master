@@ -10,19 +10,19 @@ namespace Content.Shared._DV.Abilities.Felinid;
 /// Makes eating <see cref="FelinidFoodComponent"/> enable a felinids hairball action.
 /// Other interactions are in the server system.
 /// </summary>
-public abstract class SharedFelinidSystem : EntitySystem
+public abstract partial class SharedFelinidSystem : EntitySystem
 {
-    [Dependency] private readonly HungerSystem _hunger = default!;
-    [Dependency] private readonly ItemCougherSystem _cougher = default!;
+    [Dependency] private HungerSystem _hunger = default!;
+    [Dependency] private ItemCougherSystem _cougher = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<FelinidFoodComponent, BeforeFullyEatenEvent>(OnMouseEaten);
+        SubscribeLocalEvent<FelinidFoodComponent, FullyEatenEvent>(OnMouseEaten); // Aurora's Song - BeforeFullyEatenEvent>FullyEatenEvent
     }
 
-    private void OnMouseEaten(Entity<FelinidFoodComponent> ent, ref BeforeFullyEatenEvent args)
+    private void OnMouseEaten(Entity<FelinidFoodComponent> ent, ref FullyEatenEvent args) // Aurora's Song - BeforeFullyEatenEvent>FullyEatenEvent
     {
         var user = args.User;
         if (!HasComp<FelinidComponent>(user) || !TryComp<HungerComponent>(user, out var hunger))

@@ -40,6 +40,7 @@
       - WeaponCaseInsertable
       tags:
       - Cartridge
+      - NFBlueprintAdvanced
 
 - type: entity
   name: weapon case
@@ -71,6 +72,7 @@
       - WeaponCaseInsertable
       tags:
       - Cartridge
+      - NFBlueprintAdvanced
 
 - type: entity
   name: ammo case
@@ -151,3 +153,4 @@
       - Armor
       tags:
       - Cartridge
+      - NFBlueprintAdvanced

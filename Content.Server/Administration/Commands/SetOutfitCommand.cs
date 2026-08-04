@@ -4,17 +4,15 @@ using Content.Server.EUI;
 using Content.Shared.Administration;
 using Content.Shared.Inventory;
 using Robust.Shared.Console;
-using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Content.Shared._AS.IPC; // Aurora's Song 14
 
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed class SetOutfitCommand : LocalizedEntityCommands
+    public sealed partial class SetOutfitCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly EuiManager _euiManager = default!;
-        [Dependency] private readonly OutfitSystem _outfitSystem = default!;
+        [Dependency] private EuiManager _euiManager = default!;
+        [Dependency] private OutfitSystem _outfitSystem = default!;
 
         public override string Command => "setoutfit";
         public override string Description => Loc.GetString("cmd-setoutfit-desc", ("requiredComponent", nameof(InventoryComponent)));

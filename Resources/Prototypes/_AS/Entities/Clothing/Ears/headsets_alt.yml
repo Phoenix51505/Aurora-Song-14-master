@@ -18,6 +18,22 @@
 
 - type: entity
   parent: ASClothingHeadsetAltSLENavy
+  id: ASClothingHeadsetAltSLEOffDutyNavy
+  name: SLE off-duty over-ear headset
+  description: An updated over-ear headset for Sector Law Enforcement personnel.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCommon
+      - EncryptionKeyTraffic
+      - EncryptionKeyShipboard
+      - EncryptionKeyNfsd
+      - EncryptionKeyCommand
+      - EncryptionKeyMedical
+
+- type: entity
+  parent: ASClothingHeadsetAltSLENavy
   id: ASClothingHeadsetAltSLEOrange
   name: SLE over-ear headset
   description: An updated over-ear headset for Sector Law Enforcement personnel.
@@ -92,3 +108,37 @@
     sprite: _AS/Clothing/Ears/Headsets/colcom.rsi
   - type: Clothing
     sprite: _AS/Clothing/Ears/Headsets/colcom.rsi
+
+#region Site Manager
+- type: entity
+  parent: [ClothingHeadsetAlt, BaseCommandContraband]
+  id: ClothingHeadsetAltEngineeringSiteManager
+  name: site manager's over-ear headset
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeySiteManager
+      - EncryptionKeyTraffic
+      - EncryptionKeyShipboard
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/engineering.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/engineering.rsi
+
+# Nanotrasen
+- type: entity
+  parent: ClothingHeadsetAlt
+  id: ASClothingHeadsetNanotrasen
+  name: nanotrasen over-ear headset
+  description: An updated over-ear headset used by employees of Nanotrasen.
+  components:
+  - type: Sprite
+    sprite: _AS/Clothing/Ears/Headsets/nanotrasen.rsi
+  - type: Clothing
+    sprite: _AS/Clothing/Ears/Headsets/nanotrasen.rsi
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCommon
+      - EncryptionKeyNanotrasen

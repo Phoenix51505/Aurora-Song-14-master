@@ -23,6 +23,7 @@
     NFBaseClothingNeckHolsterThigh: 3
     NFBaseClothingNeckSheathThigh: 3
     ClothingBeltBandolier: 3 # Aurora's Song
+    CassetteTape: 10 # Aurora's Song - Added for people to record potential bounty targets
 # Mercenary
     ClothingHeadBandMercenary: 3
     ClothingHeadHatBeretMercenary: 3
@@ -32,6 +33,7 @@
     ASClothingNeckMantleMercenaryElite: 3
     ClothingOuterVestWebMercenary: 3
     ClothingOuterEVASuitMercenary: 4
+    ClothingNeckBodyCameraOff: 3
     ClothingBeltMercenaryWebbing: 3
     ClothingShoesBootsMercenary: 3
     ClothingOuterBioArmoredMercenary: 3
@@ -97,6 +99,7 @@
     NFBaseClothingNeckHolsterThigh: 4294967295 # Infinite
     NFBaseClothingNeckSheathThigh: 4294967295 # Infinite
     ClothingBeltBandolier: 4294967295 # Infinite | Aurora's Song
+    CassetteTape: 4294967295 # Infinite | Aurora's Song - Added for people to record potential bounty targets
 # Mercenary
     ClothingHeadBandMercenary: 4294967295 # Infinite
     ClothingHeadHatBeretMercenary: 4294967295 # Infinite
@@ -106,6 +109,7 @@
     ClothingOuterVestWebMercenary: 3
     ASClothingNeckMantleMercenaryElite: 4294967295 # Infinite
     ClothingOuterEVASuitMercenary: 4294967295 # Infinite
+    ClothingNeckBodyCameraOff: 4294967295 # Infinite
     ClothingBeltMercenaryWebbing: 4294967295 # Infinite
     ClothingShoesBootsMercenary: 4294967295 # Infinite
     ClothingOuterBioArmoredMercenary: 4294967295 # Infinite

@@ -6,6 +6,7 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using System.Numerics;
+using Content.Client.Stylesheets;
 using Content.Shared._EstacaoPirata.Cards.Card;
 using Content.Shared._EstacaoPirata.Cards.Stack;
 
@@ -14,8 +15,8 @@ namespace Content.Client._EstacaoPirata.Cards.Hand.UI;
 [GenerateTypedNameReferences]
 public sealed partial class CardHandMenu : RadialMenu
 {
-    [Dependency] private readonly EntityManager _entManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private EntityManager _entManager = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
 
     public event Action<NetEntity>? CardHandDrawMessageAction;
 
@@ -78,7 +79,7 @@ public sealed partial class CardHandMenu : RadialMenu
     }
 }
 
-public sealed class CardMenuButton : RadialMenuTextureButton
+public sealed partial class CardMenuButton : RadialMenuButton
 {
     public CardMenuButton()
     {

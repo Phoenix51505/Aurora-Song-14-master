@@ -1,0 +1,60 @@
+- type: latheRecipePack
+  id: CorvaxWoodTiles
+  recipes:
+  - FloorTileItemWoodParquet
+  - FloorTileItemWoodChess
+  - FloorTileItemWoodBlack
+  - FloorTileItemWoodLargeBlack
+  - FloorTileItemWoodParquetBlack
+  - FloorTileItemWoodChessBlack
+  - FloorTileItemWoodDark
+  - FloorTileItemWoodLargeDark
+  - FloorTileItemWoodParquetDark
+  - FloorTileItemWoodChessDark
+  - FloorTileItemWoodLight
+  - FloorTileItemWoodLargeLight
+  - FloorTileItemWoodParquetLight
+  - FloorTileItemWoodChessLight
+  - FloorTileItemWoodRed
+  - FloorTileItemWoodLargeRed
+  - FloorTileItemWoodParquetRed
+  - FloorTileItemWoodChessRed
+
+- type: latheRecipePack
+  id: XenoTiles
+  recipes:
+  - FloorTileItemXeno
+  - FloorTileItemXenoSteel
+  - FloorTileItemXenoSteelCorner
+  - FloorTileItemXenoMaint
+
+- type: latheRecipePack
+  id: N14Tiles
+  recipes:
+  - FloorTileItemMetalBlue
+  - FloorTileItemMetalBlueSolid
+  - FloorTileItemMetalGreen
+  - FloorTileItemMetalGreenSolid
+  - FloorTileItemMetalGrey
+  - FloorTileItemMetalGreySolid
+  - FloorTileItemMetalGreyDark
+  - FloorTileItemMetalGreyDarkSolid
+  - FloorTileItemMetalPurple
+  - FloorTileItemMetalPurpleSolid
+  - FloorTileItemMetalRed
+  - FloorTileItemMetalRedSolid
+  - FloorTileItemMetalTeal
+  - FloorTileItemMetalTealSolid
+  - FloorTileItemMetalWhite
+  - FloorTileItemMetalWhiteSolid
+  - FloorTileItemMetalYellow
+  - FloorTileItemMetalYellowSolid
+  - FloorTileItemMetalFreezer
+  - FloorTileItemMetalIndustrial
+  - FloorTileItemMetalMS13
+  - FloorTileItemMetalGrate
+  - FloorTileItemMetalSolid
+  - FloorTileItemWoodOak
+  - FloorTileItemWoodHouse
+  - FloorTileItemWoodMaple
+  - FloorTileItemCarpetRed

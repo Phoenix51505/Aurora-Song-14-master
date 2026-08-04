@@ -9,8 +9,10 @@ using Content.Shared.Damage;
 using Content.Shared.GameTicking;
 using Content.Shared.Mind.Components;
 using Content.Shared.Ghost;
+using Content.Shared.Silicons.StationAi;
 using Content.Server.GameTicking;
 using Content.Server.Pointing.Components;
+using Content.Shared.Damage.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
@@ -31,17 +33,18 @@ namespace Content.Server._AS.Shuttles.Systems;
 /// <summary>
 ///     Handles making entities fall into FTL Space when stepping into space during transit
 /// </summary>
-public sealed class FTLFallingSystem : EntitySystem
+public sealed partial class FTLFallingSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly GameTicker _gameTicker = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
-    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private ActionBlockerSystem _blocker = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private GameTicker _gameTicker = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private TransformSystem _transform = default!;
+    [Dependency] private SharedMapSystem _mapSystem = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private EntityManager _entity = default!; // Aurora's Song
 
     public override void Initialize()
     {
@@ -62,7 +65,7 @@ public sealed class FTLFallingSystem : EntitySystem
                 continue;
 
             RemComp<FTLFallingComponent>(uid);
-            if (!TryComp<TransformComponent>(uid, out var xform))
+            if (!_entity.TryGetComponent<TransformComponent>(uid, out var xform)) // Aurora's Song
                 return;
 
             if (!_mapSystem.TryGetMap(_gameTicker.DefaultMap, out var mapUid))
@@ -96,7 +99,7 @@ public sealed class FTLFallingSystem : EntitySystem
     {
         if (!HasComp<FTLMapComponent>(args.Transform.ParentUid) || HasComp<MapGridComponent>(args.Entity))
             return;
-        if (HasComp<GhostComponent>(args.Entity) || HasComp<PointingArrowComponent>(args.Entity))
+        if (HasComp<GhostComponent>(args.Entity) || HasComp<PointingArrowComponent>(args.Entity) || HasComp<StationAiEyeComponent>(args.Entity))
             return;
         Log.Debug($"{args.Entity} went onto the FTL Map");
         StartFalling(args.Entity);

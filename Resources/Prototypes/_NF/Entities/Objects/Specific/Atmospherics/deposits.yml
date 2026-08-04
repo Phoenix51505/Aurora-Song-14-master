@@ -543,6 +543,7 @@
     interfaces:
       enum.GasDepositScannerUiKey.Key:
         type: GasDepositScannerBoundUserInterface
+  - type: SpaceGarbage # Aurora's Song
 
 - type: entity
   id: GasDepositLocator
@@ -551,7 +552,7 @@
   components:
   - type: PowerCellDraw
     drawRate: 1
-    useRate: 0
+    useCharge: 0 # Aurora's Song - useRate>UseCharge
   - type: ToggleCellDraw
 
 - type: entity

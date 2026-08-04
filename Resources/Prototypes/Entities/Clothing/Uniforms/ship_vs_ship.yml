@@ -4,7 +4,7 @@
 #CREW
 #Recruit
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ ClothingUniformBase, BaseC3NanoTrasenContrabandLowValue ] # Aurora's Song | Added NanoTrasen contraband parent
   id: ClothingUniformJumpsuitRecruitNT
   name: recruit jumpsuit
   description: A classy grey jumpsuit with blue trims. Perfect for the dignified helper.
@@ -27,7 +27,7 @@
 
 #Repairman
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ ClothingUniformBase, BaseC3NanoTrasenContrabandLowValue ] # Aurora's Song | Added NanoTrasen contraband parent
   id: ClothingUniformJumpsuitRepairmanNT
   name: repairman jumpsuit
   description: A jumpsuit that reminds you of a certain crew-sector work position. Hopefully, you won't have to do the same job as THOSE freaks.
@@ -50,17 +50,6 @@
 
 #Paramedic
 - type: entity
-  parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitParamedicNT
-  name: paramedic jumpsuit
-  description: A basic white & blue jumpsuit made for Nanotrasen paramedics stationed in combat sectors.
-  components:
-  - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/paramedic_nt.rsi
-  - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/paramedic_nt.rsi
-
-- type: entity
   parent: [ ClothingUniformBase, BaseC3SyndicateContrabandNoValue ] # Frontier: BaseSyndicateContraband<BaseC3SyndicateContrabandNoValue
   id: ClothingUniformJumpsuitParamedicSyndie
   name: syndicate paramedic jumpsuit
@@ -73,17 +62,6 @@
 
 #HEADS OF STAFF
 #Chief Engineer
-- type: entity
-  parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitChiefEngineerNT
-  name: chief engineer jumpsuit
-  description: It is often joked that the role of the combat-sector Chief Engineer is where the actual, logistically-minded engineers are promoted to. Good luck.
-  components:
-  - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/ce_nt.rsi
-  - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/ce_nt.rsi
-
 - type: entity
   parent: [ ClothingUniformBase, BaseC3SyndicateContrabandNoValue ] # Frontier: BaseSyndicateContraband<BaseC3SyndicateContrabandNoValue
   id: ClothingUniformJumpsuitChiefEngineerSyndie

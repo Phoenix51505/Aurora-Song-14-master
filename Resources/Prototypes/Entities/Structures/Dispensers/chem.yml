@@ -16,7 +16,7 @@
       - ChemDispensable
     maxItemSize: Large # Frontier
     grid: # Frontier
-    - 0,0,20,8 # Frontier
+    - 0,0,42,8 # Frontier # Aurora's Song - Doubled the size so you can fit all Reinforced jugs if you want
   - type: ReagentDispenser # Frontier
     canAutoLabel: true # Frontier
   - type: ApcPowerReceiver
@@ -60,25 +60,27 @@
   parent: ChemDispenserEmpty
   components:
   - type: ReagentDispenser
-  - type: StorageFill
-    contents:
-      - id: JugAluminium
-      - id: ReinforcedJugCarbon # Frontier
-      - id: ReinforcedJugChlorine # Frontier
-      - id: JugCopper
-      - id: ReinforcedJugEthanol # Frontier
-      - id: JugFluorine
-      - id: ReinforcedJugSugar # Frontier
-      - id: ReinforcedJugHydrogen # Frontier
-      - id: JugIodine
-      - id: JugIron
-      - id: ReinforcedJugLithium # Frontier
-      - id: JugMercury
-      - id: ReinforcedJugNitrogen # Frontier
-      - id: ReinforcedJugOxygen # Frontier
-      - id: ReinforcedJugPhosphorus # Frontie
-      - id: ReinforcedJugPotassium # Frontier
-      - id: JugRadium
-      - id: ReinforcedJugSilicon # Frontier
-      - id: JugSodium
-      - id: JugSulfur
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: JugAluminium
+        - id: ReinforcedJugCarbon # Frontier
+        - id: ReinforcedJugChlorine # Frontier
+        - id: JugCopper
+        - id: ReinforcedJugEthanol # Frontier
+        - id: JugFluorine
+        - id: ReinforcedJugSugar # Frontier
+        - id: ReinforcedJugHydrogen # Frontier
+        - id: JugIodine
+        - id: JugIron
+        - id: ReinforcedJugLithium # Frontier
+        - id: JugMercury
+        - id: ReinforcedJugNitrogen # Frontier
+        - id: ReinforcedJugOxygen # Frontier
+        - id: ReinforcedJugPhosphorus # Frontier
+        - id: ReinforcedJugPotassium # Frontier
+        - id: JugRadium
+        - id: ReinforcedJugSilicon # Frontier
+        - id: JugSodium
+        - id: JugSulfur

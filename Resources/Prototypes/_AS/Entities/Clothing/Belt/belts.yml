@@ -14,7 +14,7 @@
     damageCoefficient: 0.1
 
 - type: entity
-  parent: [ ASClothingRigStorageHolsterBase, ContentsExplosionResistanceBase, BaseC2ContrabandUnredeemable ]
+  parent: [ ASClothingSRigStorageHolsterMedkitBase, ASClothingRigStorageHolsterBase, ContentsExplosionResistanceBase, BaseC2ContrabandUnredeemable ]
   id: ASClothingBeltSLEWebbing
   name: SLE webbing
   description: A tactical assault webbing for Sector Law Enforcement personnel.
@@ -28,7 +28,7 @@
     damageCoefficient: 0.1
 
 - type: entity
-  parent: [ ASClothingSRigStorageHolsterMedkitBase, ContentsExplosionResistanceBase, BaseC2ContrabandUnredeemable, ASClothingBeltSLEWebbing ]
+  parent:  ASClothingBeltSLEWebbing
   id: ASClothingBeltSLEWebbingCorpsman
   name: SLE webbing
   description: A tactical assault webbing for Sector Law Enforcement personnel. Corpsman variant.
@@ -57,27 +57,31 @@
   parent: ASClothingBeltSLEWebbing
   suffix: Filled
   components:
-  - type: StorageFill
-    contents:
-      - id: GrenadeFlashBang
-      - id: TearGasGrenade
-      - id: Stunbaton
-      - id: Handcuffs
-      - id: Handcuffs
+  - type: EntityTableContainerFill # Aurora's Song - StorageFill>EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: GrenadeFlashBang
+        - id: TearGasGrenade
+        - id: Stunbaton
+        - id: Handcuffs
+        - id: Handcuffs
 
 - type: entity
   id: ASClothingBeltSLEWebbingCorpsmanFilled
   parent: ASClothingBeltSLEWebbingCorpsman
   suffix: Filled, Corpsman
   components:
-  - type: StorageFill
-    contents:
-      - id: Brutepack
-        amount: 2
-      - id: Ointment
-        amount: 1
-      - id: Bloodpack
-        amount: 1
-      - id: Gauze
-      - id: EmergencyMedipen
+  - type: EntityTableContainerFill # Aurora's Song - StorageFill>EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: Brutepack
+          amount: 2
+        - id: Ointment
+          amount: 1
+        - id: Bloodpack
+          amount: 1
+        - id: Gauze
+        - id: EmergencyMedipen
 

@@ -4,15 +4,15 @@ using Content.Shared.Bed.Sleep;
 using Robust.Shared.Serialization;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.PowerCell.Components;
+// using Content.Shared.PowerCell.Components; // Aurora's Song - Allow self interaction for battery insertion
 
 namespace Content.Shared._EE.Silicon.Systems;
 
 
-public sealed class SharedSiliconChargeSystem : EntitySystem
+public sealed partial class SharedSiliconChargeSystem : EntitySystem
 {
-    [Dependency] private readonly AlertsSystem _alertsSystem = default!;
-    [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
+    [Dependency] private AlertsSystem _alertsSystem = default!;
+    // [Dependency] private ItemSlotsSystem _itemSlots = default!; // Aurora's Song
 
     public override void Initialize()
     {
@@ -21,32 +21,36 @@ public sealed class SharedSiliconChargeSystem : EntitySystem
         SubscribeLocalEvent<SiliconComponent, ComponentInit>(OnSiliconInit);
         SubscribeLocalEvent<SiliconComponent, SiliconChargeStateUpdateEvent>(OnSiliconChargeStateUpdate);
         SubscribeLocalEvent<SiliconComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
-        SubscribeLocalEvent<SiliconComponent, ItemSlotInsertAttemptEvent>(OnItemSlotInsertAttempt);
-        SubscribeLocalEvent<SiliconComponent, ItemSlotEjectAttemptEvent>(OnItemSlotEjectAttempt);
+        // Start Aurora's Song - Allow self interaction for battery insertion
+        // SubscribeLocalEvent<SiliconComponent, ItemSlotInsertAttemptEvent>(OnItemSlotInsertAttempt);
+        // SubscribeLocalEvent<SiliconComponent, ItemSlotEjectAttemptEvent>(OnItemSlotEjectAttempt);
+        // End Aurora's Song
         SubscribeLocalEvent<SiliconComponent, TryingToSleepEvent>(OnTryingToSleep);
     }
 
-    private void OnItemSlotInsertAttempt(EntityUid uid, SiliconComponent component, ref ItemSlotInsertAttemptEvent args)
-    {
-        if (args.Cancelled
-            || !TryComp<PowerCellSlotComponent>(uid, out var cellSlotComp)
-            || !_itemSlots.TryGetSlot(uid, cellSlotComp.CellSlotId, out var cellSlot)
-            || cellSlot != args.Slot || args.User != uid)
-            return;
+    // Start Aurora's Song - Allow self interaction for battery insertion
+    // private void OnItemSlotInsertAttempt(EntityUid uid, SiliconComponent component, ref ItemSlotInsertAttemptEvent args)
+    // {
+    //     if (args.Cancelled
+    //         || !TryComp<PowerCellSlotComponent>(uid, out var cellSlotComp)
+    //         || !_itemSlots.TryGetSlot(uid, cellSlotComp.CellSlotId, out var cellSlot)
+    //         || cellSlot != args.Slot || args.User != uid)
+    //         return;
+    //
+    //     args.Cancelled = true;
+    // }
 
-        args.Cancelled = true;
-    }
-
-    private void OnItemSlotEjectAttempt(EntityUid uid, SiliconComponent component, ref ItemSlotEjectAttemptEvent args)
-    {
-        if (args.Cancelled
-            || !TryComp<PowerCellSlotComponent>(uid, out var cellSlotComp)
-            || !_itemSlots.TryGetSlot(uid, cellSlotComp.CellSlotId, out var cellSlot)
-            || cellSlot != args.Slot || args.User != uid)
-            return;
-
-        args.Cancelled = true;
-    }
+    // private void OnItemSlotEjectAttempt(EntityUid uid, SiliconComponent component, ref ItemSlotEjectAttemptEvent args)
+    // {
+    //     if (args.Cancelled
+    //         || !TryComp<PowerCellSlotComponent>(uid, out var cellSlotComp)
+    //         || !_itemSlots.TryGetSlot(uid, cellSlotComp.CellSlotId, out var cellSlot)
+    //         || cellSlot != args.Slot || args.User != uid)
+    //         return;
+    //
+    //     args.Cancelled = true;
+    // }
+    // End Aurora's Song
 
     private void OnSiliconInit(EntityUid uid, SiliconComponent component, ComponentInit args)
     {
@@ -98,7 +102,7 @@ public enum SiliconType
 ///     Event raised when a Silicon's charge state needs to be updated.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class SiliconChargeStateUpdateEvent : EntityEventArgs
+public sealed partial class SiliconChargeStateUpdateEvent : EntityEventArgs
 {
     public short ChargePercent { get; }
 

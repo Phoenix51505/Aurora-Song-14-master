@@ -32,18 +32,17 @@ namespace Content.Server._NF.Contraband.Systems;
 /// </summary>
 public sealed partial class ContrabandTurnInSystem : SharedContrabandTurnInSystem
 {
-    [Dependency] private readonly IPrototypeManager _protoMan = default!;
-    [Dependency] private readonly AudioSystem _audio = default!; // Aurora
-    [Dependency] private readonly AccessReaderSystem _reader = default!; // Aurora
-    [Dependency] private readonly PopupSystem _popup = default!; // Aurora
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly HandsSystem _hands = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!; // Aurora
-    [Dependency] private readonly StackSystem _stack = default!;
-    [Dependency] private readonly StationSystem _station = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
-    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!; // Aurora
+    [Dependency] private IPrototypeManager _protoMan = default!;
+    [Dependency] private AudioSystem _audio = default!; // Aurora
+    [Dependency] private PopupSystem _popup = default!; // Aurora
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private HandsSystem _hands = default!;
+    [Dependency] private StackSystem _stack = default!;
+    [Dependency] private StationSystem _station = default!;
+    [Dependency] private TransformSystem _transform = default!;
+    [Dependency] private UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private SharedContainerSystem _container = default!; // Aurora
+    [Dependency] private LicenseSystem _license = default!; // Aurora
 
     private EntityQuery<MobStateComponent> _mobQuery;
     private EntityQuery<TransformComponent> _xformQuery;
@@ -278,7 +277,7 @@ public sealed partial class ContrabandTurnInSystem : SharedContrabandTurnInSyste
         if (component.RewardType != null) // If we have a primary reward, spawn it
         {
             var rewardPrototype = _protoMan.Index<StackPrototype>(component.RewardType);
-            var stackUid = _stack.Spawn(reward, rewardPrototype, output);
+            var stackUid = _stack.SpawnAtPosition(reward, rewardPrototype, output);
             if (outputSent == false)
             {
                 if (!_hands.TryPickupAnyHand(args.Actor, stackUid)) // If there wasn't a a ScuOutputComponent to send these too, try to pick them up
@@ -294,7 +293,7 @@ public sealed partial class ContrabandTurnInSystem : SharedContrabandTurnInSyste
         if (component.RewardTypeAlternate != null) // If we have an alternate currency, spawn it
         {
             var altRewardPrototype = _protoMan.Index<StackPrototype>(component.RewardTypeAlternate);
-            var altStackUid = _stack.Spawn(altReward, altRewardPrototype, args.Actor.ToCoordinates());
+            var altStackUid = _stack.SpawnAtPosition(altReward, altRewardPrototype, args.Actor.ToCoordinates());
             if (!_hands.TryPickupAnyHand(args.Actor, altStackUid))
                 _transform.SetLocalRotation(altStackUid, Angle.Zero); // Orient these to grid north instead of map north if we can't pick them up
         } // End AS
@@ -323,7 +322,7 @@ public sealed partial class ContrabandTurnInSystem : SharedContrabandTurnInSyste
         {
             var stackPrototype = _protoMan.Index<StackPrototype>(ent.Comp.RewardType);
             // 1 SCU per registered item
-            var stackUid = _stack.Spawn(toRegister.Count, stackPrototype, _scuOutput.ToCoordinates());
+            var stackUid = _stack.SpawnAtPosition(toRegister.Count, stackPrototype, _scuOutput.ToCoordinates());
 
             _transform.SetLocalRotation(stackUid, Angle.Zero); // Orient these to grid north instead of map north
         }
@@ -356,7 +355,7 @@ public sealed partial class ContrabandTurnInSystem : SharedContrabandTurnInSyste
                 }
             }
 
-            Del(oldEnt);
+            QueueDel(oldEnt); // Aurora's Song - Replace Del with QueueDel as a potential fix for registration duplication
             Log.Debug($"{ent.Comp.Faction} registered {oldEnt} into {newEnt}");
         }
 
@@ -367,23 +366,8 @@ public sealed partial class ContrabandTurnInSystem : SharedContrabandTurnInSyste
     {
         if (console.LicenseRequired == null)
             return true;
-        if (!_inventory.TryGetSlotEntity(user, "id", out var slotEnt))
-            return false;
-        if (TryComp<LicenseComponent>(slotEnt, out var license) && license.LicenseName == console.LicenseRequired)
-            return true;
-        if (!_container.TryGetContainer(slotEnt.Value, "PDA-license", out var container))
-            return false;
-        foreach (var containerEnt in container.ContainedEntities)
-        {
-            if (TryComp<LicenseComponent>(containerEnt, out license) && license.LicenseName == console.LicenseRequired)
-                return true;
-        }
-        foreach (var heldEnt in _hands.EnumerateHeld(user))
-        {
-            if (TryComp<LicenseComponent>(heldEnt, out license) && license.LicenseName == console.LicenseRequired)
-                return true;
-        }
-        return false;
+
+        return _license.CheckLicence(console.LicenseRequired, user);
     }
 
     public void PlayDenyEffect(Entity<ContrabandPalletConsoleComponent> target)

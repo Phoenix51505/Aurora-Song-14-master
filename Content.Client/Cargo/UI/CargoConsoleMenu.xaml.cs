@@ -17,7 +17,7 @@ namespace Content.Client.Cargo.UI
     [GenerateTypedNameReferences]
     public sealed partial class CargoConsoleMenu : FancyWindow
     {
-        [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private IGameTiming _timing = default!;
 
         private readonly IEntityManager _entityManager;
         private readonly IPrototypeManager _protoManager;
@@ -206,14 +206,14 @@ namespace Content.Client.Cargo.UI
             if (!_orderConsoleQuery.TryComp(_owner, out var orderConsole))
                 return;
 
-            Requests.DisposeAllChildren();
+            Requests.RemoveAllChildren();
 
             foreach (var order in orders)
             {
                 if (order.Approved)
                     continue;
 
-                var product = _protoManager.Index<EntityPrototype>(order.ProductId);
+                var product = _protoManager.Index<EntityPrototype>(order.Product);
                 var productName = product.Name;
                 var account = _protoManager.Index(order.Account);
 

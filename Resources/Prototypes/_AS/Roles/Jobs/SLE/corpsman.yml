@@ -18,8 +18,8 @@
   supervisors: job-supervisors-lieutenant
   weight: 125
   displayWeight: 35
-  canBeAntag: false
   access:
+  - Medical
   - Corpsman
   - Prisoner
   accessGroups:

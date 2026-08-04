@@ -6,14 +6,15 @@ using Content.Shared.Electrocution;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Content.Server._EE.Power.Components;
+using Content.Shared.Power.Components;
 
 namespace Content.Server._EE.Power.Systems;
 
-public sealed class BatteryElectrocuteChargeSystem : EntitySystem
+public sealed partial class BatteryElectrocuteChargeSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly BatterySystem _battery = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private BatterySystem _battery = default!;
 
     public override void Initialize()
     {
@@ -32,7 +33,7 @@ public sealed class BatteryElectrocuteChargeSystem : EntitySystem
                 battery.MaxCharge * 0.25f)
             * _random.NextFloat(0.75f, 1.25f);
 
-        _battery.SetCharge(uid, battery.CurrentCharge + charge);
+        _battery.SetCharge(uid, _battery.GetCharge((uid, battery)) + charge);
 
         _popup.PopupEntity(Loc.GetString("battery-electrocute-charge"), uid, uid);
     }

@@ -138,6 +138,7 @@
   - type: Sprite
     layers:
     - state: soaplet
+      map: ["enum.SolutionContainerLayers.Fill"] # Aurora's Song - Add missing map
       shader: unshaded
       color: red
   - type: StepTrigger
@@ -184,6 +185,7 @@
     sprite: _NF/Objects/Specific/Wizard/conjuredsoap.rsi
     layers:
     - state: soap-4
+      map: ["enum.SolutionContainerLayers.Fill"] # Aurora's Song - Add missing map
       shader: unshaded
       color: red
   - type: Appearance
@@ -201,9 +203,11 @@
         Blunt: 9
   - type: PassiveDamage
     damage:
-      groups:
-        Brute: 10
-  - type: Damageable
+      types: # Aurora's Song - Convert from groups to types
+        Blunt: 3
+        Slash: 3
+        Piercing: 4
+  - type: Injurable # Aurora's Song - Extract damageContainer to Injurable
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
@@ -241,6 +245,7 @@
     sprite: _NF/Objects/Specific/Wizard/conjuredsoap.rsi
     layers:
     - state: soap-4
+      map: ["enum.SolutionContainerLayers.Fill"] # Aurora's Song - Add missing map
       shader: unshaded
       color: red
   - type: CartridgeAmmo

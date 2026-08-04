@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Numerics;
+using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.VendingMachines;
 using Content.Shared.Cargo.Components;
@@ -22,9 +23,9 @@ namespace Content.Client.VendingMachines.UI
     [GenerateTypedNameReferences]
     public sealed partial class VendingMachineMenu : FancyWindow
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IComponentFactory _componentFactory = default!; // Frontier
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private IEntityManager _entityManager = default!;
+        [Dependency] private IComponentFactory _componentFactory = default!; // Frontier
 
         private readonly Dictionary<EntProtoId, EntityUid> _dummies = [];
         private readonly Dictionary<EntProtoId, (ListContainerButton Button, VendingMachineItem Item)> _listItems = new();
@@ -84,7 +85,7 @@ namespace Content.Client.VendingMachines.UI
             var item = new VendingMachineItem(protoID, text);
             _listItems[protoID] = (button, item);
             button.AddChild(item);
-            button.AddStyleClass("ButtonSquare");
+            button.AddStyleClass(StyleClass.ButtonSquare);
             button.Disabled = !_enabled || _amounts[protoID] == 0;
         }
 
@@ -129,7 +130,7 @@ namespace Content.Client.VendingMachines.UI
             {
                 var entry = inventory[i];
 
-                if (!_prototypeManager.TryIndex(entry.ID, out var prototype))
+                if (!_prototypeManager.Resolve(entry.ID, out var prototype))
                 {
                     _amounts[entry.ID] = 0;
                     continue;

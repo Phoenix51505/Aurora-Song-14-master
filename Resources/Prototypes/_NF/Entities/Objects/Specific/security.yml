@@ -5,6 +5,7 @@
   suffix: 20 TC
   description: A token awarded to the NFSD for turning in contraband. It can be exchanged in an NFSD uplink device for a variety of law enforcement tools.
   components:
+  - type: NFCoin # Aurora's Song
   - type: Sprite
     sprite: _NF/Objects/Specific/Security/frontieruplinkcoin.rsi
     state: frontieruplinkcoin
@@ -45,6 +46,14 @@
   components:
   - type: Stack
     count: 10
+
+- type: entity # Aurora's Song - Added 20 TC coin stack
+  parent: FrontierUplinkCoin
+  id: FrontierUplinkCoin20
+  suffix: 20 TC
+  components:
+  - type: Stack
+    count: 20
 
 # Uplinks
 

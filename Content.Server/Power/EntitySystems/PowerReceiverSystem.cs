@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Administration.Managers;
 using Content.Server.Power.Components;
-using Content.Server.Emp; // Frontier: Upstream - #28984
 using Content.Shared.Administration;
 using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
@@ -14,11 +13,13 @@ using Content.Shared.Emp; // Frontier: Upstream - #28984
 
 namespace Content.Server.Power.EntitySystems
 {
-    public sealed class PowerReceiverSystem : SharedPowerReceiverSystem
+    public sealed partial class PowerReceiverSystem : SharedPowerReceiverSystem
     {
-        [Dependency] private readonly IAdminManager _adminManager = default!;
-        private EntityQuery<ApcPowerReceiverComponent> _recQuery;
-        private EntityQuery<ApcPowerProviderComponent> _provQuery;
+        [Dependency] private IAdminManager _adminManager = default!;
+
+        [Dependency] private EntityQuery<ApcPowerReceiverComponent> _recQuery = default!;
+        [Dependency] private EntityQuery<ApcPowerProviderComponent> _provQuery = default!;
+        [Dependency] private EntityQuery<HandsComponent> _handsQuery = default!;
 
         public override void Initialize()
         {
@@ -38,10 +39,7 @@ namespace Content.Server.Power.EntitySystems
             SubscribeLocalEvent<ApcPowerReceiverComponent, ComponentGetState>(OnGetState);
 
             SubscribeLocalEvent<ApcPowerReceiverComponent, EmpPulseEvent>(OnEmpPulse); // Frontier: Upstream - #28984
-            SubscribeLocalEvent<ApcPowerReceiverComponent, EmpDisabledRemoved>(OnEmpEnd); // Frontier: Upstream - #28984
-
-            _recQuery = GetEntityQuery<ApcPowerReceiverComponent>();
-            _provQuery = GetEntityQuery<ApcPowerProviderComponent>();
+            SubscribeLocalEvent<ApcPowerReceiverComponent, EmpDisabledRemovedEvent>(OnEmpEnd); // Frontier: Upstream - #28984
         }
 
         private void OnExamined(Entity<ApcPowerReceiverComponent> ent, ref ExaminedEvent args)
@@ -117,7 +115,7 @@ namespace Content.Server.Power.EntitySystems
             if(!args.CanAccess || !args.CanInteract)
                 return;
 
-            if (!HasComp<HandsComponent>(args.User))
+            if (!_handsQuery.HasComp(args.User))
                 return;
 
             if (!_recQuery.TryGetComponent(uid, out var receiver))
@@ -130,7 +128,7 @@ namespace Content.Server.Power.EntitySystems
             {
                 Act = () =>
                 {
-                    TryTogglePower(uid, user: args.User); // Frontier: Upstream - #28984 (TogglePower<TryTogglePower)
+                    TryTogglePower(uid, user: args.User); // Frontier: Upstream - #28984
                 },
                 Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/Spare/poweronoff.svg.192dpi.png")),
                 Text = Loc.GetString("power-switch-component-toggle-verb"),
@@ -166,11 +164,6 @@ namespace Content.Server.Power.EntitySystems
             return !_recQuery.Resolve(uid, ref receiver, false) || receiver.Powered;
         }
 
-        public void SetLoad(ApcPowerReceiverComponent comp, float load)
-        {
-            comp.Load = load;
-        }
-
         public override bool ResolveApc(EntityUid entity, [NotNullWhen(true)] ref SharedApcPowerReceiverComponent? component)
         {
             if (component != null)
@@ -183,7 +176,7 @@ namespace Content.Server.Power.EntitySystems
             return true;
         }
 
-        // Frontier: upstream (#28984) - MIT
+        // Frontier: Upstream - #28984
         private void OnEmpPulse(EntityUid uid, ApcPowerReceiverComponent component, ref EmpPulseEvent args)
         {
             if (!component.PowerDisabled)
@@ -194,13 +187,13 @@ namespace Content.Server.Power.EntitySystems
             }
         }
 
-        private void OnEmpEnd(EntityUid uid, ApcPowerReceiverComponent component, ref EmpDisabledRemoved args)
+        // Frontier: Upstream - #28984
+        private void OnEmpEnd(EntityUid uid, ApcPowerReceiverComponent component, ref EmpDisabledRemovedEvent args)
         {
             if (component.PowerDisabled)
             {
                 TogglePower(uid, false);
             }
         }
-        // End Frontier: upstream (#28984) - MIT
     }
 }

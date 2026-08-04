@@ -1,5 +1,4 @@
 using Content.Shared.Research.Prototypes;
-using NetSerializer;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
@@ -10,12 +9,15 @@ public sealed class LatheUpdateState : BoundUserInterfaceState
 {
     public List<ProtoId<LatheRecipePrototype>> Recipes;
 
-    public List<LatheRecipeBatch> Queue; // Frontier: ProtoId<LatheRecipePrototype>[] < List<LatheRecipeBatch>
+    public LatheRecipeBatch[] Queue;
 
     public ProtoId<LatheRecipePrototype>? CurrentlyProducing;
 
-    public LatheUpdateState(List<ProtoId<LatheRecipePrototype>> recipes, List<LatheRecipeBatch> queue, ProtoId<LatheRecipePrototype>? currentlyProducing = null) // Frontier: change queue type
+    public int? BufferAmount; // Coyote: current buffer amount (if the lathe has a buffer)
+
+    public LatheUpdateState(List<ProtoId<LatheRecipePrototype>> recipes, LatheRecipeBatch[] queue, ProtoId<LatheRecipePrototype>? currentlyProducing = null, int? bufferAmount = null) // Coyote: add bufferAmount
     {
+        BufferAmount = bufferAmount; // Coyote
         Recipes = recipes;
         Queue = queue;
         CurrentlyProducing = currentlyProducing;
@@ -44,6 +46,33 @@ public sealed class LatheQueueRecipeMessage : BoundUserInterfaceMessage
         ID = id;
         Quantity = quantity;
     }
+}
+
+/// <summary>
+///     Sent to the server to remove a batch from the queue.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class LatheDeleteRequestMessage(int index) : BoundUserInterfaceMessage
+{
+    public int Index = index;
+}
+
+/// <summary>
+///     Sent to the server to move the position of a batch in the queue.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class LatheMoveRequestMessage(int index, int change) : BoundUserInterfaceMessage
+{
+    public int Index = index;
+    public int Change = change;
+}
+
+/// <summary>
+///     Sent to the server to stop producing the current item.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class LatheAbortFabricationMessage() : BoundUserInterfaceMessage
+{
 }
 
 [NetSerializable, Serializable]

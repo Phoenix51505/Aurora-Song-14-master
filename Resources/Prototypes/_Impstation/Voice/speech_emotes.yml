@@ -8,7 +8,7 @@
   whitelist:
     components:
     - Vocal
-    - Slime
+    #- Slime # Aurora Song: Remove Slime Component
   blacklist:
     components:
     - BorgChassis
@@ -30,7 +30,7 @@
   whitelist:
     components:
     - Vocal
-    - Slime
+    #- Slime # Aurora Song: Remove Slime Component
   blacklist:
     components:
     - BorgChassis
@@ -43,26 +43,7 @@
     - popped
     # End Frontier: emote consistency
 
-- type: emote
-  id: ReptilianHiss
-  name: chat-emote-name-reptilian-hiss
-  category: Vocal
-  available: false
-  icon: _Impstation/Interface/Emotes/hiss.png
-  whitelist:
-    components:
-    - Vocal
-  blacklist:
-    components:
-    - BorgChassis
-  chatMessages: ["chat-emote-msg-reptilian-hiss"]
-  chatTriggers:
-    # Frontier: emote consistency
-    - hiss
-    - hisses
-    - hissing
-    - hissed
-    # End Frontier: emote consistency
+# Aurora's Song - Removed ReptilianHiss for Hiss from Nyano
 
 # hand emotes
 - type: emote
@@ -86,3 +67,33 @@
     - cracks her knuckles
     - cracks his knuckles
     - cracks its knuckles
+- type: emote
+  id: Blink
+  name: chat-emote-name-blink
+  category: General
+  icon: _Impstation/Interface/Emotes/blink.png #imp
+  chatMessages: ["chat-emote-msg-blink"]
+  chatTriggers:
+    - blink
+    - blinks
+    - blinked
+
+#Diona
+- type: emote
+  id: Multichirp
+  name: chat-emote-name-multichirp
+  category: Vocal
+  available: false
+  icon: Interface/Emotes/chirp.png # Aurora's Song - default chirp icon
+  whitelist:
+    components:
+    - Nymph
+    - Vocal
+  blacklist:
+    tags:
+    - SiliconEmotes
+  chatMessages: ["chat-emote-msg-multichirp"]
+  chatTriggers:
+    - chirps a chorus
+    - chirps in a chorus
+    - chorus of chirps

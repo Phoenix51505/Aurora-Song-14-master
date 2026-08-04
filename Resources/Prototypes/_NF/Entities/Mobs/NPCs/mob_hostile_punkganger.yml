@@ -3,7 +3,6 @@
   id: MobVandalizer
   abstract: true
   components:
-  - type: Timer
   - type: TimedSpawner
     prototypes:
     - SpawnerHoloGraffitiRandom
@@ -17,6 +16,7 @@
   name: punk
   abstract: true
   parent:
+  - BaseMobHumanNoHands # Aurora's Song - Nubody
   - NFMobNoEquipmentOnGib
   - MobStaminaFodder
   - MobMovementSpeedModifierMelee
@@ -31,9 +31,6 @@
   - type: NpcFactionMember
     factions:
     - StreetGangNF
-  - type: Body
-    prototype: NFHumanNoHands
-    requiredLegs: 2
   - type: RechargeBasicEntityAmmo
     rechargeCooldown: 1.5
     rechargeSound:
@@ -204,11 +201,10 @@
   - type: Loadout
     prototypes:
     - PunkGangerGearLaser
-  - type: ProjectileBatteryAmmoProvider
+  - type: BatteryAmmoProvider # Aurora's Song - ProjectileBatteryAmmoProvider>BatteryAmmoProvider
     proto: NFBulletLaserLow
     fireCost: 100
   - type: BatterySelfRecharger
-    autoRecharge: true
     autoRechargeRate: 50
   - type: Battery
     maxCharge: 600

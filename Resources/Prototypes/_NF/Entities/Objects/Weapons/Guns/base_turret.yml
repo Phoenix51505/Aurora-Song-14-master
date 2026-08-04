@@ -37,6 +37,7 @@
   - type: CombatMode
     toggleMouseRotator: false
   - type: Damageable
+  - type: Injurable # Aurora's Song - Extract damageContainer to Injurable
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
@@ -180,7 +181,6 @@
     maxCharge: 500
     startingCharge: 500
   - type: BatterySelfRecharger
-    autoRecharge: true
     autoRechargeRate: 5
   # - type: StaticPrice # for arbitrage tests
   #   price: 50

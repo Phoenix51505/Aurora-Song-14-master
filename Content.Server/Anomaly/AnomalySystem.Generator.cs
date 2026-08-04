@@ -1,6 +1,5 @@
 using Content.Server.Anomaly.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Server.Station.Components;
 using Content.Shared.Anomaly;
 using Content.Shared.CCVar;
 using Content.Shared.Materials;
@@ -12,6 +11,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Content.Shared.Power;
 using Content.Server.Chat.Systems; // Frontier
+using Content.Shared.Chat; // Frontier
 
 namespace Content.Server.Anomaly;
 
@@ -22,9 +22,10 @@ namespace Content.Server.Anomaly;
 /// </summary>
 public sealed partial class AnomalySystem
 {
-    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly ChatSystem _chat = default!; // Frontier
+    [Dependency] private SharedMapSystem _mapSystem = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
+    [Dependency] private ChatSystem _chat = default!; // Frontier
 
     private void InitializeGenerator()
     {
@@ -97,30 +98,29 @@ public sealed partial class AnomalySystem
 
         for (var i = 0; i < 20; i++) // Frontier: 25<20
         {
-            var randomX = Random.Next((int) gridBounds.Left, (int) gridBounds.Right);
-            var randomY = Random.Next((int) gridBounds.Bottom, (int) gridBounds.Top);
+            var randomX = Random.Next((int)gridBounds.Left, (int)gridBounds.Right);
+            var randomY = Random.Next((int)gridBounds.Bottom, (int)gridBounds.Top);
 
             var tile = new Vector2i(randomX, randomY);
 
             // no air-blocked areas.
             if (_atmosphere.IsTileSpace(grid, xform.MapUid, tile) ||
-                _atmosphere.IsTileAirBlocked(grid, tile, mapGridComp: gridComp))
+                _atmosphere.IsTileAirBlockedCached(grid, tile))
             {
                 continue;
             }
 
             // don't spawn inside of solid objects
-            var physQuery = GetEntityQuery<PhysicsComponent>();
             var valid = true;
 
             // TODO: This should be using static lookup.
             foreach (var ent in _mapSystem.GetAnchoredEntities(grid, gridComp, tile))
             {
-                if (!physQuery.TryGetComponent(ent, out var body))
+                if (!_physicsQuery.TryGetComponent(ent, out var body))
                     continue;
                 if (body.BodyType != BodyType.Static ||
                     !body.Hard ||
-                    (body.CollisionLayer & (int) CollisionGroup.Impassable) == 0)
+                    (body.CollisionLayer & (int)CollisionGroup.Impassable) == 0)
                     continue;
 
                 valid = false;
@@ -173,7 +173,7 @@ public sealed partial class AnomalySystem
                     if (generator is { } genEnt
                         && TryComp(genEnt, out TransformComponent? generatorXform))
                     {
-                        _stack.Spawn(genEnt.Comp.RefundAmount, genEnt.Comp.RefundStackType, generatorXform.Coordinates);
+                        _stack.SpawnAtPosition(genEnt.Comp.RefundAmount, genEnt.Comp.RefundStackType, generatorXform.Coordinates);
                         genEnt.Comp.CooldownEndTime = TimeSpan.Zero;
                         UpdateGeneratorUi(genEnt, genEnt.Comp);
                         _chat.TrySendInGameICMessage(genEnt, Loc.GetString("anomaly-generator-refund-message"), InGameICChatType.Speak, hideChat: true);

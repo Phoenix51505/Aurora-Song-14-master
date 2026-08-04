@@ -9,19 +9,19 @@ using Content.Shared.Security;
 using Content.Shared.StationRecords;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Content.Server._NF.SectorServices; // Frontier
+using Content.Shared._NF.SectorServices; // Frontier
 
 namespace Content.Server.CriminalRecords.Systems;
 
-public sealed class CriminalRecordsHackerSystem : SharedCriminalRecordsHackerSystem
+public sealed partial class CriminalRecordsHackerSystem : SharedCriminalRecordsHackerSystem
 {
-    [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly CriminalRecordsSystem _criminalRecords = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    // [Dependency] private readonly StationSystem _station = default!; // Frontier
-    [Dependency] private readonly StationRecordsSystem _records = default!;
-    [Dependency] private readonly SectorServiceSystem _sectorService = default!;
+    [Dependency] private ChatSystem _chat = default!;
+    [Dependency] private CriminalRecordsSystem _criminalRecords = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    // [Dependency] private StationSystem _station = default!; // Frontier
+    [Dependency] private StationRecordsSystem _records = default!;
+    [Dependency] private SectorServiceSystem _sectorService = default!;
 
     public override void Initialize()
     {

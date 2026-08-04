@@ -59,6 +59,7 @@
     - BountyContractsCartridge
     - AstroNavCartridge
     - WantedListCartridge
+    - NanoChatCartridge # Auroras Song
 
 #region Medical
 
@@ -95,6 +96,7 @@
     - BountyContractsCartridge
     - AstroNavCartridge
     - MedTekCartridge
+    - NanoChatCartridge # Auroras Song
 
 #region Service
 
@@ -130,6 +132,7 @@
     - NewsReaderCartridge
     - BountyContractsCartridge
     - AstroNavCartridge
+    - NanoChatCartridge # Auroras Song
 
 #region SLE
 
@@ -174,6 +177,7 @@
     - AstroNavCartridge
     - WantedListCartridge
     - LedgerCartridge
+    - NanoChatCartridge # Auroras Song
 
 - type: entity
   parent: ASBaseSecurityPDA
@@ -281,8 +285,34 @@
 
 - type: entity
   parent: ASBaseSecurityPDA
+  id: OffDutyOfficerPDA
+  name: off-duty officer PDA
+  description: Whosoever bears this PDA puts the law on their back.
+  components:
+  - type: Pda
+    id: OffDutyOfficerIDCard
+    bookSlot:
+      startingItem: HyperlinkBookSLESop
+      priority: -2
+      whitelist:
+        tags:
+        - BookSpaceLaw
+        - BookNfsdSop
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-assergeant
+  - type: PdaBorderColor
+    borderColor: "#98BBC2"
+    accentHColor: "#2A4F63"
+  - type: Icon
+    state: pda-assergeant
+
+- type: entity
+  parent: ASBaseSecurityPDA
   id: ASLieutenantPDA
-  name: bailiff PDA
+  name: lieutenant PDA
   description: Whosoever bears this PDA puts the law on their back.
   components:
   - type: Pda
@@ -398,6 +428,7 @@
     - AstroNavCartridge
     - LedgerCartridge
     - MailMetricsCartridge
+    - NanoChatCartridge # Auroras Song
 
 #region Colonial Command
 
@@ -435,6 +466,7 @@
       - WantedListCartridge
       - LogProbeCartridge
       - AstroNavCartridge
+      - NanoChatCartridge # Auroras Song
 
 - type: entity
   parent: ASBaseSecurityPDA
@@ -468,6 +500,7 @@
       - LogProbeCartridge
       - AstroNavCartridge
       - MailMetricsCartridge # Frontier
+      - NanoChatCartridge # Auroras Song
 
 #- type: entity # commenting out until CAF Chaplain role is added
 #  parent: CAFLeaderPDA
@@ -554,6 +587,7 @@
     - BountyContractsCartridge
     - AstroNavCartridge
     - LedgerCartridge
+    - NanoChatCartridge # Auroras Song
 
 - type: entity
   parent: ASBasePDA
@@ -626,3 +660,33 @@
       - MailMetricsCartridge
       - AppraisalCartridge
       - NetProbeCartridge
+      - NanoChatCartridge # Auroras Song
+
+- type: entity
+  parent: ASBasePDA
+  id: ASForensicMantisPDA
+  name: mantis PDA
+  description: "This PDA marks its bearer as a member of the Outer Chamber--a mantis, the Greek word for \"seer.\" The eye on its display seems to track whoever dares to look back. Carried in a pocket, because you couldn't bear to hang this hunk of plastic on your belt."
+  components:
+  - type: PdaBorderColor
+    borderColor: "#3b3640"
+    accentVColor: "#431b57"
+    accentHColor: "#8c1c54"
+  - type: Pda
+    id: ForensicMantisIDCard
+  - type: Icon
+    sprite: _DEN/Objects/Devices/pda.rsi
+    state: pda-mantis
+  - type: Sprite
+    sprite: _DEN/Objects/Devices/pda.rsi
+    layers:
+    - state: "pda-mantis"
+      map: [ "enum.PdaVisualLayers.Base" ]
+    - state: "mantis-light_overlay"
+      map: [ "enum.PdaVisualLayers.Flashlight" ]
+      shader: "unshaded"
+      visible: false
+    - state: "mantis-id_overlay"
+      map: [ "enum.PdaVisualLayers.IdLight" ]
+      shader: "unshaded"
+      visible: false

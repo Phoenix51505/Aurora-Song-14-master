@@ -27,10 +27,6 @@
       Frezon: danger
       Respiron: ignore # Frontier
       Helium: stationHe # Frontier
-  - type: Tag
-    tags:
-      - AirSensor
-      - ForceFixRotations
   - type: GuideHelp
     guides:
     - DeviceMonitoringAndControl
@@ -47,8 +43,9 @@
   - type: Transform
     anchored: true
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -92,6 +89,10 @@
         enum.PowerDeviceVisualLayers.Powered:
           True: { state: gsensor1 }
           False: { state: gsensor0 }
+  - type: Tag
+    tags:
+    - AirSensor
+    - ForceFixRotations
 
 - type: entity
   parent: BaseItem

@@ -4,10 +4,10 @@ using Content.Shared.Radio.EntitySystems;
 
 namespace Content.Server._EE.Silicon.EncryptionHolderRequiresLock;
 
-public sealed class EncryptionHolderRequiresLockSystem : EntitySystem
+public sealed partial class EncryptionHolderRequiresLockSystem : EntitySystem
 
 {
-    [Dependency] private readonly EncryptionKeySystem _encryptionKeySystem = default!;
+    [Dependency] private EncryptionKeySystem _encryptionKeySystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -24,5 +24,7 @@ public sealed class EncryptionHolderRequiresLockSystem : EntitySystem
 
         keyHolder.KeysUnlocked = !lockComp.Locked;
         _encryptionKeySystem.UpdateChannels(uid, keyHolder);
+
+        Dirty(uid, keyHolder); // Aurora's Song - Fix IPC encryption key prediction
     }
 }

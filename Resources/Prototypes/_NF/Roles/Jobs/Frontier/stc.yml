@@ -11,13 +11,13 @@
     - !type:RoleTimeRequirement
       role: JobSecurityGuard
       time: 10800 # 3 hrs as security guard
-  canBeAntag: false
   icon: "JobIconStc"
   supervisors: job-supervisors-sr
   weight: 160
   displayWeight: 50 # Second from the top
   setPreference: true
   access:
+  - Cargo # Aurora's Song - Cargo access is being undeprecated
   - Service
   - Maintenance
   - External
@@ -38,12 +38,13 @@
     - RubberStampStc
     - ShipVoucherFrontierStc
     - BoxFolderStc
-  encryptionKeys: # Aurora's Song - Added traffic, shipboard, security, greeting, and service encryption keys
+  encryptionKeys: # Aurora's Song - Added traffic, shipboard, security, greeting, command and service encryption keys
   - EncryptionKeyTraffic
   - EncryptionKeyShipboard
   - EncryptionKeySecurity
   - EncryptionKeyGreeting
   - EncryptionKeyService
+  - EncryptionKeyCommand
 
 - type: chameleonOutfit
   id: StationTrafficControllerChameleonOutfit

@@ -1,19 +1,23 @@
 ﻿using System.Text;
 using Content.Server.Destructible;
-using Content.Server.PowerCell;
 using Content.Shared.Speech.Components;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
+using Content.Shared.Power.EntitySystems;
+using Content.Shared.PowerCell;
 using Content.Shared.Speech;
 using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed class DamagedSiliconAccentSystem : EntitySystem
+public sealed partial class DamagedSiliconAccentSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly PowerCellSystem _powerCell = default!;
-    [Dependency] private readonly DestructibleSystem _destructibleSystem = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedBatterySystem _battery = default!;
+    [Dependency] private PowerCellSystem _powerCell = default!;
+    [Dependency] private DestructibleSystem _destructibleSystem = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
 
     public override void Initialize()
     {
@@ -34,7 +38,7 @@ public sealed class DamagedSiliconAccentSystem : EntitySystem
             }
             else if (_powerCell.TryGetBatteryFromSlot(uid, out var battery))
             {
-                currentChargeLevel = battery.CurrentCharge / battery.MaxCharge;
+                currentChargeLevel = _battery.GetChargeLevel(battery.Value.AsNullable());
             }
             currentChargeLevel = Math.Clamp(currentChargeLevel, 0.0f, 1.0f);
             // Corrupt due to low power (drops characters on longer messages)
@@ -50,7 +54,7 @@ public sealed class DamagedSiliconAccentSystem : EntitySystem
             }
             else if (TryComp<DamageableComponent>(uid, out var damageable))
             {
-                damage = damageable.TotalDamage;
+                damage = _damageable.GetTotalDamage((uid, damageable));
             }
             // Corrupt due to damage (drop, repeat, replace with symbols)
             args.Message = CorruptDamage(args.Message, damage, ent);
@@ -124,9 +128,19 @@ public sealed class DamagedSiliconAccentSystem : EntitySystem
         // Linear interpolation of character damage probability
         var damagePercent = Math.Clamp((float)totalDamage / (float)damageAtMaxCorruption, 0, 1);
         var chanceToCorruptLetter = damagePercent * ent.Comp.MaxDamageCorruption;
+        var disableCorruption = -1; // Aurora's Song - Support text formatting
         foreach (var letter in message)
         {
-            if (_random.Prob(chanceToCorruptLetter)) // Corrupt!
+            // Start Aurora's Song - Support text formatting
+            disableCorruption = letter switch
+            {
+                '\\' or ']' => 0,
+                '[' => 1,
+                _ => disableCorruption,
+            };
+
+            if (disableCorruption == -1  && _random.Prob(chanceToCorruptLetter)) // Corrupt!
+            // End Aurora's Song
             {
                 outMsg.Append(CorruptLetterDamage(letter));
             }
@@ -134,6 +148,9 @@ public sealed class DamagedSiliconAccentSystem : EntitySystem
             {
                 outMsg.Append(letter);
             }
+
+            if (disableCorruption == 0) // Aurora's Song - Support text formatting
+                disableCorruption = -1;
         }
         return outMsg.ToString();
     }
@@ -153,7 +170,7 @@ public sealed class DamagedSiliconAccentSystem : EntitySystem
 
     private string CorruptPunctuize()
     {
-        const string punctuation = "\"\\`~!@#$%^&*()_+-={}[]|\\;:<>,.?/";
+        const string punctuation = "\"`~!@#$%^&*()_+-={}]|;:<>,.?/"; // Aurora's Song - Remove characters which cause formatting issues
         return punctuation[_random.NextByte((byte)punctuation.Length)].ToString();
     }
 

@@ -1,4 +1,4 @@
-using Content.Shared.Construction.Prototypes;
+﻿using Content.Shared.Construction.Prototypes;
 using Content.Shared.Whitelist;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
@@ -56,14 +56,14 @@ public sealed partial class MaterialReclaimerComponent : Component
     /// For example, with a rate of 50, an entity with 100 total material takes 2 seconds to process.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float BaseMaterialProcessRate = 100f;
+    public float BaseMaterialProcessRate = 500f; // Aurora's Song 100>500
 
     /// <summary>
     /// How quickly it takes to consume X amount of materials per second.
     /// For example, with a rate of 50, an entity with 100 total material takes 2 seconds to process.
     /// </summary>
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
-    public float MaterialProcessRate = 100f;
+    public float MaterialProcessRate = 500f; // Aurora's Song 100>500
 
     /// <summary>
     /// Machine part whose rating modifies <see cref="MaterialProcessRate"/>
@@ -89,6 +89,20 @@ public sealed partial class MaterialReclaimerComponent : Component
     /// </summary>
     [DataField]
     public string? SolutionContainerId;
+
+    /// <summary>
+    /// Can this reclaimer reclaim materials?
+    /// They will be spawned as material stacks.
+    /// </summary>
+    [DataField]
+    public bool ReclaimMaterials = true;
+
+    /// <summary>
+    /// Can this reclaimer reclaim solutions?
+    /// The reclaimed reagents will be stored in a buffer or spilled on the ground if that is full.
+    /// </summary>
+    [DataField]
+    public bool ReclaimSolutions = true;
 
     /// <summary>
     /// If the reclaimer should attempt to reclaim all solutions or just drainable ones

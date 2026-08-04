@@ -16,6 +16,10 @@
         whitelist:
           tags:
           - Sidearm
+        ejectSound: #Aurora's Song - add unique holster sounds; originally made for Den
+          path: /Audio/_DEN/Weapons/pistol_unholster.ogg
+        insertSound: #Aurora's Song - add unique holster sounds; originally made for Den
+          path: /Audio/_DEN/Weapons/pistol_holster.ogg
       magazine:
         priority: 3
         name: clothing-neck-magazine
@@ -27,7 +31,15 @@
           - NFSpeedLoaderPistol35
           - NFSpeedLoaderPistol45
           - SpeedLoaderRifleHeavy
+          - ASMagazinePistol40 # Aurora's Song - Allow .40 mags to fit
+          - ASMagazineHighCapacityPistol40 # Aurora's Song - Allow High cap .40 mags to fit
+          - ASSpeedLoaderPistol40 # Aurora's Song - Allow .40 speedloaders to fit
           - ASMagazinePistolCaselessRifle # Aurora's Song - Allow Cobra mags to fit
+          - PowerCellHyper # Aurora's Song - Allow power cells to fit
+          - PowerCellHigh # Aurora's Song - Allow power cells to fit
+          - PowerCellMedium # Aurora's Song - Allow power cells to fit
+          - PowerCellSmall # Aurora's Song - Allow power cells to fit
+          - MagazineBRDIP15 # Auroa's Song - Allow BRDI mags to fit
   - type: Appearance
   - type: ItemMapper
     mapLayers:
@@ -45,8 +57,14 @@
           - NFSpeedLoaderPistol45
           - SpeedLoaderRifleHeavy
           - ASMagazinePistol40 # Aurora's Song - Allow .40 mags to fit
+          - ASMagazineHighCapacityPistol40 # Aurora's Song - Allow High cap .40 mags to fit
           - ASSpeedLoaderPistol40 # Aurora's Song - Allow .40 speedloaders to fit
           - ASMagazinePistolCaselessRifle # Aurora's Song - Allow Cobra mags to fit
+          - PowerCellHyper # Aurora's Song - Allow power cells to fit
+          - PowerCellHigh # Aurora's Song - Allow power cells to fit
+          - PowerCellMedium # Aurora's Song - Allow power cells to fit
+          - PowerCellSmall # Aurora's Song - Allow power cells to fit
+          - MagazineBRDIP15 # Auroa's Song - Allow BRDI mags to fit
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
@@ -71,6 +89,7 @@
         whitelist:
           tags:
           - Knife
+          - Baton # Aurora's Song
   - type: Appearance
   - type: ItemMapper
     mapLayers:
@@ -78,6 +97,7 @@
         whitelist:
           tags:
           - Knife
+          - Baton # Aurora's Song
   - type: ContainerContainer
     containers:
       storagebase: !type:Container

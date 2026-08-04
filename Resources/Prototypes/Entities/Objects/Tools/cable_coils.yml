@@ -3,9 +3,9 @@
 # ability to have applied colors yet in GUIs. And also inhands... -Swept
 
 - type: entity
-  id: CableStack
   abstract: true
-  parent: BaseItem
+  parent: [SolutionCompositeSmallStackable, BaseItem]
+  id: CableStack
   name: cable stack
   suffix: Full
   components:
@@ -16,6 +16,7 @@
     stackType: Cable
   - type: Sprite
     sprite: Objects/Tools/cable-coils.rsi
+  - type: Appearance
   - type: Item
     sprite: Objects/Tools/cable-coils.rsi
     size: Small
@@ -33,6 +34,20 @@
     guides:
     - VoltageNetworks
     - Power
+  - type: Damageable
+    damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: Inorganic
+  - type: Extractable
+    grindableSolutionName: composite
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   # EE Change Start
   #Same as Ointment but divided by 5 and 3 because StackPrice needs to be 1 - Estacao Pirata IPCs
   #1 Ointment = -50 damage of those types
@@ -83,19 +98,15 @@
   - type: CablePlacer
     cablePrototypeID: CableHV
     blockingWireType: HighVoltage
-  - type: Appearance
-  - type: Extractable
-    grindableSolutionName: hvcable
-  - type: SolutionContainerManager
-    solutions:
-      hvcable:
-        reagents:
-        - ReagentId: Iron
-          Quantity: 3
-        - ReagentId: Copper
-          Quantity: 2
-        - ReagentId: Carbon #steel-reinforced
-          Quantity: 1
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Iron
+        Quantity: 2.5
+      - ReagentId: Copper
+        Quantity: 2
+      - ReagentId: Carbon #steel-reinforced
+        Quantity: 0.5
 
 - type: entity
   parent: CableHVStack
@@ -105,15 +116,6 @@
   - type: Sprite
     state: coilhv-10
   - type: Stack
-    count: 10
-
-- type: entity
-  parent: CableHVStack10
-  id: CableHVStackLingering10
-  suffix: Lingering, 10
-  components:
-  - type: Stack
-    lingering: true
     count: 10
 
 - type: entity
@@ -127,7 +129,7 @@
     count: 1
 
 - type: entity
-  parent: CableStack
+  parent: [SolutionCompositeCable, CableStack]
   id: CableMVStack
   name: MV cable coil
   suffix: Full
@@ -146,21 +148,23 @@
     - state: coilmv-30
       map: ["base"]
   - type: Item
-    heldPrefix: coilmv
+    heldPrefix: composite
   - type: CablePlacer
     cablePrototypeID: CableMV
     blockingWireType: MediumVoltage
-  - type: Appearance
-  - type: Extractable
-    grindableSolutionName: mvcable
-  - type: SolutionContainerManager
-    solutions:
-      mvcable:
-        reagents:
-        - ReagentId: Iron
-          Quantity: 3
-        - ReagentId: Copper
-          Quantity: 2
+
+- type: entity
+  abstract: true
+  parent: SolutionCompositeSmallStackable
+  id: SolutionCompositeCable
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Iron
+        Quantity: 3
+      - ReagentId: Copper
+        Quantity: 2
 
 - type: entity
   parent: CableMVStack
@@ -170,15 +174,6 @@
   - type: Sprite
     state: coilmv-10
   - type: Stack
-    count: 10
-
-- type: entity
-  parent: CableMVStack10
-  id: CableMVStackLingering10
-  suffix: Lingering, 10
-  components:
-  - type: Stack
-    lingering: true
     count: 10
 
 - type: entity
@@ -192,7 +187,7 @@
     count: 1
 
 - type: entity
-  parent: CableStack
+  parent: [SolutionCompositeCable, CableStack]
   id: CableApcStack
   name: LV cable coil
   description: Low-Voltage stack of wires for connecting APCs to machines and other purposes.
@@ -214,17 +209,6 @@
   - type: CablePlacer
     cablePrototypeID: CableApcExtension
     blockingWireType: Apc
-  - type: Appearance
-  - type: Extractable
-    grindableSolutionName: lvcable
-  - type: SolutionContainerManager
-    solutions:
-      lvcable:
-        reagents:
-        - ReagentId: Iron
-          Quantity: 3
-        - ReagentId: Copper
-          Quantity: 2
 
 - type: entity
   parent: CableApcStack
@@ -238,15 +222,6 @@
     - type: Construction # Frontier
       graph: CableApcStack10 # Frontier
       node: CableApcStack10 # Frontier
-
-- type: entity
-  parent: CableApcStack10
-  id: CableApcStackLingering10
-  suffix: Lingering, 10
-  components:
-  - type: Stack
-    lingering: true
-    count: 10
 
 - type: entity
   parent: CableApcStack

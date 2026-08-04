@@ -1,3 +1,67 @@
+# Aurora Song - Mantis drip merge
+- type: loadout
+  id: ContractorClothingUniformMantisLoincloth
+  price: 300
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMantisLoincloth
+
+- type: loadout
+  id: ContractorClothingUniformMantisDark
+  price: 300
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMantisDark
+
+- type: loadout
+  id: ContractorClothingUniformMantisOrnate
+  price: 300
+  equipment:
+    jumpsuit: ClothingUniformSkirtMantisOrnate
+
+- type: loadout
+  id: ContractorClothingUniformMantisAiry
+  price: 300
+  equipment:
+    jumpsuit: ClothingUniformSkirtMantisAiry
+# Mantis drip ends
+
+# Aurora Song - Chaplain drip start
+- type: loadout
+  id: ContractorClothingUniformSkirtClayshaper
+  price: 300
+  equipment:
+    jumpsuit: ClothingUniformSkirtClayshaper
+
+- type: loadout
+  id: ContractorClothingUniformSkirtDruid
+  price: 300
+  equipment:
+    jumpsuit: ClothingUniformSkirtDruid
+
+- type: loadout
+  id: ContractorClothingUniformSkirtMoon
+  price: 300
+  equipment:
+    jumpsuit: ClothingUniformSkirtMoon
+
+- type: loadout
+  id: ContractorClothingUniformSun
+  price: 300
+  equipment:
+    jumpsuit: ClothingUniformSun
+
+- type: loadout
+  id: ContractorClothingUniformTech
+  price: 300
+  equipment:
+    jumpsuit: ClothingUniformTech
+
+- type: loadout
+  id: ContractorClothingUniformSkirtTidal
+  price: 300
+  equipment:
+    jumpsuit: ClothingUniformSkirtTidal
+# Aurora Song - Chaplain drip end
+
 - type: loadout
   id: ContractorClothingUniformJumpsuitAtmos
   price: 200
@@ -9,6 +73,20 @@
   price: 200
   equipment:
     jumpsuit: ClothingUniformJumpskirtAtmos
+
+# Aurora - Atmos Flightsuits
+- type: loadout
+  id: ContractorClothingUniformFlightsuitAtmos
+  price: 300
+  equipment:
+    jumpsuit: ClothingUniformAtmosFlightSuit
+
+- type: loadout
+  id: ContractorClothingUniformFlightskirtAtmos
+  price: 300
+  equipment:
+    jumpsuit: ClothingUniformAtmosFlightSkirt
+# End Flightsuits
 
 - type: loadout
   id: ContractorClothingUniformJumpsuitBartender
@@ -258,9 +336,31 @@
 
 - type: loadout # Aurora's Song - Shirtless Coyote Pants
   id: ContractorClothingUniformJumpsuitCoyotePants
+  groupBy: coyotepants
   price: 200
   equipment:
     jumpsuit: ClothingUniformJumpsuitCoyotePants
+
+- type: loadout # Aurora's Song - coyote pants recolor
+  id: ContractorClothingUniformJumpsuitJackalPants
+  groupBy: coyotepants
+  price: 200
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitJackalPants    
+
+- type: loadout # Aurora's Song - coyote pants recolor
+  id: ContractorClothingUniformJumpsuitWolfPants
+  groupBy: coyotepants
+  price: 200
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitWolfPants    
+
+- type: loadout # Aurora's Song - coyote pants recolor
+  id: ContractorClothingUniformJumpsuitHoundPants
+  groupBy: coyotepants
+  price: 200
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHoundPants
 
 #T1
 - type: loadout
@@ -1317,7 +1417,7 @@
     proto: ContractorT2
   price: 1000
   equipment:
-    jumpsuit: ClothingUniformJumpsuitChiefEngineerNT
+    jumpsuit: ClothingUniformJumpsuitChiefEngineer #Aurora Song: ClothingUniformJumpsuitChiefEngineerNT: ClothingUniformJumpsuitChiefEngineer
 
 - type: loadout
   id: ContractorClothingUniformJumpsuitChiefEngineer

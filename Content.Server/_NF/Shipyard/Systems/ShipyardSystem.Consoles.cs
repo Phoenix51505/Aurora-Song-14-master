@@ -47,31 +47,32 @@ using Robust.Server.Player;
 using Robust.Shared.Timing;
 using Content.Server._NF.GC.Components;
 using Content.Server._Mono.Shipyard;
-using Content.Shared._AS.Traits; // AS
+using Content.Shared._AS.Traits;
+using Content.Shared.Maps; // AS
 
 namespace Content.Server._NF.Shipyard.Systems;
 
 public sealed partial class ShipyardSystem : SharedShipyardSystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IServerPreferencesManager _prefManager = default!;
-    [Dependency] private readonly AccessSystem _accessSystem = default!;
-    [Dependency] private readonly AccessReaderSystem _access = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly RadioSystem _radio = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly BankSystem _bank = default!;
-    [Dependency] private readonly IdCardSystem _idSystem = default!;
-    [Dependency] private readonly StationRecordsSystem _records = default!;
-    [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly MindSystem _mind = default!;
-    [Dependency] private readonly ShuttleRecordsSystem _shuttleRecordsSystem = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly ShipyardDirectionSystem _directionSystem = default!; // Aurora Song port of Monolith direction system
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IServerPreferencesManager _prefManager = default!;
+    [Dependency] private AccessSystem _accessSystem = default!;
+    [Dependency] private AccessReaderSystem _access = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private UserInterfaceSystem _ui = default!;
+    [Dependency] private RadioSystem _radio = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private BankSystem _bank = default!;
+    [Dependency] private IdCardSystem _idSystem = default!;
+    [Dependency] private StationRecordsSystem _records = default!;
+    [Dependency] private ChatSystem _chat = default!;
+    [Dependency] private MindSystem _mind = default!;
+    [Dependency] private ShuttleRecordsSystem _shuttleRecordsSystem = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private ShipyardDirectionSystem _directionSystem = default!; // Aurora Song port of Monolith direction system
 
     private static readonly Regex DeedRegex = new(@"\s*\([^()]*\)");
 
@@ -315,7 +316,7 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
                     name: deedShuttle.ShuttleName ?? "",
                     suffix: deedShuttle.ShuttleNameSuffix ?? "",
                     ownerName: shuttleOwner,
-                    entityUid: EntityManager.GetNetEntity(shuttleUid),
+                    entityUid: GetNetEntity(shuttleUid),
                     purchasedWithVoucher: voucherUsed,
                     purchasePrice: (uint)vessel.Price,
                     vesselPrototypeId: vessel.ID
@@ -326,7 +327,7 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         RefreshState(shipyardConsoleUid, bank.Balance, true, name, sellValue, targetId, (ShipyardConsoleUiKey)args.UiKey, voucherUsed);
     }
 
-    private void TryParseShuttleName(ShuttleDeedComponent deed, string name)
+    public static void TryParseShuttleName(ShuttleDeedComponent deed, string name) // Aurora's Song - Make public and static so we can use it in the deed system
     {
         // The logic behind this is: if a name part fits the requirements, it is the required part. Otherwise it's the name.
         // This may cause problems but ONLY when renaming a ship. It will still display properly regardless of this.
@@ -371,6 +372,13 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         if (!TryComp<BankAccountComponent>(player, out var bank))
         {
             ConsolePopup(player, Loc.GetString("shipyard-console-no-bank"));
+            PlayDenySound(player, uid, component);
+            return;
+        }
+
+        if (!deed.Sellable) // Aurora's Song - Handle non-sellable ships
+        {
+            ConsolePopup(player, Loc.GetString("shipyard-console-unsellable-station"));
             PlayDenySound(player, uid, component);
             return;
         }

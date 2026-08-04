@@ -14,11 +14,13 @@
   effects:
   - !type:SpeciesLoadoutEffect
     species:
+    - Decapoid # Aurora's Song - Water vapor.
     - SlimePerson
     - Vox
     - Sheleg # Different meds
     - IPC
     - Feroxi # Water vapor breather - Aurora Song
+    - Avali # Aurora's Song - Ammonia drinker
     inverted: true
 
 - type: loadoutEffectGroup

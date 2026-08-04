@@ -1,20 +1,16 @@
-using System.Collections;
 using System.Linq;
 using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Server.Atmos;
-using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
-using Robust.Shared.CPUJob.JobQueues;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Parallax;
 using Content.Server.Procedural;
 using Content.Server.Salvage.Expeditions;
-using Content.Server.Salvage.Expeditions.Structure;
+using Content.Server.Shuttles.Components;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Construction.EntitySystems;
-using Content.Shared.Dataset;
 using Content.Shared.Gravity;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Physics;
@@ -25,20 +21,19 @@ using Content.Shared.Salvage;
 using Content.Shared.Salvage.Expeditions;
 using Content.Shared.Salvage.Expeditions.Modifiers;
 using Content.Shared.Shuttles.Components;
-using Content.Shared.Storage;
 using Robust.Shared.Collections;
-using Robust.Shared.Map;
+using Robust.Shared.CPUJob.JobQueues;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Content.Server.Shuttles.Components;
 using Content.Server._NF.Salvage.Expeditions; // Frontier
-using Content.Server.Station.Components; // Frontier
+using Content.Shared.Station.Components; // Frontier
 using Content.Server.Station.Systems; // Frontier
 using Content.Server.Shuttles.Systems;
 using Content.Server._NF.Salvage.Expeditions.Structure; // Frontier
+using Robust.Shared.Map; // Frontier
 
 namespace Content.Server.Salvage;
 
@@ -249,7 +244,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         var stationData = _entManager.GetComponent<StationDataComponent>(Station);
 
         // Get ship bounding box relative to largest grid coords
-        var shuttleUid = _station.GetLargestGrid(stationData);
+        var shuttleUid = _station.GetLargestGrid((Station, stationData));
         Box2 shuttleBox = new Box2();
 
         if (shuttleUid is { Valid: true } vesselUid &&
@@ -497,7 +492,6 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
                 }
 
                 var uid = _entManager.SpawnEntity(shaggy, _map.GridTileToLocal(mapUid, grid, tile));
-                _entManager.AddComponent<SalvageStructureComponent>(uid);
                 structureComp.Structures.Add(uid);
                 break;
             }

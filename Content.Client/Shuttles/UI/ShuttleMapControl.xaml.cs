@@ -23,11 +23,10 @@ namespace Content.Client.Shuttles.UI;
 [GenerateTypedNameReferences]
 public sealed partial class ShuttleMapControl : BaseShuttleControl
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IInputManager _inputs = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!; // Mono
-    [Dependency] private readonly IEntityManager _entManager = default!; // Frontier
-
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IInputManager _inputs = default!;
+    [Dependency] private IMapManager _mapManager = default!; // Mono
+    [Dependency] private IEntityManager _entManager = default!; // Frontier
     private readonly SharedMapSystem _mapSystem;
     private readonly ShuttleSystem _shuttles;
     private readonly SharedTransformSystem _xformSystem;
@@ -138,7 +137,6 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
                 {
                     // We'll send the "adjusted" position and server will adjust it back when relevant.
                     var mapCoords = new MapCoordinates(InverseMapPosition(args.RelativePixelPosition), ViewingMap);
-
                     RequestFTL?.Invoke(mapCoords, _ftlAngle);
                 }
             }
@@ -194,7 +192,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
 
         // Remove offset so we can floor.
         var botLeft = new Vector2(0f, 0f);
-        var topRight = botLeft + PixelSize; // Mono: Pixels
+        var topRight = botLeft + PixelSize;
 
         var flooredBL = botLeft - originBL;
 
@@ -629,18 +627,5 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         {
             _mapObjects.AddRange(obbies);
         }
-    }
-
-    // Mono
-    /// <summary>
-    /// Draw the coordinate data with a custom color.
-    /// </summary>
-    protected void DrawData(DrawingHandleScreen handle, string text, Color color)
-    {
-        var margin = 5f;
-        var font = _font;
-        var dimensions = handle.GetDimensions(font, text, 1f);
-        var position = new Vector2(margin, PixelHeight - dimensions.Y - margin);
-        handle.DrawString(font, position, text, color);
     }
 }

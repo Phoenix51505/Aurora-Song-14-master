@@ -3,13 +3,14 @@ using Content.Server.Power.Components;
 using JetBrains.Annotations;
 using Content.Server._NF.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Shared.Power.Components;
 
 namespace Content.Server._NF.Power.EntitySystems;
 
 [UsedImplicitly]
-public sealed class UpgradeBatterySystem : EntitySystem
+public sealed partial class UpgradeBatterySystem : EntitySystem
 {
-    [Dependency] private readonly BatterySystem _batterySystem = default!;
+    [Dependency] private BatterySystem _batterySystem = default!;
 
     public override void Initialize()
     {
@@ -25,7 +26,7 @@ public sealed class UpgradeBatterySystem : EntitySystem
 
         if (TryComp<BatteryComponent>(uid, out var batteryComp))
         {
-            _batterySystem.SetMaxCharge(uid, MathF.Pow(component.MaxChargeMultiplier, powerCellRating - 1) * component.BaseMaxCharge, batteryComp);
+            _batterySystem.SetMaxCharge((uid, batteryComp), MathF.Pow(component.MaxChargeMultiplier, powerCellRating - 1) * component.BaseMaxCharge);
         }
     }
 

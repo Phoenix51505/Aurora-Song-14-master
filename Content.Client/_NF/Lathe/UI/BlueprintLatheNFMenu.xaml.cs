@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Text;
+using Content.Client.Lathe.UI;
 using Content.Client.Materials;
 using Content.Shared._NF.Lathe;
 using Content.Shared._NF.Research.Prototypes;
@@ -24,8 +25,8 @@ namespace Content.Client._NF.Lathe.UI;
 [GenerateTypedNameReferences]
 public sealed partial class BlueprintLatheNFMenu : DefaultWindow
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
 
     private readonly SpriteSystem _spriteSystem;
     private readonly BlueprintLatheSystem _lathe;

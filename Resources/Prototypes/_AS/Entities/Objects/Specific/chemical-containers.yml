@@ -6,12 +6,11 @@
   components:
   - type: Label
     currentLabel: med-desc-bruizine
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        reagents:
-        - ReagentId: Bruizine
-          Quantity: 200
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Bruizine
+        Quantity: 240
 
 - type: entity
   parent: Jug
@@ -21,57 +20,11 @@
   components:
   - type: Label
     currentLabel: med-desc-lacerinol
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        reagents:
-        - ReagentId: Lacerinol
-          Quantity: 200
-
-- type: entity
-  parent: Jug
-  suffix: puncturase
-  id: JugPuncturase
-#  categories: [ HideSpawnMenu ]
-  components:
-  - type: Label
-    currentLabel: med-desc-puncturase
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        reagents:
-        - ReagentId: Puncturase
-          Quantity: 200
-
-- type: entity
-  parent: Jug
-  suffix: saline
-  id: JugSaline
-#  categories: [ HideSpawnMenu ]
-  components:
-  - type: Label
-    currentLabel: med-desc-saline
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        reagents:
-        - ReagentId: Saline
-          Quantity: 200
-
-- type: entity
-  parent: Jug
-  suffix: tranexamicacid
-  id: JugTranexamicAcid
-#  categories: [ HideSpawnMenu ]
-  components:
-  - type: Label
-    currentLabel: med-desc-tranexamicacid
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        reagents:
-        - ReagentId: TranexamicAcid
-          Quantity: 200
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Lacerinol
+        Quantity: 240
 
 - type: entity
   parent: Jug
@@ -81,27 +34,11 @@
   components:
   - type: Label
     currentLabel: med-desc-pyrazine
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        reagents:
-        - ReagentId: Pyrazine
-          Quantity: 200
-
-- type: entity
-  parent: Jug
-  suffix: dexalinplus
-  id: JugDexalinPlus
-#  categories: [ HideSpawnMenu ]
-  components:
-  - type: Label
-    currentLabel: med-desc-dexalinplus
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        reagents:
-        - ReagentId: DexalinPlus
-          Quantity: 200
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Pyrazine
+        Quantity: 240
 
 - type: entity
   parent: Jug
@@ -111,9 +48,8 @@
   components:
   - type: Label
     currentLabel: med-desc-epinephrine
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        reagents:
-        - ReagentId: Epinephrine
-          Quantity: 200
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Epinephrine
+        Quantity: 240

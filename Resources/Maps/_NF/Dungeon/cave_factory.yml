@@ -8703,7 +8703,7 @@ entities:
     - type: Transform
       pos: 9.462372,35.6454
       parent: 1
-- proto: FloorDrain
+- proto: FloorDrainCosmetic
   entities:
   - uid: 939
     components:
@@ -11063,7 +11063,7 @@ entities:
     - type: Transform
       pos: 2.5,16.5
       parent: 1
-- proto: RipleyChassis
+- proto: ASSpawnRipleyParts
   entities:
   - uid: 1889
     components:

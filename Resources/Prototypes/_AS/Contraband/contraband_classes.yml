@@ -16,38 +16,112 @@
       ExchangeCoin: 2
 
 # For Van to fill out later
-# - type: entity 
+# - type: entity
 #  id: SLEContrabandReturnable1
 #  abstract: true
 #  components:
 #  - type: Contraband
 #    severity: {Fill this out Van}
-#    turnInValues: 
+#    turnInValues:
 #      FrontierUplinkCoin: 1
 
-# - type: entity 
+# - type: entity
 #  id: SLEContrabandReturnable3
 #  abstract: true
 #  components:
 #  - type: Contraband
 #    severity: {Fill this out Van}
-#    turnInValues: 
+#    turnInValues:
 #      FrontierUplinkCoin: 3
 
-# - type: entity 
+# - type: entity
 #  id: SLEContrabandReturnable5
 #  abstract: true
 #  components:
 #  - type: Contraband
 #    severity: {Fill this out Van}
-#    turnInValues: 
+#    turnInValues:
 #      FrontierUplinkCoin: 5
 
-# - type: entity 
+# - type: entity
 #  id: SLEContrabandReturnable10
 #  abstract: true
 #  components:
 #  - type: Contraband
 #    severity: {Fill this out Van}
-#    turnInValues: 
+#    turnInValues:
 #      FrontierUplinkCoin: 10
+
+- type: entity #Aurora's Song - NanoTrasen contraband flavour text
+  parent: BaseC3ContrabandUnredeemable
+  id: BaseC3NanoTrasenContrabandUnredeemable
+  abstract: true
+  components:
+  - type: Contraband
+    severity: Class3NanoTrasen
+
+- type: entity # Aurora's Song - NanoTrasen Specific contraband low bounty
+  parent: BaseC3NanoTrasenContrabandUnredeemable
+  id: BaseC3NanoTrasenContrabandLowValue
+  abstract: true
+  components:
+  - type: Contraband
+    turnInValues:
+      FrontierUplinkCoin: 1
+      Doubloon: 1
+
+- type: entity # Aurora's Song - NanoTrasen Specific contraband of military grade, high bounty
+  parent: BaseC3NanoTrasenContrabandUnredeemable
+  id: BaseC3NanoTrasenContraband
+  abstract: true
+  components:
+  - type: Contraband
+    turnInValues:
+      FrontierUplinkCoin: 2
+      Doubloon: 2
+
+- type: entity
+  id: BaseC3ContrabandCentCommUnredeemable
+  parent: BaseC2ContrabandUnredeemable
+  abstract: true
+  components:
+  - type: Contraband
+    severity: Class3NanoTrasenCentComm
+
+- type: entity
+  id: BaseC3ContrabandCentCommLowValue
+  parent: BaseC3ContrabandCentCommUnredeemable
+  abstract: true
+  components:
+  - type: Contraband
+    turnInValues:
+      FrontierUplinkCoin: 1
+      Doubloon: 1
+
+- type: entity
+  id: BaseC3ContrabandCentComm
+  parent: BaseC3ContrabandCentCommUnredeemable
+  abstract: true
+  components:
+  - type: Contraband
+    turnInValues:
+      FrontierUplinkCoin: 2
+      Doubloon: 2
+
+- type: entity
+  id: BaseC3ContrabandCAFUnredeemable
+  parent: BaseC2ContrabandUnredeemable
+  abstract: true
+  components:
+  - type: Contraband
+    severity: Class3ColonialArmedForces
+
+- type: entity
+  id: BaseC3ContrabandCAFLowValue # Just in case we want to encourage people to turn it in by paying them
+  parent: BaseC3ContrabandCAFUnredeemable
+  abstract: true
+  components:
+  - type: Contraband
+    turnInValues:
+      FrontierUplinkCoin: 1
+      Doubloon: 1

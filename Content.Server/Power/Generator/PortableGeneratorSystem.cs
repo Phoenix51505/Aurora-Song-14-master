@@ -18,17 +18,17 @@ namespace Content.Server.Power.Generator;
 /// Implements logic for portable generators (the PACMAN). Primarily UI & power switching behavior.
 /// </summary>
 /// <seealso cref="PortableGeneratorComponent"/>
-public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
+public sealed partial class PortableGeneratorSystem : SharedPortableGeneratorSystem
 {
-    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly DoAfterSystem _doAfter = default!;
-    [Dependency] private readonly AudioSystem _audio = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly GeneratorSystem _generator = default!;
-    [Dependency] private readonly PowerSwitchableSystem _switchable = default!;
-    [Dependency] private readonly ActiveGeneratorRevvingSystem _revving = default!;
-    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!; // Frontier
+    [Dependency] private UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private DoAfterSystem _doAfter = default!;
+    [Dependency] private AudioSystem _audio = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private GeneratorSystem _generator = default!;
+    [Dependency] private PowerSwitchableSystem _switchable = default!;
+    [Dependency] private ActiveGeneratorRevvingSystem _revving = default!;
+    [Dependency] private ActionBlockerSystem _actionBlocker = default!; // Frontier
 
     public override void Initialize()
     {
@@ -44,8 +44,6 @@ public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
         SubscribeLocalEvent<PortableGeneratorComponent, PortableGeneratorStartMessage>(GeneratorStartMessage);
         SubscribeLocalEvent<PortableGeneratorComponent, PortableGeneratorStopMessage>(GeneratorStopMessage);
         SubscribeLocalEvent<PortableGeneratorComponent, PortableGeneratorSwitchOutputMessage>(GeneratorSwitchOutputMessage);
-
-        SubscribeLocalEvent<FuelGeneratorComponent, SwitchPowerCheckEvent>(OnSwitchPowerCheck);
 
         SubscribeLocalEvent<PortableGeneratorComponent, MapInitEvent>(GeneratorMapInit); // Frontier
     }
@@ -212,12 +210,6 @@ public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
 
             args.Verbs.Add(verb);
         }
-    }
-
-    private void OnSwitchPowerCheck(EntityUid uid, FuelGeneratorComponent comp, ref SwitchPowerCheckEvent args)
-    {
-        if (comp.On)
-            args.DisableMessage = Loc.GetString("fuel-generator-verb-disable-on");
     }
 
     public override void Update(float frameTime)

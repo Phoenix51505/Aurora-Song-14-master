@@ -13,8 +13,9 @@
     fuelCost: 10
     doAfterDelay: 2
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: RGlass
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -125,7 +126,7 @@
   - type: Tag
     tags:
     - Diagonal
-    - Window # AS: Brought in line with standard window
+    - Window
   - type: IconSmooth
     mode: Diagonal
     base: state

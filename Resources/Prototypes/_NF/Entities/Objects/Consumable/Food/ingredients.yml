@@ -13,14 +13,13 @@
   - type: Sprite
     sprite: _NF/Objects/Consumable/Food/ingredients.rsi
     state: salt-big
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 50
-        reagents:
-        - ReagentId: TableSalt
-          Quantity: 50
-  - type: Drink
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: TableSalt
+        Quantity: 60
+  - type: Edible  # Aurora's Song - Convert to edible from Drink
+    edible: Drink
     solution: food
     useSound:
       path: /Audio/Items/eating_1.ogg
@@ -34,13 +33,11 @@
   - type: Sprite
     sprite: _NF/Objects/Consumable/Food/ingredients.rsi
     state: pepper-big
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 50
-        reagents:
-        - ReagentId: Blackpepper
-          Quantity: 50
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: Blackpepper
+        Quantity: 60
 
 - type: entity
   parent: ReagentPacketBase
@@ -51,13 +48,11 @@
   - type: Sprite
     sprite: _NF/Objects/Consumable/Food/ingredients.rsi
     state: raisin-big
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 50
-        reagents:
-        - ReagentId: Raisins
-          Quantity: 50
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: Raisins
+        Quantity: 60
 
 - type: entity
   parent: ReagentPacketBase
@@ -68,12 +63,11 @@
   - type: Sprite
     sprite: _NF/Objects/Consumable/Food/ingredients.rsi
     state: cocoa-chip-big
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: CocoaPowder
-          Quantity: 50
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: CocoaPowder
+        Quantity: 60
 
 - type: entity
   name: raw coffee beans
@@ -84,16 +78,14 @@
   - type: FlavorProfile
     flavors:
       - bitter
-  - type: Food
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 6
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 1
-        - ReagentId: Theobromine # Caffeine
-          Quantity: 1
+  - type: Edible # Aurora's Song - Food>Edible
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 1
+      - ReagentId: Theobromine # Caffeine
+        Quantity: 1
   - type: Sprite
     sprite: _NF/Objects/Specific/Hydroponics/coffee.rsi
     state: produce-beans
@@ -122,14 +114,12 @@
   - type: FlavorProfile
     flavors:
       - bitter
-  - type: Food
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 6
-        reagents:
-        - ReagentId: CoffeeGrounds
-          Quantity: 5
+  - type: Edible # Aurora's Song - Food>Edible
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: CoffeeGrounds
+        Quantity: 5
   - type: Sprite
     sprite: _NF/Objects/Specific/Hydroponics/coffee.rsi
     state: produce-beans-light
@@ -182,7 +172,7 @@
     defaultTarget: Null # Overwriting light target
 
 - type: entity
-  parent: [ReagentPacketBase, ItemHeftyBase]
+  parent: [SolutionTiny, ReagentPacketBase, ItemHeftyBase] # Aurora's Song - Convert to solution
   id: ReagentContainerHoney
   name: honey bottle
   description: A big squeeze bottle of honey. Great for sweetening up your day!
@@ -190,14 +180,13 @@
   - type: Sprite
     sprite: _NF/Objects/Consumable/Food/ingredients.rsi
     state: honeybottle
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 30
-        reagents:
-        - ReagentId: Honey
-          Quantity: 30
-  - type: Drink
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: Honey
+        Quantity: 30
+  - type: Edible  # Aurora's Song - Convert to edible from Drink
+    edible: Drink
     solution: food
     useSound:
       path: /Audio/Items/eating_1.ogg
@@ -247,15 +236,13 @@
   - type: Construction
     graph: WaffleCone
     node: cone
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 13
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 2
-        - ReagentId: Sugar
-          Quantity: 1
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 2
+      - ReagentId: Sugar
+        Quantity: 1
 
 - type: entity
   parent: FoodInjectableBase
@@ -269,22 +256,20 @@
     sprite: _NF/Objects/Consumable/Food/ingredients.rsi
     state: rice-noodle-sheet
   - type: SliceableFood
-    count: 3
+    count: 4
     slice: FoodRiceNoodles
   - type: Tag
     tags:
     - Raw
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 65 # it's a bunch of raw rice. How sad to eat this.
-        reagents:
-        - ReagentId: Rice
-          Quantity: 45
-        - ReagentId: TableSalt
-          Quantity: 10
-        - ReagentId: Cornoil
-          Quantity: 10
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: Rice
+        Quantity: 40
+      - ReagentId: TableSalt
+        Quantity: 10
+      - ReagentId: Cornoil
+        Quantity: 10
 
 - type: entity
   parent: FoodNoodlesBase
@@ -295,17 +280,15 @@
   - type: Sprite
     sprite: _NF/Objects/Consumable/Food/ingredients.rsi
     state: rice-noodle
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 21
-        reagents:
-        - ReagentId: Rice
-          Quantity: 15
-        - ReagentId: TableSalt
-          Quantity: 3
-        - ReagentId: Cornoil
-          Quantity: 3
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: Rice
+        Quantity: 10
+      - ReagentId: TableSalt
+        Quantity: 2
+      - ReagentId: Cornoil
+        Quantity: 3
 
 - type: entity
   parent: FoodMeatBase
@@ -316,16 +299,17 @@
   - type: Sprite
     sprite: _NF/Objects/Consumable/Food/ingredients.rsi
     state: sausageraw
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 7
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 5
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: UncookedAnimalProteins
+        Quantity: 5
   - type: Construction
     graph: NFHotdogStove
     node: start
+  - type: Tag # Aurora's Song
+    tags:
+    - Meat
 
 - type: entity
   parent: BaseItem
@@ -339,3 +323,42 @@
   - type: Construction
     graph: Cutlet
     node: casing
+
+- type: entity
+  name: rice dough
+  parent: FoodBakingBase
+  id: FoodRiceDough
+  description: You're pretty sure this is just rice and water. You have no idea how it's holding together.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - rice
+  - type: Sprite
+    sprite: _NF/Objects/Consumable/Food/ingredients.rsi
+    state: rice-dough
+  - type: SliceableFood
+    count: 4
+    slice: FoodRiceDoughSlice
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: Rice
+        Quantity: 40
+
+- type: entity
+  name: rice dough slice
+  parent: FoodBakingBase
+  id: FoodRiceDoughSlice
+  description: A slice of rice dough.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - rice
+  - type: Sprite
+    sprite: _NF/Objects/Consumable/Food/ingredients.rsi
+    state: rice-dough-slice
+  - type: Solution # Aurora's Song - Convert to solution
+    solution:
+      reagents:
+      - ReagentId: Rice
+        Quantity: 10

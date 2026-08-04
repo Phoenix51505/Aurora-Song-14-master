@@ -8,7 +8,6 @@
   startingGear: CAFLeaderGearEVAJackhammer
   icon: "JobIconColonialArmedForces"
   supervisors: job-supervisors-colcom
-  canBeAntag: false
   accessGroups:
   - AllAccess
   access:
@@ -47,7 +46,7 @@
   id: CAFLeaderGearEVA
   equipment:
     jumpsuit: ClothingUniformJumpsuitMilitaryCAFLeader
-    back: ClothingBackpackCAFLeaderFilled # Given backpack filled sincce storage doesn't work on debug-set gear
+    back: ClothingBackpackCAFLeaderFilled # Given backpack filled since storage doesn't work on debug-set gear
     shoes: ClothingShoesBootsMagAdv
     mask: ClothingMaskGasCAF
     eyes: ClothingEyesGlassesSecurity
@@ -58,7 +57,7 @@
     belt: ClothingBeltMilitaryWebbingSecurityFilled
     pocket1: NFWeaponPistolN1984 # Frontier
     pocket2: FlashlightSeclite
-#  storage: # Commented out backpack filled sincce storage doesn't work on debug-set gear
+#  storage: # Commented out backpack filled since storage doesn't work on debug-set gear
 #    back:
 #    - NFWeaponEnergyPistolDisabler # Frontier: WeaponDisabler<NFWeaponEnergyPistolDisabler
 #    - MedicatedSuture
@@ -71,7 +70,7 @@
   id: CAFLeaderGearEVAJackhammer
   equipment:
     jumpsuit: ClothingUniformJumpsuitMilitaryCAFLeader
-    back: ClothingBackpackCAFLeaderFilled # Given backpack filled sincce storage doesn't work on debug-set gear
+    back: ClothingBackpackCAFLeaderFilled # Given backpack filled since storage doesn't work on debug-set gear
     shoes: ClothingShoesBootsMagAdv
     mask: ClothingMaskGasCAF
     eyes: ClothingEyesGlassesSecurity
@@ -84,7 +83,7 @@
     pocket2: ASMagazineMarksmanRifle30Overpressure
   inhand:
   - ASWeaponRifleMarksmanHZ-3-3-MOverpressure
-#  storage: # Commented out backpack filled sincce storage doesn't work on debug-set gear
+#  storage: # Commented out backpack filled since storage doesn't work on debug-set gear
 #    back:
 #    - NFWeaponEnergyPistolDisabler # Frontier: WeaponDisabler<NFWeaponEnergyPistolDisabler
 #    - MedicatedSuture
@@ -93,13 +92,18 @@
 #    - CrowbarRed
 #    - NFMagazinePistol45 # Frontier: MagazineMagnum<NFMagazinePistol45
 
-#- type: chameleonOutfit # TODO: add later
-#  id: CAFLeaderChameleonOutfit
-#  job: CAFLeader
-#  hasMindShield: true
-#  equipment:
-#    head: ClothingHeadHelmetHardsuitERTLeader
-#    neck: ClothingNeckBronzeheart
+- type: chameleonOutfit # TODO: expand later
+  id: CAFLeaderChameleonOutfit
+  job: CAFLeader
+  hasMindShield: true
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMilitaryCAFLeader
+    head: ClothingHeadHelmetHardsuitMilitaryCAF
+    ears: ClothingHeadsetAltColCom
+    mask: ClothingMaskGasCAF
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitMilitaryCAFLeader
+    shoes: ClothingShoesBootsMagAdv
 
 #region Trooper
 - type: job
@@ -111,7 +115,6 @@
   startingGear: CAFTrooperGearEVAJackhammer
   icon: "JobIconColonialArmedForces"
   supervisors: job-supervisors-colcom
-  canBeAntag: false
   accessGroups:
   - AllAccess
   access:
@@ -150,7 +153,7 @@
   id: CAFTrooperGearEVA
   equipment:
     jumpsuit: ClothingUniformJumpsuitMilitaryCAFTrooper
-    back: ClothingBackpackCAFTrooperFilled # Given backpack filled sincce storage doesn't work on debug-set gear
+    back: ClothingBackpackCAFTrooperFilled # Given backpack filled since storage doesn't work on debug-set gear
     shoes: ClothingShoesBootsMag
     mask: ClothingMaskGasCAF
     eyes: ClothingEyesGlassesSecurity
@@ -187,7 +190,7 @@
     pocket2: ASMagazineMarksmanRifle30Overpressure
   inhand:
     - ASWeaponRifleMarksmanHZ-3-3-MOverpressure
-#  storage: # Commented out backpack filled sincce storage doesn't work on debug-set gear
+#  storage: # Commented out backpack filled since storage doesn't work on debug-set gear
 #    back:
 #    - NFWeaponEnergyPistolDisabler # Frontier: WeaponDisabler<NFWeaponEnergyPistolDisabler
 #    - MedicatedSuture
@@ -196,25 +199,29 @@
 #    - CrowbarRed
 #    - NFMagazinePistol35 # Frontier: MagazinePistol<NFMagazinePistol35
 
-#- type: chameleonOutfit # Add later
-#  id: ERTSecurityChameleonOutfit
-#  job: ERTSecurity
-#  hasMindShield: true
-#  equipment:
-#    head: ClothingHeadHelmetHardsuitERTSecurity
-#    neck: ClothingNeckSecuritymedal
+- type: chameleonOutfit # TODO: expand later
+  id: CAFTrooperChameleonOutfit
+  job: CAFTrooper
+  hasMindShield: true
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMilitaryCAFTrooper
+    head: ClothingHeadHelmetHardsuitMilitaryCAF
+    ears: ClothingHeadsetAltColCom
+    mask: ClothingMaskGasCAF
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitMilitaryCAFTrooper
+    shoes: ClothingShoesBootsMag
 
 #region Medical
 - type: job
   id: CAFMedical
-  name: job-name-cafmedical
-  description: job-description-cafmedical
+  name: job-name-cafmedic
+  description: job-description-cafmedic
   playTimeTracker: JobCAFMedical
   setPreference: false
   startingGear: CAFMedicalGearEVA
   icon: "JobIconColonialArmedForces"
   supervisors: job-supervisors-colcom
-  canBeAntag: false
   accessGroups:
   - AllAccess
   access:
@@ -264,7 +271,7 @@
     belt: ClothingBeltMedicalFilled
     pocket1: NFWeaponEnergyPistolDisabler
     pocket2: Flare
-#  storage: # Commented out backpack filled sincce storage doesn't work on debug-set gear
+#  storage: # Commented out backpack filled since storage doesn't work on debug-set gear
 #    back:
 #    - Hypospray
 #    - MedkitCombatFilled
@@ -274,13 +281,18 @@
 #    - ChemistryBottleEpinephrine
 #    - ChemistryBottleEpinephrine
 
-#- type: chameleonOutfit # Add later
-#  id: ERTMedicalChameleonOutfit
-#  job: ERTMedical
-#  hasMindShield: true
-#  equipment:
-#    head: ClothingHeadHelmetHardsuitERTMedical
-#    neck: ClothingNeckStethoscope
+- type: chameleonOutfit # TODO: expand later
+  id: CAFMedicalChameleonOutfit
+  job: CAFMedical
+  hasMindShield: true
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMilitaryCAFMedic
+    head: ClothingHeadHelmetHardsuitMilitaryCAF
+    ears: ClothingHeadsetAltColCom
+    mask: ClothingMaskGasCAF
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitMilitaryCAFTrooper
+    shoes: ClothingShoesBootsMag
 
 #region Engineer
 - type: job
@@ -292,7 +304,6 @@
   startingGear: CAFEngineerGearEVA
   icon: "JobIconColonialArmedForces"
   supervisors: job-supervisors-colcom
-  canBeAntag: false
   accessGroups:
   - AllAccess
   access:
@@ -346,7 +357,7 @@
     belt: ClothingBeltChiefEngineerFilled
     pocket1: Flare
     pocket2: GasAnalyzer
-#  storage: # Commented out backpack filled sincce storage doesn't work on debug-set gear
+#  storage: # Commented out backpack filled since storage doesn't work on debug-set gear
 #    back:
 #    - trayScanner
 #    - RCD
@@ -359,10 +370,15 @@
 #    - SheetSteel
 #    - SheetGlass
 
-#- type: chameleonOutfit # Add later
-#  id: ERTEngineerChameleonOutfit
-#  job: ERTEngineer
-#  hasMindShield: true
-#  equipment:
-#    head: ClothingHeadHelmetHardsuitERTEngineer
-#    neck: ClothingNeckEngineermedal
+- type: chameleonOutfit # TODO: expand later
+  id: CAFEngineerChameleonOutfit
+  job: CAFEngineer
+  hasMindShield: true
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMilitaryCAFEngineer
+    head: ClothingHeadHelmetHardsuitMilitaryCAF
+    ears: ClothingHeadsetAltColCom
+    mask: ClothingMaskGasCAF
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitMilitaryCAFEngineer
+    shoes: ClothingShoesBootsMag

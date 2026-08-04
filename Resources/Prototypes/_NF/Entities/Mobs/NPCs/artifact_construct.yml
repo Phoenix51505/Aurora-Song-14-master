@@ -95,10 +95,6 @@
         - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
           state: flash
           shader: unshaded
-        - map: [ "clownedon" ]
-          sprite: "_NF/Effects/creampie_64.rsi"
-          state: "creampie_grimforged"
-          visible: false
     - type: DamageStateVisuals
       states:
         Alive:
@@ -123,16 +119,18 @@
       sound:
         path: /Audio/_NF/Ambience/force-field.ogg
     - type: CreamPied
+      sprite: # Aurora's Song - Creampie refactor
+        sprite: _NF/Effects/creampie_64.rsi
+        state: creampie_grimforged
     - type: HTN
       rootTask:
         task: SimpleRangedHostileCompound
     - type: Stamina
-      critThreshold: 300
-    - type: HitscanBatteryAmmoProvider
+      baseCritThreshold: 300 # Aurora's Song - critThreshold>baseCritThreshold
+    - type: BatteryAmmoProvider # Aurora's Song - HitscanBatteryAmmoProvider>BatteryAmmoProvider
       proto: NFRedLightLaser
       fireCost: 50
     - type: BatterySelfRecharger
-      autoRecharge: true
       autoRechargeRate: 40
     - type: Battery
       maxCharge: 55

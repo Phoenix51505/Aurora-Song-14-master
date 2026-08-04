@@ -265,6 +265,12 @@
     - id: CigPackRed
       orGroup: Cigs
       prob: 0.19
+    #- id: CigPackSpirits # TheDen
+    #  orGroup: Cigs
+    #  prob: 0.19
+    #- id: CigPackMnemolith # TheDen
+    #  orGroup: Cigs
+    #  prob: 0.19
     - id: CigPackMixed
       orGroup: Cigs
       prob: 0.19
@@ -1021,7 +1027,7 @@
     - id: FoodBakedCannoli
       amount: 2
       orGroup: Food
-    - id: FoodDonutJellySlugcat
+    - id: FoodDonutJellyScurret # Aurora Song: FoodDonutJellySlugcat > FoodDonutJellyScurret
       amount: 2
       orGroup: Food
     - id: FoodMealMint # unlucky
@@ -1180,7 +1186,7 @@
   components:
   - type: Mail
     contents:
-    - id: NFWeaponRifleBarlowsBoltLessLethal # Frontier: WeaponSniperMosin<NFWeaponRifleBarlowsBolt
+    - id: ASWeaponRifleMosinBolt # Aurora's Song | restored lethal mail mosin, changed to AS version
     - id: ClothingHeadHatUshanka
     - id: SyndicateWhistle
     - id: PaperMailNTConscript
@@ -1193,7 +1199,7 @@
   components:
   - type: Mail
     contents:
-    - id: ClothingHandsGlovesBoxingRigged
+    - id: ClothingHandsGlovesBoxingRiggedRed # Aurora's Song - Add red for upmerge
     - id: ClothingBeltChampion
     - id: PaperMailNTBoxer
 
@@ -1622,17 +1628,18 @@
     contents:
       - id: SyringeCognizine # 15u cognizine, 3 friends should be enough.
 
-- type: entity
-  categories: [ HideSpawnMenu ]
-  parent: BaseMail
-  id: MailNFNecrosol # Not sure about keeping this, but its probably fine
-  suffix: necrosol bottle
-  components:
-  - type: Mail
-    isFragile: true
-    contents:
-      - id: ChemistryBottleNecrosol
-      - id: Syringe
+# Aurora's Song - Necrosol was replaced with Arcryox upstream
+# - type: entity
+#   categories: [ HideSpawnMenu ]
+#   parent: BaseMail
+#   id: MailNFNecrosol # Not sure about keeping this, but its probably fine
+#   suffix: necrosol bottle
+#   components:
+#   - type: Mail
+#     isFragile: true
+#     contents:
+#       - id: ChemistryBottleNecrosol
+#       - id: Syringe
 
 - type: entity
   categories: [ HideSpawnMenu ]

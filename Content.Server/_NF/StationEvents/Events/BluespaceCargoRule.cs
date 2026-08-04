@@ -9,16 +9,17 @@ using Robust.Shared.Configuration;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.GameTicking.Components;
 using Content.Shared._NF.CCVar;
+using Content.Shared.Station.Components;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.StationEvents.Events;
 
-public sealed class BluespaceCargoRule : StationEventSystem<BluespaceCargoRuleComponent>
+public sealed partial class BluespaceCargoRule : StationEventSystem<BluespaceCargoRuleComponent>
 {
-    [Dependency] private readonly IConfigurationManager _configuration = default!;
-    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly MapSystem _map = default!;
+    [Dependency] private IConfigurationManager _configuration = default!;
+    [Dependency] private AtmosphereSystem _atmosphere = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private MapSystem _map = default!;
 
     protected override void Added(EntityUid uid, BluespaceCargoRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
@@ -35,7 +36,7 @@ public sealed class BluespaceCargoRule : StationEventSystem<BluespaceCargoRuleCo
         if (!TryComp<StationDataComponent>(chosenStation, out var stationData))
             return;
 
-        var grid = StationSystem.GetLargestGrid(stationData);
+        var grid = StationSystem.GetLargestGrid((chosenStation.Value, stationData));
 
         if (grid is null)
             return;

@@ -12,7 +12,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Widgets;
 [GenerateTypedNameReferences]
 public sealed partial class GhostGui : UIWidget
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!; // Frontier
+    [Dependency] private IGameTiming _gameTiming = default!; // Frontier
     private TimeSpan? _respawnTime; // Frontier
 
     public GhostTargetWindow TargetWindow { get; }
@@ -39,7 +39,7 @@ public sealed partial class GhostGui : UIWidget
         GhostWarpButton.OnPressed += _ => RequestWarpsPressed?.Invoke();
         ReturnToBodyButton.OnPressed += _ => ReturnToBodyPressed?.Invoke();
         GhostRolesButton.OnPressed += _ => GhostRolesPressed?.Invoke();
-        GhostRolesButton.OnPressed += _ => GhostRolesButton.StyleClasses.Remove(StyleBase.ButtonCaution);
+        GhostRolesButton.OnPressed += _ => GhostRolesButton.StyleClasses.Remove(StyleClass.Negative);
         GhostRespawnButton.OnPressed += _ => RulesWindow.OpenCentered(); // Frontier
         CryosleepReturnButton.OnPressed += _ => CryosleepWakeupWindow.OpenCentered(); // Frontier
     }
@@ -65,7 +65,7 @@ public sealed partial class GhostGui : UIWidget
 
             if (roles > _prevNumberRoles)
             {
-                GhostRolesButton.StyleClasses.Add(StyleBase.ButtonCaution);
+                GhostRolesButton.StyleClasses.Add(StyleClass.Negative);
             }
 
             _prevNumberRoles = (int)roles;

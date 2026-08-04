@@ -2,15 +2,15 @@ using Content.Server.Power.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.AlertLevel;
 using Content.Shared.Power;
-using Content.Server._NF.SectorServices; // Frontier
+using Content.Shared._NF.SectorServices; // Frontier
 
 namespace Content.Server.AlertLevel;
 
-public sealed class AlertLevelDisplaySystem : EntitySystem
+public sealed partial class AlertLevelDisplaySystem : EntitySystem
 {
-    // [Dependency] private readonly StationSystem _stationSystem = default!; // Frontier
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SectorServiceSystem _sectorService = default!; // Frontier
+    // [Dependency] private StationSystem _stationSystem = default!; // Frontier
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SectorServiceSystem _sectorService = default!; // Frontier
 
     public override void Initialize()
     {

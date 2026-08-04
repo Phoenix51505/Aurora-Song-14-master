@@ -5,6 +5,7 @@ using Content.Shared.Body.Components;
 using Content.Server.Body.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Item;
+using Content.Shared.Medical;
 using Content.Shared.StatusEffect;
 using Content.Shared.Throwing;
 using Robust.Shared.Random;
@@ -20,11 +21,11 @@ namespace Content.Server._DV.Abilities.Felinid;
 /// 2. vomiting was in shared
 /// 3. this didn't use RNG.
 /// </remarks>
-public sealed class FelinidSystem : SharedFelinidSystem
+public sealed partial class FelinidSystem : SharedFelinidSystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
-    [Dependency] private readonly VomitSystem _vomit = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedSolutionContainerSystem _solution = default!;
+    [Dependency] private VomitSystem _vomit = default!;
 
     public override void Initialize()
     {
@@ -38,7 +39,7 @@ public sealed class FelinidSystem : SharedFelinidSystem
 
     private void OnItemCoughedUp(Entity<FelinidComponent> ent, ref ItemCoughedUpEvent args)
     {
-        if (!TryComp<BloodstreamComponent>(ent, out var blood) || blood.ChemicalSolution is not {} solution)
+        if (!TryComp<StomachComponent>(ent, out var stomach) || stomach.Solution is not {} solution) // Aurora's Song - Replace with stomach solution
             return;
 
         var item = args.Item;

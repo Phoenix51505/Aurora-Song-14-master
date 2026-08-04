@@ -23,15 +23,15 @@ namespace Content.Server._NF.Bank;
 
 public sealed partial class BankSystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly StackSystem _stackSystem = default!;
-    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly HandsSystem _hands = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private StackSystem _stackSystem = default!;
+    [Dependency] private UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private SharedContainerSystem _containerSystem = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private HandsSystem _hands = default!;
+    [Dependency] private TransformSystem _transform = default!;
 
     private void InitializeATM()
     {
@@ -87,7 +87,7 @@ public sealed partial class BankSystem
 
         //spawn the cash stack of whatever cash type the ATM is configured to.
         var stackPrototype = _prototypeManager.Index<StackPrototype>(component.CashType);
-        var cashStack = _stackSystem.Spawn(args.Amount, stackPrototype, player.ToCoordinates());
+        var cashStack = _stackSystem.SpawnAtPosition(args.Amount, stackPrototype, player.ToCoordinates());
         if (!_hands.TryPickupAnyHand(player, cashStack))
             _transform.SetLocalRotation(cashStack, Angle.Zero); // Orient these to grid north instead of map north
 
@@ -127,8 +127,7 @@ public sealed partial class BankSystem
         }
 
         // validate stack prototypes
-        if (!TryComp<StackComponent>(component.CashSlot.ContainerSlot.ContainedEntity, out var stackComponent) ||
-            stackComponent.StackTypeId == null)
+        if (!TryComp<StackComponent>(component.CashSlot.ContainerSlot.ContainedEntity, out var stackComponent))
         {
             _log.Info($"ATM cash slot contains bad stack prototype");
             ConsolePopup(args.Actor, Loc.GetString("bank-atm-menu-wrong-cash"));

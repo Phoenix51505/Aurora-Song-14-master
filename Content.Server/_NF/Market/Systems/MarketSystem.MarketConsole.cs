@@ -12,6 +12,7 @@ using Content.Shared.Power;
 using Content.Shared.Stacks;
 using Content.Shared.Storage;
 using Content.Shared.Materials;
+using Content.Shared.Storage.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -20,8 +21,8 @@ namespace Content.Server._NF.Market.Systems;
 
 public sealed partial class MarketSystem
 {
-    [Dependency] private readonly IComponentFactory _componentFactory = default!;
-    [Dependency] private readonly SharedMaterialStorageSystem _sharedMaterialStorageSystem = default!;
+    [Dependency] private IComponentFactory _componentFactory = default!;
+    [Dependency] private SharedMaterialStorageSystem _sharedMaterialStorageSystem = default!;
     private void InitializeConsole()
     {
         SubscribeLocalEvent<NFEntitySoldEvent>(OnEntitySoldEvent);
@@ -57,7 +58,7 @@ public sealed partial class MarketSystem
     }
 
     /// <summary>
-    /// Recursively updates/inserts an entity and everything it contains into the cargo market. 
+    /// Recursively updates/inserts an entity and everything it contains into the cargo market.
     /// </summary>
     /// <param name="market">The market data set that will store these entities.</param>
     /// <param name="sold">The entity to add.</param>
@@ -100,7 +101,7 @@ public sealed partial class MarketSystem
 
         // Check whitelist/blacklist for particular prototype
         if (_whitelistSystem.IsWhitelistFail(market.Whitelist, sold) ||
-            _whitelistSystem.IsBlacklistPass(market.Blacklist, sold) &&
+            _whitelistSystem.IsWhitelistPass(market.Blacklist, sold) &&
             _whitelistSystem.IsWhitelistFailOrNull(market.WhitelistOverride, sold))
         {
             return;

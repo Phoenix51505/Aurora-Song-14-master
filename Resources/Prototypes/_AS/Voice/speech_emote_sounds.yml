@@ -15,10 +15,10 @@
       collection: FairyYawn
     Snore:
       collection: Snores
-#    Sigh:
-#      collection: FemaleSigh # Todo: Make fairy sigh
- #   Crying:
- #     collection: FairyCry # NEED TO MAKE A FAIRY CRY
+    Sigh:
+      collection: FairySigh
+    Crying:
+      collection: FairyCry
     Whistle:
       collection: Whistles
     Weh:
@@ -29,3 +29,29 @@
       collection: FairyGasp
     DefaultDeathgasp:
       collection: FairyDeathgasp
+
+- type: emoteSounds
+  id: FairyBodyEmotes
+  sounds:
+    Clap: # block start | Fairies were missing certain emote sounds, added in entries
+      collection: Claps
+    ClapSingle:
+      collection: ClapSingle
+    Salute:
+      collection: Salutes
+    Snap:
+      collection: Snaps
+      params:
+        volume: -7 # block end
+    Crack:
+        collection: Cracks
+    Blink:
+        path: /Audio/_AS/Voice/Fairy/fairy_blink.ogg
+        params:
+         variation: 0.1
+    FairyGlimmer:
+      collection: FairyGlimmer
+    Flutter:
+      collection: FairyFlutter
+    Flap:
+      collection: FairyFlutter

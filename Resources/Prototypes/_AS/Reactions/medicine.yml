@@ -1,49 +1,4 @@
-﻿- type: reaction #Aurora Polymorph chem
-  id: Mothrazine
-  impact: Medium
-  reactants:
-    Fiber:
-      amount: 3
-    Lipozine:
-      amount: 3
-    Ethanol:
-      amount: 1
-  products:
-      Mothrazine: 2
-
-- type: reaction #Aurora Polymorph chem
-  id: Catgirlium
-  impact: Medium
-  reactants:
-    Estradiol:
-      amount: 2
-    Pomelustine:
-      amount: 1
-    Ethanol:
-      amount: 1
-    Acetone:
-      amount: 1
-  products:
-      Catgirlium: 3
-
-- type: reaction #Aurora Polymorph chem, wip
-  id: Davisicium
-  minTemp: 310
-  impact: Medium
-  reactants:
-    Saxoite: # Y'like jazz?
-      amount: 3
-    Ethanol:
-      amount: 2
-    Oil:
-      amount: 1
-  products:
-      Davisicium: 4
-      Ash: 1 # a smoke for afterward
-      GroundBee: 1 # rip
-
-
-- type: reaction
+﻿- type: reaction
   id: Purge
   impact: Medium
   reactants:
@@ -90,3 +45,49 @@
   products:
     Razorium: 1
 
+- type: reaction
+  id: strongHeart
+  impact: Medium
+  reactants:
+    SulfuricAcid:
+      amount: 2
+    Cryoxadone:
+      amount: 2
+    Diphenhydramine:
+      amount: 1
+    Dexalin:
+      amount: 1
+  products:
+    StrongHeartBrew: 5
+
+- type: reaction
+  id: warriorsBlood
+  impact: Medium
+  reactants:
+    SulfuricAcid:
+      amount: 2
+    Lithium:
+      amount: 1
+    Cryoxadone:
+      amount: 1
+    Mercury:
+      amount: 2
+    SalicylicAcid:
+      amount: 1
+  products:
+    WarriorsBlood: 6
+
+- type: reaction
+  id: murderDraught
+  impact: Medium
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    Stimulants:
+      amount: 1
+    RedMead:
+      amount: 1
+    WarriorsBlood:
+      amount: 1
+  products:
+    murderDraught: 3

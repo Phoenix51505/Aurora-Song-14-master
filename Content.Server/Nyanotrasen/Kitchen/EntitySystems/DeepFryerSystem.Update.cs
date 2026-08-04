@@ -14,7 +14,7 @@ public sealed partial class DeepFryerSystem
     {
         base.Update(frameTime);
 
-        var deepFryers = EntityManager.EntityQueryEnumerator<DeepFryerComponent>();
+        var deepFryers = EntityQueryEnumerator<DeepFryerComponent>();
         while (deepFryers.MoveNext(out var uid, out var component))
         {
             if (_gameTimingSystem.CurTime < component.NextFryTime ||
@@ -25,7 +25,7 @@ public sealed partial class DeepFryerSystem
 
             UpdateNextFryTime(uid, component);
 
-            if (!_solutionContainerSystem.TryGetSolution(uid, component.Solution.Name, out var solution))
+            if (!_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var solution)) // Aurora's Song - Use SolutionName instead of Solution.Name
                 continue;
 
             // Heat the vat solution and contained entities.
@@ -44,24 +44,25 @@ public sealed partial class DeepFryerSystem
 
                 if (oilVolume > FixedPoint2.Zero)
                 {
-                    //JJ Comment - this code block makes the Linter fail, and doesn't seem to be necessary with the changes I made.
-                    foreach (var reagent in component.Solution.Contents.ToArray())
-                    {
-                        _prototypeManager.TryIndex<ReagentPrototype>(reagent.Reagent.ToString(), out var proto);
-
-                        foreach (var effect in component.UnsafeOilVolumeEffects)
-                        {
-                            effect.Effect(new EntityEffectReagentArgs(uid,
-                                    EntityManager,
-                                    null,
-                                    component.Solution,
-                                    reagent.Quantity,
-                                    proto!,
-                                    null,
-                                    1f));
-                        }
-
-                    }
+                    // Aurora's Song - Seemingly unused
+                    // //JJ Comment - this code block makes the Linter fail, and doesn't seem to be necessary with the changes I made.
+                    // foreach (var reagent in component.Solution.Contents.ToArray())
+                    // {
+                    //     _prototypeManager.TryIndex<ReagentPrototype>(reagent.Reagent.ToString(), out var proto);
+                    //
+                    //     foreach (var effect in component.UnsafeOilVolumeEffects)
+                    //     {
+                    //         effect.Effect(new EntityEffectReagentArgs(uid,
+                    //                 EntityManager,
+                    //                 null,
+                    //                 component.Solution,
+                    //                 reagent.Quantity,
+                    //                 proto!,
+                    //                 null,
+                    //                 1f));
+                    //     }
+                    //
+                    // }
 
                     component.Solution.RemoveAllSolution();
 

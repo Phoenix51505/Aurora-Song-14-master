@@ -1,7 +1,7 @@
 - type: entity
   id: ClothingUniformJumpsuitArcadia
   name: arcadia jumpsuit
-  parent: [ ClothingUniformBase, BaseC3ContrabandNoValue, ContrabandClothing ]
+  parent: [ ClothingUniformBase, BaseC3ContrabandNoValue, ContrabandClothing, ClothingUniformFoldableBase ] # Aurora's Song - Added ClothingUniformFoldableBase
   description: A jumpsuit produced by Arcadia Industries. Designed to reduce chaffing between the legs for the comfort of skin, slime, scales, fluff, and wood.
   components:
   - type: Sprite
@@ -47,7 +47,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitSecGuard
   name: security guard's uniform
-  description: A specialized uniform for Frontier Outpost's station guard. Crisp and official to let dock loiterers know you mean business.
+  description: A specialized uniform for The Outpost's station guard. Crisp and official to let dock loiterers know you mean business. # Aurora's Song - Frontier Outpost -> The Outpost
   components:
   - type: Sprite
     sprite: _NF/Clothing/Uniforms/Jumpsuit/security_guard.rsi

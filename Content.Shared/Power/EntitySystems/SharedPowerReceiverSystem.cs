@@ -9,12 +9,12 @@ using Robust.Shared.Network;
 
 namespace Content.Shared.Power.EntitySystems;
 
-public abstract class SharedPowerReceiverSystem : EntitySystem
+public abstract partial class SharedPowerReceiverSystem : EntitySystem
 {
-    [Dependency] private readonly INetManager _netMan = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedPowerNetSystem _net = default!;
+    [Dependency] private INetManager _netMan = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedPowerNetSystem _net = default!;
 
     public abstract bool ResolveApc(EntityUid entity, [NotNullWhen(true)] ref SharedApcPowerReceiverComponent? component);
 
@@ -36,21 +36,11 @@ public abstract class SharedPowerReceiverSystem : EntitySystem
         Dirty(uid, receiver);
     }
 
-    // Frontier: upstream (#28984) - MIT
-    public bool TryTogglePower(EntityUid uid, bool playSwitchSound = true, SharedApcPowerReceiverComponent? receiver = null, EntityUid? user = null)
-    {
-        if (HasComp<EmpDisabledComponent>(uid))
-            return false;
-
-        return TogglePower(uid, playSwitchSound, receiver, user);
-    }
-    // End Frontier: upstream (#28984) - MIT
-
     /// <summary>
     /// Turn this machine on or off.
     /// Returns true if we turned it on, false if we turned it off.
     /// </summary>
-    protected bool TogglePower(EntityUid uid, bool playSwitchSound = true, SharedApcPowerReceiverComponent? receiver = null, EntityUid? user = null) // Frontier: public<protected (intentional with upstream EMP cherry-pick, should show breaks)
+    public bool TogglePower(EntityUid uid, bool playSwitchSound = true, SharedApcPowerReceiverComponent? receiver = null, EntityUid? user = null)
     {
         if (!ResolveApc(uid, ref receiver))
             return true;
@@ -104,6 +94,17 @@ public abstract class SharedPowerReceiverSystem : EntitySystem
     }
 
     /// <summary>
+    /// Sets the power load of this power receiver.
+    /// </summary>
+    public void SetLoad(Entity<SharedApcPowerReceiverComponent?> entity, float load)
+    {
+        if (!ResolveApc(entity.Owner, ref entity.Comp))
+            return;
+
+        entity.Comp.Load = load;
+    }
+
+    /// <summary>
     /// Checks if entity is APC-powered device, and if it have power.
     /// </summary>
     public bool IsPowered(Entity<SharedApcPowerReceiverComponent?> entity)
@@ -120,5 +121,14 @@ public abstract class SharedPowerReceiverSystem : EntitySystem
                                 ("stateText", Loc.GetString(powered
                                     ? "power-receiver-component-on-examine-powered"
                                     : "power-receiver-component-on-examine-unpowered")));
+    }
+
+    // Frontier: Upstream - #28984
+    public bool TryTogglePower(EntityUid uid, bool playSwitchSound = true, SharedApcPowerReceiverComponent? receiver = null, EntityUid? user = null)
+    {
+        if (HasComp<EmpDisabledComponent>(uid))
+            return false;
+
+        return TogglePower(uid, playSwitchSound, receiver, user);
     }
 }

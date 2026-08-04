@@ -12,14 +12,14 @@ using Robust.Shared.Map.Components; // imp edit
 
 namespace Content.Shared.Movement.Systems;
 
-public sealed class SpeedModifierContactsSystem : EntitySystem
+public sealed partial class SpeedModifierContactsSystem : EntitySystem
 {
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedGravitySystem _gravity = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _speedModifierSystem = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private SharedGravitySystem _gravity = default!;
+    [Dependency] private MovementSpeedModifierSystem _speedModifierSystem = default!;
+    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
 
-    [Dependency] private readonly SharedMapSystem _map = default!; // imp edit
+    [Dependency] private SharedMapSystem _map = default!; // imp edit
 
     // TODO full-game-save
     // Either these need to be processed before a map is saved, or slowed/slowing entities need to update on init.
@@ -222,7 +222,7 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
             if (otherEnt == ent)
                 continue;
 
-            if (_whitelistSystem.IsBlacklistPass(ent.Comp.Blacklist, otherEnt.Value))
+            if (_whitelistSystem.IsWhitelistPass(ent.Comp.Blacklist, otherEnt.Value))
             {
                 return false;
             }

@@ -4,14 +4,14 @@ using Content.Server.CartridgeLoader;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.CartridgeLoader.Cartridges;
 using Content.Server._DV.Mail.Components;
-using Content.Server._NF.SectorServices; // Frontier
+using Content.Shared._NF.SectorServices; // Frontier
 
 namespace Content.Server._DV.CartridgeLoader.Cartridges;
 
-public sealed class MailMetricsCartridgeSystem : EntitySystem
+public sealed partial class MailMetricsCartridgeSystem : EntitySystem
 {
-    [Dependency] private readonly CartridgeLoaderSystem _cartridgeLoader = default!;
-    [Dependency] private readonly SectorServiceSystem _sectorService = default!; // Frontier
+    [Dependency] private CartridgeLoaderSystem _cartridgeLoader = default!;
+    [Dependency] private SectorServiceSystem _sectorService = default!; // Frontier
 
     public override void Initialize()
     {

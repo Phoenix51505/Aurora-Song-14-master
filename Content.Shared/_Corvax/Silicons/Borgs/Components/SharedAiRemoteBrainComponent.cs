@@ -11,6 +11,8 @@ public sealed partial class AiRemoteControllerComponent : Component
 
     [DataField] public string[]? PreviouslyTransmitterChannels;
     [DataField] public string[]? PreviouslyActiveRadioChannels;
+    [DataField] public string PreviousName = "Empty Remote Chassis"; // Aurora's Song, might need to have the datafield part removed?
+    [DataField] public string? CurrentName;
 
     [DataField] public EntProtoId BackToAiAction = "ActionBackToAi";
     [DataField] public EntityUid? BackToAiActionEntity;
@@ -51,6 +53,7 @@ public record struct RemoteDevicesData()
     public NetEntity NetEntityUid = NetEntity.Invalid;
     public float DevicePosX = 0.0f;
     public float DevicePosY = 0.0f;
+    public float DeviceDistance = 0.0f;
 }
 
 [Serializable, NetSerializable]
