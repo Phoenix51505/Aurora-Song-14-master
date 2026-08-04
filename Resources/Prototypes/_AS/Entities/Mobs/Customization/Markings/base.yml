@@ -21,7 +21,6 @@
   abstract: true
   id: BaseEyes
   bodyPart: Eyes
-  markingCategory: Head
   coloring:
     default:
       type:
@@ -31,37 +30,31 @@
 - type: marking
   abstract: true
   id: BaseChest
-  markingCategory: Chest
   bodyPart: Chest
 
 - type: marking
   abstract: true
   id: BaseHead
-  markingCategory: Head
   bodyPart: Head
 
 - type: marking
   abstract: true
   id: BaseHeadTop
-  markingCategory: HeadTop
   bodyPart: HeadTop
 
 - type: marking
   abstract: true
   id: BaseHeadSide
-  markingCategory: HeadSide
   bodyPart: HeadSide
 
 - type: marking
   abstract: true
   id: BaseSnout
-  markingCategory: Snout
   bodyPart: Snout
 
 - type: marking
   abstract: true
   id: BaseTail
-  markingCategory: Tail
   bodyPart: Tail
 
 # Cyberlimbs
@@ -72,21 +65,23 @@
   abstract: true
   parent: BaseSpeciesIPC
   id: BaseArmsCyberlimb
-  markingCategory: Arms
-  invertSpeciesRestriction: true
-  speciesRestriction:
+  invertGroupWhitelist: true
+  groupWhitelist:
+  - Allulalo
   - Harpy
   - Vox
   - Diona
+  - Decapoid
 
 ## Exclude anything that doesn't have standard legs (e.g. if any taurs are ever added)
 - type: marking
   abstract: true
   parent: BaseSpeciesIPC
   id: BaseLegsCyberlimb
-  markingCategory: Legs
-  invertSpeciesRestriction: true
-  speciesRestriction:
+  invertGroupWhitelist: true
+  groupWhitelist:
+  - Allulalo
   - Harpy
   - Vox
   - Diona
+  - Decapoid

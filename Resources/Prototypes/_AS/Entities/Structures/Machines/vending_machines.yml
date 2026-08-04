@@ -241,3 +241,60 @@
     pack: ASPTechSLEInventory
   - type: AccessReader
     access: [["HeadOfSecurity"]]
+
+# NanoTrasen CommandVend
+- type: entity
+  parent: [BaseStructureDisableAnchoring, VendingMachine]
+  id: ASVendingMachineNanoVend
+  abstract: true # This one isn't really meant to be spawned in anyhow
+  name: NT Officer Vend
+  description: A vending machine for authorised NanoTrasen agents to acquire high tech equipment.
+  components:
+  - type: VendingMachine
+    pack: ASNanoTrasenOfficerVendA # cus I got rid of the intial pack after finding out I couldn't do a parented setup with them
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+  - type: DatasetVocalizer
+    dataset: NanoTrasenOfficerTechAds # New adverts
+  - type: Sprite
+    sprite: _AS/Structures/Machines/VendingMachines/nanovend.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: AccessReader
+    access: [["ASNanoTrasenCommand"]]
+
+- type: entity
+  parent: ASVendingMachineNanoVend
+  id: ASVendingMachineNanoVendA
+  components:
+  - type: VendingMachine
+    pack: ASNanoTrasenOfficerVendA
+
+- type: entity
+  parent: ASVendingMachineNanoVend
+  id: ASVendingMachineNanoVendB
+  components:
+  - type: VendingMachine
+    pack: ASNanoTrasenOfficerVendB
+
+- type: entity
+  parent: ASVendingMachineNanoVend
+  id: ASVendingMachineNanoVendC
+  components:
+  - type: VendingMachine
+    pack: ASNanoTrasenOfficerVendC
+
+- type: entity
+  parent: ASVendingMachineNanoVend
+  id: ASVendingMachineNanoVendD
+  components:
+  - type: VendingMachine
+    pack: ASNanoTrasenOfficerVendD
+

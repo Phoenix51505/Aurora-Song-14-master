@@ -39,11 +39,11 @@ public sealed partial class SalvageSystem
      * Handles actively running a salvage expedition.
      */
 
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly GameTicker _gameTicker = default!; // Frontier
-    [Dependency] private readonly DamageableSystem _damageable = default!; // AS
-    [Dependency] private readonly IPlayerManager _players = default!; // Coyote
-    [Dependency] private readonly SharedBuckleSystem _buckle = default!; // AS
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private GameTicker _gameTicker = default!; // Frontier
+    [Dependency] private DamageableSystem _damageable = default!; // AS
+    [Dependency] private IPlayerManager _players = default!; // Coyote
+    [Dependency] private SharedBuckleSystem _buckle = default!; // AS
 
     private void InitializeRunner()
     {
@@ -62,7 +62,7 @@ public sealed partial class SalvageSystem
         }
 
         // TODO: This is terrible but need bluespace harnesses or something.
-        var query = EntityQueryEnumerator<HumanoidAppearanceComponent, MobStateComponent, TransformComponent>();
+        var query = EntityQueryEnumerator<HumanoidProfileComponent, MobStateComponent, TransformComponent>();
 
         while (query.MoveNext(out var uid, out _, out var mobState, out var mobXform))
         {
@@ -291,7 +291,7 @@ public sealed partial class SalvageSystem
 
                             // Get a list of all grid positions on the destination map
                             List<Vector2> gridCoords = new();
-                            var gridQuery = EntityManager.AllEntityQueryEnumerator<MapGridComponent, TransformComponent>();
+                            var gridQuery = AllEntityQuery<MapGridComponent, TransformComponent>();
                             while (gridQuery.MoveNext(out var _, out _, out var xform))
                             {
                                 if (xform.MapID == mapId)
@@ -453,7 +453,7 @@ public sealed partial class SalvageSystem
 
         var query =
             EntityQueryEnumerator<
-                HumanoidAppearanceComponent,
+                HumanoidProfileComponent, // Aurora's Song
                 MindContainerComponent,
                 MobStateComponent,
                 TransformComponent>();
@@ -624,7 +624,7 @@ public sealed partial class SalvageSystem
 
             Log.Debug($"Strap point found: {strapuid}");
             SafetyWarp(player, xform.Coordinates);
-            _buckle.TryBuckle(strapuid, null, strapuid);
+            _buckle.TryBuckle(player, null, strapuid);
             return;
         }
 

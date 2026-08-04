@@ -273,7 +273,7 @@
         shader: unshaded # Frontier
 
 - type: entity
-  parent: [ NFClothingDuffel, BaseCentcommContraband ] # Frontier: ClothingBackpackDuffel<NFClothingDuffel
+  parent: [ NFClothingDuffel, BaseC3NanoTrasenContrabandLowValue ] # Aurora's Song | ClothingBackpackDuffelNFClothingDuffel, BaseSyndicateContraband<BaseC3NanoTrasenContrabandLowValue
   id: ClothingBackpackDuffelCBURN
   name: CBURN duffel bag
   description: A duffel bag containing a variety of biological containment equipment.

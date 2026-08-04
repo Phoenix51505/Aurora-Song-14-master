@@ -1,0 +1,11 @@
+﻿- type: contrabandSeverity
+  id: Class3NanoTrasen
+  examineText: contraband-examine-text-Class3NanoTrasen
+
+- type: contrabandSeverity
+  id: Class3NanoTrasenCentComm
+  examineText: contraband-examine-text-Class3NanoTrasenCentComm
+
+- type: contrabandSeverity
+  id: Class3ColonialArmedForces
+  examineText: contraband-examine-text-Class3ColonialArmedForces

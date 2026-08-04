@@ -76,7 +76,7 @@
       - EncryptionKeyCommon
 
 - type: entity
-  parent: [ ClothingHeadset, BaseCentcommCommandContraband ] # Frontier: Added BaseCentcommCommandContraband, removed BaseCentcommContraband.
+  parent: [ ClothingHeadset, BaseC3NanoTrasenContraband ] # Aurora's Song | BaseCentcommContraband<BaseC3NanoTrasenContraband
   id: ClothingHeadsetCentCom
   name: CentComm headset
   description: A headset used by the upper echelons of Nanotrasen.

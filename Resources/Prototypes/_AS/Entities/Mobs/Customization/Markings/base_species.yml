@@ -1,10 +1,12 @@
 # Markings are inheriting. That means they can have parents now. Yay!
 # This file is mostly for species restriction lists.
 # Keep in mind that there is no partial inheritance of species restrictions, so you have to redeclare the entire
-# species restriction list in its entirety for each speciesRestriction property.
+# species restriction list in its entirety for each groupWhitelist property.
 
 # Species for reference, excluding non-roundstart:
+# Allulalo
 # Arachnid
+# Decapoid
 # Diona
 # Dwarf
 # Felinid
@@ -31,9 +33,11 @@
 - type: marking
   abstract: true
   id: BaseSpeciesEyesStandard
-  invertSpeciesRestriction: true
-  speciesRestriction:
+  invertGroupWhitelist: true
+  groupWhitelist:
+  - Allulalo
   - Arachnid
+  - Decapoid
   - Diona
   - IPC
   - Moth
@@ -45,9 +49,10 @@
 - type: marking
   abstract: true
   id: BaseSpeciesChestStandardOrganic
-  invertSpeciesRestriction: true
-  speciesRestriction:
+  invertGroupWhitelist: true
+  groupWhitelist:
   # Non-standard
+  - Allulalo
   - Moth
   - Vox
   # Inorganic / Skinless
@@ -57,9 +62,10 @@
 - type: marking
   abstract: true
   id: BaseSpeciesArmsStandardOrganic
-  invertSpeciesRestriction: true
-  speciesRestriction:
+  invertGroupWhitelist: true
+  groupWhitelist:
   # Non-standard
+  - Allulalo
   - Harpy
   - Moth
   - Vox
@@ -70,43 +76,54 @@
 - type: marking
   abstract: true
   id: BaseSpeciesLegsStandardOrganic
-  invertSpeciesRestriction: true
-  speciesRestriction:
+  invertGroupWhitelist: true
+  groupWhitelist:
   # Non-standard
+  - Allulalo
   - Harpy
   - Moth
   - Vox
   # Inorganic / Skinless
+  - Decapoid
   - Diona
   - IPC
   # Technically Tajaran are missing one pixel off the heel (like, very subtle digitigrade)
   # but I'm not removing them from the legs tattoo list just because of that.
 
 # Non-standard species restrictions.
-# Why single-species restrictions, you ask? I would like to minimize the amount of `speciesRestriction` redeclaration
+# Why single-species restrictions, you ask? I would like to minimize the amount of `groupWhitelist` redeclaration
 # in general. Always easier to edit one prototype than it is to edit potentially dozens. Maybe you add a species that
 # has an identical body but does something different - not that I recommend this.
 
 - type: marking
   abstract: true
   id: BaseSpeciesIPC
-  speciesRestriction: [IPC]
+  groupWhitelist: [IPC]
   preferredSpecies: [IPC]
 
 - type: marking
   abstract: true
   id: BaseSpeciesMoth
-  speciesRestriction: [Moth]
+  groupWhitelist: [Moth]
   preferredSpecies: [Moth]
 
 - type: marking
   abstract: true
   id: BaseSpeciesRodentia
-  speciesRestriction: [Rodentia]
+  groupWhitelist: [Rodentia]
   preferredSpecies: [Rodentia]
 
 - type: marking
   abstract: true
   id: BaseSpeciesVox
-  speciesRestriction: [Vox]
+  groupWhitelist: [Vox]
   preferredSpecies: [Vox]
+
+- type: marking
+  abstract: true
+  id: BaseSpeciesUndergarmentStandard
+  invertGroupWhitelist: true
+  groupWhitelist:
+  - Allulalo
+  - Vox
+  - Reptilian

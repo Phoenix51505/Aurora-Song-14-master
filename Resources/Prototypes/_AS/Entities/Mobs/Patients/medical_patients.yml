@@ -94,6 +94,7 @@
   #   useArgumentEntity: true
   # Aurora Song: AS Medical bounty-specific component
   - type: ASMedicalBounty
+    medicalOnly: true
   - type: NpcFactionMember
     factions:
     - NanoTrasen # Friendly turrets shouldn't attack patients

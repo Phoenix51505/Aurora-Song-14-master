@@ -14,12 +14,12 @@ using Robust.Shared.Timing; // Aurora's Song: Death Times
 
 namespace Content.Server._AS.Trigger.Systems;
 
-public sealed class ASRattleTriggerSystem : XOnTriggerSystem<RattleOnTriggerComponent>
+public sealed partial class ASRattleTriggerSystem : XOnTriggerSystem<RattleOnTriggerComponent>
 {
-    [Dependency] private readonly SharedStationSystem _station = default!;
-    [Dependency] private readonly RadioSystem _radioSystem = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IGameTiming _timing = default!; // Aurora's Song: Death Times & Retriggering
+    [Dependency] private SharedStationSystem _station = default!;
+    [Dependency] private RadioSystem _radioSystem = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IGameTiming _timing = default!; // Aurora's Song: Death Times & Retriggering
 
     // Have old functionality of rattle available for NF and Coyote functionality
     protected override void OnTrigger(Entity<RattleOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
@@ -52,7 +52,7 @@ public sealed class ASRattleTriggerSystem : XOnTriggerSystem<RattleOnTriggerComp
 
         // Frontier: Gets species of the implant user
         var speciesText = $"";
-        if (TryComp<HumanoidAppearanceComponent>(implanted.ImplantedEntity, out var species))
+        if (TryComp<HumanoidProfileComponent>(implanted.ImplantedEntity, out var species)) // Aurora's Song - Nubody
         {
 
             if (HasComp<ReplicantComponent>(implanted.ImplantedEntity)) // AS: Replika

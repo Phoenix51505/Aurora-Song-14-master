@@ -315,7 +315,6 @@
     tags:
     - WhitelistChameleon
     - FireHelmet
-    - CorgiWearable
   - type: HideLayerClothing
     layers:
       Hair: HEAD
@@ -347,7 +346,7 @@
 #ERT HELMETS
 #ERT Leader Helmet
 - type: entity
-  parent: [ BaseCentcommContraband, ClothingHeadHelmetArmoredBase ]
+  parent: [ BaseC3NanoTrasenContraband, ClothingHeadHelmetArmoredBase ] # Aurora's Song - BaseCentcommContraband<BaseC3NanoTrasenContraband
   id: ClothingHeadHelmetERTLeader
   name: ERT leader helmet
   description: An in-atmosphere helmet worn by the leader of a Nanotrasen Emergency Response Team. Has blue highlights.

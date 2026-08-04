@@ -15,6 +15,7 @@
     ClothingHeadHelmetFire: 2
     ClothingOuterSuitFire: 2
     ClothingOuterWinterAtmos: 2
+    ClothingOuterCoatBomberAtmos: 2 #imp
     ClothingNeckScarfStripedLightBlue: 3
     ClothingShoesBootsWinterAtmos: 2 #Delta V: Add departmental winter boots
   contrabandInventory:

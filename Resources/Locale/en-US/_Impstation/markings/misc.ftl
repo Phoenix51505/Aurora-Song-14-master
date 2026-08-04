@@ -73,20 +73,6 @@ marking-VitiligoLegL = Vitiligo (Left)
 marking-VitiligoChestF = Vitiligo Spread
 marking-VitiligoChestSpots = Vitiligo Spots
 
-# slimes
-marking-fizz = Fizz
-marking-fizz-fizz = Fizz
-marking-bubble = Bubbles
-marking-bubble-bubble = Bubbles
-marking-fishbowl = Fishbowl
-marking-fishbowl-fishbowl1 = Fish
-# Frontier: bubbles < Bubbles
-marking-fishbowl-fishbowl2 = Fish Bubbles
-marking-FadingStars = Fading Starlight
-marking-FadingStars-fadingstars1 = Brightest
-marking-FadingStars-fadingstars2 = Middling
-marking-FadingStars-fadingstars3 = Darkest
-
 # vox
 marking-VoxCocktail = Cocktail
 marking-VoxCocktail-voxcocktail1 = Feathers
@@ -167,11 +153,12 @@ marking-VoxTailSplit-voxtailsplit = Twinned
 # upstream vox markings dont have localized names. lmfao
 # these are just straight up broken and shouldnt be visible from the markings menu period but ALAS im not skilled enough to remove them so you get this stupid botch job instead
 # marking-VoxBeak = Default Beak [DO NOT USE] # Aurora's Song - Duplicate
-marking-VoxLArmScales = Default Arm [DO NOT USE]
-marking-VoxLHandScales = Default Left Hand [DO NOT USE]
-marking-VoxRArmScales = Default Right Arm [DO NOT USE]
-marking-VoxRHandScales = Default Right Hand [DO NOT USE]
-marking-VoxLFootScales = Default Left Foot [DO NOT USE]
-marking-VoxLLegScales = Default Left Leg [DO NOT USE]
-marking-VoxRFootScales = Default Right Foot [DO NOT USE]
-marking-VoxRLegScales = Default Right Leg [DO NOT USE]
+# Aurora's Song - turned all [DO NOT USE] to (Colorable)
+marking-VoxLArmScales = Default Arm (Colorable)
+marking-VoxLHandScales = Default Left Hand (Colorable)
+marking-VoxRArmScales = Default Right Arm (Colorable)
+marking-VoxRHandScales = Default Right Hand (Colorable)
+marking-VoxLFootScales = Default Left Foot (Colorable)
+marking-VoxLLegScales = Default Left Leg (Colorable)
+marking-VoxRFootScales = Default Right Foot (Colorable)
+marking-VoxRLegScales = Default Right Leg (Colorable)

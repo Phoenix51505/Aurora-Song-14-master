@@ -1,0 +1,35 @@
+﻿# Aurora Song
+#region base
+- type: entity
+  id: ASBaseAmmunitionBoxRifle30Long
+  parent: NFBaseAmmunitionBox
+  name: ammunition box (.30 Long rifle)
+  abstract: true
+  components:
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+      - ASCartridgeRifle30Long
+    proto: ASCartridgeRifle30Long
+    capacity: 50
+  - type: Sprite
+    sprite: _NF/Objects/Weapons/Guns/Ammunition/Boxes/rifle.rsi
+
+- type: entity
+  id: ASAmmunitionBoxRifle30Long
+  parent: ASBaseAmmunitionBoxRifle30Long
+  name: ammunition box (.30 Long rifle)
+  components:
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+      - ASCartridgeRifle30Long
+    proto: ASCartridgeRifle30Long
+  - type: Sprite
+    layers:
+    - state: base
+      map: [ "enum.GunVisualLayers.Base" ]
+      color: "#5b7b8c"
+    - state: decal-calibre-30L
+    - state: mag-1
+      map: [ "enum.GunVisualLayers.Mag" ]

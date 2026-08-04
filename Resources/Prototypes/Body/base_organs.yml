@@ -1,3 +1,19 @@
+- type: markingsGroup
+  id: None
+  onlyGroupWhitelisted: true
+
+- type: markingsGroup
+  id: Undergarments
+  limits:
+    enum.HumanoidVisualLayers.UndergarmentTop:
+      limit: 1
+      required: false
+      nudityDefault: [ UndergarmentTopTanktop ]
+    enum.HumanoidVisualLayers.UndergarmentBottom:
+      limit: 1
+      required: false
+      nudityDefault: [ UndergarmentBottomBoxers ]
+
 - type: entity
   id: OrganBase
   name: organ
@@ -7,7 +23,31 @@
   - type: Organ
 
 - type: entity
-  parent: OrganBase
+  id: OrganBaseOrganic
+  name: organ
+  abstract: true
+  parent: [ OrganBase, SolutionFood, SolutionTiny ]
+  components:
+  - type: FlavorProfile
+    flavors:
+    - chicken # INTRODUCING OUR NEW EVERY-MEAT BURRITO, IT'S GOT EVERY MEAT!
+  - type: Edible
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: UncookedAnimalProteins
+        Quantity: 20
+  - type: Tag # I am nearing my limit of tolerance for TagComponent.
+    tags:
+    - Raw
+    - Meat
+  # Aurora's Song Start - Make them grindable
+  - type: Extractable
+    grindableSolutionName: food
+  # Aurora's Song End
+
+- type: entity
+  parent: OrganBase # Aurora's Song - OrganBaseOrganic>OrganBase
   id: OrganBaseTorso
   name: torso
   abstract: true
@@ -15,7 +55,25 @@
   - type: Organ
     category: Torso
   - type: Sprite
-    state: torso_m
+    state: torso
+  - type: VisualOrgan
+    layer: enum.HumanoidVisualLayers.Chest
+    data:
+      state: torso
+  - type: VisualOrganMarkings
+    hideableLayers: # Aurora's Song - Hidable undergarments and tail
+    - enum.HumanoidVisualLayers.UndergarmentTop
+    - enum.HumanoidVisualLayers.UndergarmentBottom
+    - enum.HumanoidVisualLayers.Tail
+    markingData:
+      layers:
+      - Chest
+      - Tail
+      - Overlay
+      - TailOverlay
+      - UndergarmentTop
+      - UndergarmentBottom
+      - Special
 
 - type: entity
   parent: OrganBase
@@ -26,7 +84,23 @@
   - type: Organ
     category: Head
   - type: Sprite
-    state: head_m
+    state: head
+  - type: VisualOrgan
+    layer: enum.HumanoidVisualLayers.Head
+    data:
+      state: head
+  - type: VisualOrganMarkings
+    hideableLayers:
+    - enum.HumanoidVisualLayers.Hair
+    markingData:
+      layers:
+      - Head
+      - Hair
+      - FacialHair
+      - Snout
+      - SnoutCover
+      - HeadSide
+      - HeadTop
 
 - type: entity
   parent: OrganBase
@@ -38,6 +112,14 @@
     category: ArmLeft
   - type: Sprite
     state: l_arm
+  - type: VisualOrgan
+    layer: enum.HumanoidVisualLayers.LArm
+    data:
+      state: l_arm
+  - type: VisualOrganMarkings
+    markingData:
+      layers:
+      - LArm
 
 - type: entity
   parent: OrganBase
@@ -49,6 +131,14 @@
     category: ArmRight
   - type: Sprite
     state: r_arm
+  - type: VisualOrgan
+    layer: enum.HumanoidVisualLayers.RArm
+    data:
+      state: r_arm
+  - type: VisualOrganMarkings
+    markingData:
+      layers:
+      - RArm
 
 - type: entity
   parent: OrganBase
@@ -64,6 +154,14 @@
       location: Left
   - type: Sprite
     state: l_hand
+  - type: VisualOrgan
+    layer: enum.HumanoidVisualLayers.LHand
+    data:
+      state: l_hand
+  - type: VisualOrganMarkings
+    markingData:
+      layers:
+      - LHand
 
 - type: entity
   parent: OrganBase
@@ -79,6 +177,14 @@
       location: Right
   - type: Sprite
     state: r_hand
+  - type: VisualOrgan
+    layer: enum.HumanoidVisualLayers.RHand
+    data:
+      state: r_hand
+  - type: VisualOrganMarkings
+    markingData:
+      layers:
+      - RHand
 
 - type: entity
   parent: OrganBase
@@ -90,6 +196,16 @@
     category: LegLeft
   - type: Sprite
     state: l_leg
+  - type: VisualOrgan
+    layer: enum.HumanoidVisualLayers.LLeg
+    data:
+      state: l_leg
+  - type: VisualOrganMarkings
+    hideableLayers: # Aurora's Song - Heel stockings
+    - enum.HumanoidVisualLayers.LLeg
+    markingData:
+      layers:
+      - LLeg
 
 - type: entity
   parent: OrganBase
@@ -101,6 +217,16 @@
     category: LegRight
   - type: Sprite
     state: r_leg
+  - type: VisualOrgan
+    layer: enum.HumanoidVisualLayers.RLeg
+    data:
+      state: r_leg
+  - type: VisualOrganMarkings
+    hideableLayers: # Aurora's Song - Heel stockings
+    - enum.HumanoidVisualLayers.RLeg
+    markingData:
+      layers:
+      - RLeg
 
 - type: entity
   parent: OrganBase
@@ -112,6 +238,16 @@
     category: FootLeft
   - type: Sprite
     state: l_foot
+  - type: VisualOrgan
+    layer: enum.HumanoidVisualLayers.LFoot
+    data:
+      state: l_foot
+  - type: VisualOrganMarkings
+    hideableLayers: # Aurora's Song - Heel stockings
+    - enum.HumanoidVisualLayers.LFoot
+    markingData:
+      layers:
+      - LFoot
 
 - type: entity
   parent: OrganBase
@@ -123,6 +259,16 @@
     category: FootRight
   - type: Sprite
     state: r_foot
+  - type: VisualOrgan
+    layer: enum.HumanoidVisualLayers.RFoot
+    data:
+      state: r_foot
+  - type: VisualOrganMarkings
+    hideableLayers: # Aurora's Song - Heel stockings
+    - enum.HumanoidVisualLayers.RFoot
+    markingData:
+      layers:
+      - RFoot
 
 - type: entity
   parent: OrganBase
@@ -145,6 +291,13 @@
   - type: Examiner
   - type: BlockMovement
   - type: BadFood
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: UncookedAnimalProteins
+        Quantity: 15
+      - ReagentId: GreyMatter
+        Quantity: 10
   - type: FoodSequenceElement
     entries:
       Burger: Brain
@@ -163,6 +316,15 @@
     layers:
     - state: eyeball-l
     - state: eyeball-r
+  - type: VisualOrgan
+    layer: enum.HumanoidVisualLayers.Eyes
+    data:
+      sprite: Mobs/Customization/eyes.rsi
+      state: eyes
+  - type: VisualOrganMarkings
+    markingData:
+      layers:
+      - Eyes
 
 - type: entity
   parent: OrganBase
@@ -214,23 +376,27 @@
     category: Lungs
   - type: Lung
   - type: Metabolizer
-    removeEmpty: true
-    solutionOnBody: false
-    solution: "Lung"
-    groups:
-    - id: Gas
-      rateModifier: 100.0
-  - type: SolutionContainerManager
+    stages: [ Respiration ]
+  - type: SolutionManager
     solutions:
-      Lung:
-        maxVol: 100.0
-        canReact: false
+    - SolutionLungGas
   - type: Sprite
     layers:
     - state: lung-l
     - state: lung-r
   - type: Item
     heldPrefix: lungs
+
+- type: entity
+  parent: Solution
+  id: SolutionLungGas # TODO: Metabolize directly from gasses :(
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    id: Lung
+    solution:
+      maxVol: 100.0
+      canReact: false
 
 - type: entity
   parent: OrganBase
@@ -246,11 +412,7 @@
     - state: heart-on
   - type: Metabolizer
     maxReagents: 2
-    groups:
-    - id: Medicine
-    - id: Poison
-    - id: Narcotic
-    - id: Cryogenic # Aurora's Song - Metabolizes cryogenics separately
+    stages: [ Bloodstream ]
 
 - type: entity
   parent: OrganBase
@@ -262,20 +424,27 @@
   - type: Organ
     category: Stomach
   - type: Stomach
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      stomach:
-        maxVol: 50
+    - SolutionStomach
   - type: Metabolizer
     maxReagents: 3
-    groups:
-    - id: Food
-    - id: Drink
+    stages: [ Digestion ]
   - type: Sprite
     layers:
     - state: stomach
   - type: Item
     heldPrefix: stomach
+
+- type: entity
+  parent: Solution
+  id: SolutionStomach
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    id: stomach
+    solution:
+      maxVol: 150 # 1.25 liters which is average for a human
 
 - type: entity
   parent: OrganBase
@@ -293,8 +462,7 @@
     heldPrefix: liver
   - type: Metabolizer
     maxReagents: 1
-    groups:
-    - id: Alcohol
+    stages: [ Metabolites ]
 
 - type: entity
   parent: OrganBase
@@ -313,7 +481,6 @@
     heldPrefix: kidneys
   - type: Metabolizer
     maxReagents: 5
-    removeEmpty: true
 
 - type: entity
   id: OrganSpriteHumanInternal
@@ -321,3 +488,29 @@
   components:
   - type: Sprite
     sprite: Mobs/Species/Human/organs.rsi
+
+- type: entity
+  id: OrganBaseHeadSexed
+  abstract: true
+  components:
+  - type: Sprite
+    state: head_m
+  - type: VisualOrgan
+    data:
+      state: head_m
+    sexStateOverrides:
+      Male: head_m
+      Female: head_f
+
+- type: entity
+  id: OrganBaseTorsoSexed
+  abstract: true
+  components:
+  - type: Sprite
+    state: torso_m
+  - type: VisualOrgan
+    data:
+      state: torso_m
+    sexStateOverrides:
+      Male: torso_m
+      Female: torso_f

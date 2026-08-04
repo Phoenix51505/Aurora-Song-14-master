@@ -14,6 +14,7 @@ using Content.Server.Polymorph.Systems;
 using Content.Server.Popups;
 using Content.Server.Roles;
 using Content.Server.Speech.Components;
+using Content.Shared.Speech.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Tabletop;
 using Content.Server.Tabletop.Components;
@@ -77,42 +78,44 @@ public sealed partial class AdminVerbSystem
     private readonly ProtoId<PolymorphPrototype> LizardSmite = "AdminLizardSmite";
     private readonly ProtoId<PolymorphPrototype> VulpkaninSmite = "AdminVulpSmite";
 
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
-    [Dependency] private readonly BodySystem _bodySystem = default!;
-    [Dependency] private readonly CreamPieSystem _creamPieSystem = default!;
-    [Dependency] private readonly ElectrocutionSystem _electrocutionSystem = default!;
-    [Dependency] private readonly EntityStorageSystem _entityStorageSystem = default!;
-    [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
-    [Dependency] private readonly FixtureSystem _fixtures = default!;
-    [Dependency] private readonly FlammableSystem _flammableSystem = default!;
-    [Dependency] private readonly GhostKickManager _ghostKickManager = default!;
-    [Dependency] private readonly SharedGodmodeSystem _sharedGodmodeSystem = default!;
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
-    [Dependency] private readonly PolymorphSystem _polymorphSystem = default!;
-    [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly RoleSystem _role = default!;
-    [Dependency] private readonly TabletopSystem _tabletopSystem = default!;
-    [Dependency] private readonly VomitSystem _vomitSystem = default!;
-    [Dependency] private readonly WeldableSystem _weldableSystem = default!;
-    [Dependency] private readonly SharedContentEyeSystem _eyeSystem = default!;
-    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
-    [Dependency] private readonly SuperBonkSystem _superBonkSystem = default!;
-    [Dependency] private readonly SlipperySystem _slipperySystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!; // Frontier
-    [Dependency] private readonly DamageableSystem _damageable = default!; // Frontier
-    [Dependency] private readonly SleepingSystem _sleep = default!; // Frontier
-    [Dependency] private readonly GibbingSystem _gibbing = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private BloodstreamSystem _bloodstreamSystem = default!;
+    [Dependency] private BodySystem _bodySystem = default!;
+    [Dependency] private CreamPieSystem _creamPieSystem = default!;
+    [Dependency] private ElectrocutionSystem _electrocutionSystem = default!;
+    [Dependency] private EntityStorageSystem _entityStorageSystem = default!;
+    [Dependency] private ExplosionSystem _explosionSystem = default!;
+    [Dependency] private FixtureSystem _fixtures = default!;
+    [Dependency] private FlammableSystem _flammableSystem = default!;
+    [Dependency] private GhostKickManager _ghostKickManager = default!;
+    [Dependency] private SharedGodmodeSystem _sharedGodmodeSystem = default!;
+    [Dependency] private InventorySystem _inventorySystem = default!;
+    [Dependency] private MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
+    [Dependency] private PolymorphSystem _polymorphSystem = default!;
+    [Dependency] private MobThresholdSystem _mobThresholdSystem = default!;
+    [Dependency] private PopupSystem _popupSystem = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private RoleSystem _role = default!;
+    [Dependency] private TabletopSystem _tabletopSystem = default!;
+    [Dependency] private VomitSystem _vomitSystem = default!;
+    [Dependency] private WeldableSystem _weldableSystem = default!;
+    [Dependency] private SharedContentEyeSystem _eyeSystem = default!;
+    [Dependency] private SharedTransformSystem _transformSystem = default!;
+    [Dependency] private SuperBonkSystem _superBonkSystem = default!;
+    [Dependency] private SlipperySystem _slipperySystem = default!;
+    [Dependency] private GibbingSystem _gibbing = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private SharedAudioSystem _audio = default!; // Frontier
+    [Dependency] private SleepingSystem _sleep = default!; // Frontier
 
     private readonly EntProtoId _actionViewLawsProtoId = "ActionViewLaws";
     private readonly ProtoId<SiliconLawsetPrototype> _crewsimovLawset = "Crewsimov";
 
     private readonly EntProtoId _siliconMindRole = "MindRoleSiliconBrain";
     private const string SiliconLawBoundUserInterface = "SiliconLawBoundUserInterface";
+
+    private static readonly ProtoId<DamageTypePrototype> Blunt = "Blunt"; // Aurora's Song
 
     // All smite verbs have names so invokeverb works.
     private void AddSmiteVerbs(GetVerbsEvent<Verb> args)
@@ -242,6 +245,7 @@ public sealed partial class AdminVerbSystem
                 Icon = new SpriteSpecifier.Rsi(new("/Textures/Clothing/Hands/Gloves/Color/yellow.rsi"), "icon"),
                 Act = () =>
                 {
+                    var totalDamage = _damageable.GetTotalDamage((args.Target, damageable));
                     int damageToDeal;
                     if (!_mobThresholdSystem.TryGetThresholdForState(args.Target, MobState.Critical, out var criticalThreshold))
                     {
@@ -249,11 +253,11 @@ public sealed partial class AdminVerbSystem
                         if (!_mobThresholdSystem.TryGetThresholdForState(args.Target, MobState.Dead,
                                 out var deadThreshold))
                             return;// whelp.
-                        damageToDeal = deadThreshold.Value.Int() - (int)damageable.TotalDamage;
+                        damageToDeal = deadThreshold.Value.Int() - (int)totalDamage;
                     }
                     else
                     {
-                        damageToDeal = criticalThreshold.Value.Int() - (int)damageable.TotalDamage;
+                        damageToDeal = criticalThreshold.Value.Int() - (int)totalDamage;
                     }
 
                     if (damageToDeal <= 0)
@@ -289,7 +293,7 @@ public sealed partial class AdminVerbSystem
                 Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Consumable/Food/Baked/pie.rsi"), "plain-slice"),
                 Act = () =>
                 {
-                    _creamPieSystem.SetCreamPied(args.Target, creamPied, true);
+                    _creamPieSystem.SetCreamPied((args.Target, creamPied), true);
                 },
                 Impact = LogImpact.Extreme,
                 Message = string.Join(": ", creamPieName, Loc.GetString("admin-smite-creampie-description"))
@@ -981,7 +985,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new("Interface/Actions/voice-mask.rsi"), "icon"),
             Act = () =>
             {
-                EnsureComp<BarkAccentComponent>(args.Target);
+                // EnsureComp<BarkAccentComponent>(args.Target); # Aurora's Song - Disable bark accent
                 EnsureComp<BleatingAccentComponent>(args.Target);
                 EnsureComp<FrenchAccentComponent>(args.Target);
                 EnsureComp<GermanAccentComponent>(args.Target);
@@ -1018,7 +1022,7 @@ public sealed partial class AdminVerbSystem
                 if (hand != null)
                 {
                     _handsSystem.TryDrop(args.Target, hand);
-                    var club = EntityManager.SpawnNextToOrDrop("CavemanClubCursed", args.Target);
+                    var club = SpawnNextToOrDrop("CavemanClubCursed", args.Target);
                     if (club.Valid &&
                         !_handsSystem.TryPickupAnyHand(args.Target, club, false))
                     {
@@ -1026,7 +1030,7 @@ public sealed partial class AdminVerbSystem
                     }
                 }
 
-                if (_prototypeManager.TryIndex<DamageTypePrototype>("Blunt", out var bluntProto))
+                if (_prototypeManager.TryIndex<DamageTypePrototype>(Blunt, out var bluntProto)) // Aurora's Song
                 {
                     var bluntDamage = new DamageSpecifier(bluntProto, 10);
                     _damageable.TryChangeDamage(args.Target, bluntDamage, true);

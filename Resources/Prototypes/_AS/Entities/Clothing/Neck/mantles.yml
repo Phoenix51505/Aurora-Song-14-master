@@ -36,3 +36,18 @@
     sprite: _AS/Clothing/Neck/Mantles/cr.rsi
   - type: Clothing
     sprite: _AS/Clothing/Neck/Mantles/cr.rsi
+
+#region NanoTrasen
+
+- type: entity
+  parent: [ClothingNeckBase, BaseC2ContrabandUnredeemable]
+  id: ASClothingNeckMantleBlueshieldOperative
+  name: blushield operative's mantle
+  description: Decorative and clearly expensive, supposedly these are granted for exceptional service
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Clothing/Neck/Mantle/bsomantle.rsi
+  - type: Clothing
+    sprite: _Goobstation/Clothing/Neck/Mantle/bsomantle.rsi
+  - type: StaticPrice
+    price: 200

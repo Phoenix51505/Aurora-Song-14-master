@@ -29,9 +29,9 @@
     NFWeaponSubMachineGunWt550: 4294967295
     NFWeaponSubMachineGunTypewriter: 4294967295
   # Rifles
-    NFWeaponRifleBarlowsBolt: 4294967295
+    ASWeaponRifleMosinBolt: 4294967295 # Aurora's Song | Mosin reworked
     NFWeaponRifleMusket: 4294967295
-    NFWeaponRifleCeremonial: 4294967295
+    ASWeaponRifleGarandCeremonial: 4294967295 # Aurora's Song | Ceremonial rifle reworked
     NFWeaponRifleSVS: 4294967295
     NFWeaponRifleRepeater: 4294967295
   # Assault Rifles

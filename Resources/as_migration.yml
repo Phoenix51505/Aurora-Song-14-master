@@ -13,3 +13,9 @@ LeftLegGoblin: OrganGoblinLegLeft
 RightLegGoblin: OrganGoblinLegRight
 LeftFootGoblin: OrganGoblinFootLeft
 RightFootGoblin: OrganGoblinFootRight
+
+# 2026-06-13 - Completely remove NF medical bounties
+MachineMedicalBountyRedemption: ASMachineMedicalBountyRedemption
+
+# 2026-06-30 - Remove TechnologyDiskRare
+TechnologyDiskRare: TechnologyDisk

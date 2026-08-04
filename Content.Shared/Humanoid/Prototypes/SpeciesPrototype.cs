@@ -1,3 +1,4 @@
+using Content.Shared.Body;
 using Content.Shared.Dataset;
 using Content.Shared.Humanoid.Markings;
 using Robust.Shared.Prototypes;
@@ -34,18 +35,6 @@ public sealed partial class SpeciesPrototype : IPrototype
     [DataField(required: true)]
     public bool RoundStart { get; private set; } = false;
 
-    // The below two are to avoid fetching information about the species from the entity
-    // prototype.
-
-    // This one here is a utility field, and is meant to *avoid* having to duplicate
-    // the massive SpriteComponent found in every species.
-    // Species implementors can just override SpriteComponent if they want a custom
-    // sprite layout, and leave this null. Keep in mind that this will disable
-    // sprite accessories.
-
-    [DataField("sprites")]
-    public ProtoId<HumanoidSpeciesBaseSpritesPrototype> SpriteSet { get; private set; } = default!;
-
     /// <summary>
     ///     Default skin tone for this species. This applies for non-human skin tones.
     /// </summary>
@@ -58,12 +47,6 @@ public sealed partial class SpeciesPrototype : IPrototype
     /// </summary>
     [DataField]
     public int DefaultHumanSkinTone { get; private set; } = 20;
-
-    /// <summary>
-    ///     The limit of body markings that you can place on this species.
-    /// </summary>
-    [DataField("markingLimits")]
-    public ProtoId<MarkingPointsPrototype> MarkingPoints { get; private set; } = default!;
 
     /// <summary>
     ///     Humanoid species variant used by this entity.
@@ -82,30 +65,49 @@ public sealed partial class SpeciesPrototype : IPrototype
     /// </summary>
     [DataField(required: true)]
     public ProtoId<SkinColorationPrototype> SkinColoration { get; private set; }
-        // Aurora height and width sliders
-        /// <summary>
+
+    // Aurora height and width sliders
+    /// <summary>
     /// Minimum allowed height for this species.
     /// </summary>
     [DataField("minHeight")]
-    public float MinHeight { get; private set; } = 0.6f;
+    public float MinHeight { get; private set; } = 0.75f;
 
     /// <summary>
     /// Maximum allowed height for this species.
     /// </summary>
     [DataField("maxHeight")]
-    public float MaxHeight { get; private set; } = 1.3f;
+    public float MaxHeight { get; private set; } = 1.5f;
 
     /// <summary>
     /// Minimum allowed width for this species.
     /// </summary>
     [DataField("minWidth")]
-    public float MinWidth { get; private set; } = 0.6f;
+    public float MinWidth { get; private set; } = 0.75f;
 
     /// <summary>
     /// Maximum allowed width for this species.
     /// </summary>
     [DataField("maxWidth")]
-    public float MaxWidth { get; private set; } = 1.3f;
+    public float MaxWidth { get; private set; } = 1.5f;
+
+    /// <summary>
+    /// Average height of a species in CM
+    /// </summary>
+    [DataField("averageHeight")]
+    public float AverageHeight { get; private set; } = 170.0f;
+
+    /// <summary>
+    /// Average width of a species in CM
+    /// </summary>
+    [DataField("averageWidth")]
+    public float AverageWidth { get; private set; } = 40.0f;
+
+    /// <summary>
+    /// Default Scaling
+    /// </summary>
+    [DataField("defaultScale")]
+    public float DefaultScale { get; private set; } = 1.0f;
     // Aurora height and width sliders end
 
     [DataField]

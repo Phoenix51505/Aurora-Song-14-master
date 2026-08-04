@@ -533,6 +533,7 @@
       - id: VendingMachineRoboDrobe
       - id: VendingMachineGeneDrobe
       - id: VendingMachineViroDrobe
+      - id: VendingMachineSecDrobe # Aurora's Song
     - !type:NestedSelector
       tableId: TableDungeonLootGeneralVendomatsContraband
       weight: 0.05
@@ -595,7 +596,7 @@
       - id: VendingMachineClothingPunk
       - id: VendingMachineBountyVendPunk
       - id: VendingMachineSyndieContraband
-      - id: VendingMachineSomberMantis # Aurora
+      - id: VendingMachineSomberMantis # Aurora's Song
 
 # region Flatpacks
 - type: entityTable

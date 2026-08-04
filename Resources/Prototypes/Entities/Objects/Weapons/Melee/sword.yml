@@ -135,6 +135,9 @@
     - Back
     - Belt
   - type: DisarmMalus
+  - type: Tag # Aurora's Song | Katana tag applied
+    tags:
+    - Katana
 
 - type: entity
   name: energy katana

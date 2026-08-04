@@ -204,3 +204,17 @@
     tags:
     - PetWearable
     - CorgiWearable
+
+#region NanoTrasen
+- type: entity
+  parent: ClothingHeadBase
+  id: ASClothingHeadHatBeretBlueshield
+  name: blueshield's beret
+  description: A vibrant navy blue beret that marks out a Blueshield of NanoTrasen's Command On-Site Security programme
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Clothing/Head/Hats/blueshield_beret.rsi
+  - type: Clothing
+    sprite: _Goobstation/Clothing/Head/Hats/blueshield_beret.rsi
+  - type: StaticPrice
+    price: 100

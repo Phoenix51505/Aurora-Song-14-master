@@ -1,0 +1,258 @@
+# Corvax wood tiles
+- type: latheRecipe
+  parent: NFBaseFloorTileWoodRecipe
+  id: FloorTileItemWoodParquet
+  result: FloorTileItemWoodParquet
+
+- type: latheRecipe
+  parent: NFBaseFloorTileWoodRecipe
+  id: FloorTileItemWoodChess
+  result: FloorTileItemWoodChess
+
+- type: latheRecipe
+  parent: NFBaseFloorTileWoodRecipe
+  id: FloorTileItemWoodBlack
+  result: FloorTileItemWoodBlack
+
+- type: latheRecipe
+  parent: NFBaseFloorTileWoodRecipe
+  id: FloorTileItemWoodLargeBlack
+  result: FloorTileItemWoodLargeBlack
+
+- type: latheRecipe
+  parent: NFBaseFloorTileWoodRecipe
+  id: FloorTileItemWoodParquetBlack
+  result: FloorTileItemWoodParquetBlack
+
+- type: latheRecipe
+  parent: NFBaseFloorTileWoodRecipe
+  id: FloorTileItemWoodChessBlack
+  result: FloorTileItemWoodChessBlack
+
+- type: latheRecipe
+  parent: NFBaseFloorTileWoodRecipe
+  id: FloorTileItemWoodDark
+  result: FloorTileItemWoodDark
+
+- type: latheRecipe
+  parent: NFBaseFloorTileWoodRecipe
+  id: FloorTileItemWoodLargeDark
+  result: FloorTileItemWoodLargeDark
+
+- type: latheRecipe
+  parent: NFBaseFloorTileWoodRecipe
+  id: FloorTileItemWoodParquetDark
+  result: FloorTileItemWoodParquetDark
+
+- type: latheRecipe
+  parent: NFBaseFloorTileWoodRecipe
+  id: FloorTileItemWoodChessDark
+  result: FloorTileItemWoodChessDark
+
+- type: latheRecipe
+  parent: NFBaseFloorTileWoodRecipe
+  id: FloorTileItemWoodLight
+  result: FloorTileItemWoodLight
+
+- type: latheRecipe
+  parent: NFBaseFloorTileWoodRecipe
+  id: FloorTileItemWoodLargeLight
+  result: FloorTileItemWoodLargeLight
+
+- type: latheRecipe
+  parent: NFBaseFloorTileWoodRecipe
+  id: FloorTileItemWoodParquetLight
+  result: FloorTileItemWoodParquetLight
+
+- type: latheRecipe
+  parent: NFBaseFloorTileWoodRecipe
+  id: FloorTileItemWoodChessLight
+  result: FloorTileItemWoodChessLight
+
+- type: latheRecipe
+  parent: NFBaseFloorTileWoodRecipe
+  id: FloorTileItemWoodRed
+  result: FloorTileItemWoodRed
+
+- type: latheRecipe
+  parent: NFBaseFloorTileWoodRecipe
+  id: FloorTileItemWoodLargeRed
+  result: FloorTileItemWoodLargeRed
+
+- type: latheRecipe
+  parent: NFBaseFloorTileWoodRecipe
+  id: FloorTileItemWoodParquetRed
+  result: FloorTileItemWoodParquetRed
+
+- type: latheRecipe
+  parent: NFBaseFloorTileWoodRecipe
+  id: FloorTileItemWoodChessRed
+  result: FloorTileItemWoodChessRed
+
+# Xeno tile base
+- type: latheRecipe
+  abstract: true
+  id: ASBaseFloorTileXenoRecipe
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Chitin: 25
+
+# Xeno tiles
+- type: latheRecipe
+  parent: ASBaseFloorTileXenoRecipe
+  id: FloorTileItemXeno
+  result: FloorTileItemXeno
+
+- type: latheRecipe
+  parent: ASBaseFloorTileXenoRecipe
+  id: FloorTileItemXenoSteel
+  result: FloorTileItemXenoSteel
+
+- type: latheRecipe
+  parent: ASBaseFloorTileXenoRecipe
+  id: FloorTileItemXenoSteelCorner
+  result: FloorTileItemXenoSteelCorner
+
+- type: latheRecipe
+  parent: ASBaseFloorTileXenoRecipe
+  id: FloorTileItemXenoMaint
+  result: FloorTileItemXenoMaint
+
+# N14 metal tiles
+- type: latheRecipe
+  parent: NFBaseFloorTileRecipe
+  id: FloorTileItemMetalBlue
+  result: FloorTileItemMetalBlue
+
+- type: latheRecipe
+  parent: NFBaseFloorTileRecipe
+  id: FloorTileItemMetalBlueSolid
+  result: FloorTileItemMetalBlueSolid
+
+- type: latheRecipe
+  parent: NFBaseFloorTileRecipe
+  id: FloorTileItemMetalGreen
+  result: FloorTileItemMetalGreen
+
+- type: latheRecipe
+  parent: NFBaseFloorTileRecipe
+  id: FloorTileItemMetalGreenSolid
+  result: FloorTileItemMetalGreenSolid
+
+- type: latheRecipe
+  parent: NFBaseFloorTileRecipe
+  id: FloorTileItemMetalGrey
+  result: FloorTileItemMetalGrey
+
+- type: latheRecipe
+  parent: NFBaseFloorTileRecipe
+  id: FloorTileItemMetalGreySolid
+  result: FloorTileItemMetalGreySolid
+
+- type: latheRecipe
+  parent: NFBaseFloorTileRecipe
+  id: FloorTileItemMetalGreyDark
+  result: FloorTileItemMetalGreyDark
+
+- type: latheRecipe
+  parent: NFBaseFloorTileRecipe
+  id: FloorTileItemMetalGreyDarkSolid
+  result: FloorTileItemMetalGreyDarkSolid
+
+- type: latheRecipe
+  parent: NFBaseFloorTileRecipe
+  id: FloorTileItemMetalPurple
+  result: FloorTileItemMetalPurple
+
+- type: latheRecipe
+  parent: NFBaseFloorTileRecipe
+  id: FloorTileItemMetalPurpleSolid
+  result: FloorTileItemMetalPurpleSolid
+
+- type: latheRecipe
+  parent: NFBaseFloorTileRecipe
+  id: FloorTileItemMetalRed
+  result: FloorTileItemMetalRed
+
+- type: latheRecipe
+  parent: NFBaseFloorTileRecipe
+  id: FloorTileItemMetalRedSolid
+  result: FloorTileItemMetalRedSolid
+
+- type: latheRecipe
+  parent: NFBaseFloorTileRecipe
+  id: FloorTileItemMetalTeal
+  result: FloorTileItemMetalTeal
+
+- type: latheRecipe
+  parent: NFBaseFloorTileRecipe
+  id: FloorTileItemMetalTealSolid
+  result: FloorTileItemMetalTealSolid
+
+- type: latheRecipe
+  parent: NFBaseFloorTileRecipe
+  id: FloorTileItemMetalWhite
+  result: FloorTileItemMetalWhite
+
+- type: latheRecipe
+  parent: NFBaseFloorTileRecipe
+  id: FloorTileItemMetalWhiteSolid
+  result: FloorTileItemMetalWhiteSolid
+
+- type: latheRecipe
+  parent: NFBaseFloorTileRecipe
+  id: FloorTileItemMetalYellow
+  result: FloorTileItemMetalYellow
+
+- type: latheRecipe
+  parent: NFBaseFloorTileRecipe
+  id: FloorTileItemMetalYellowSolid
+  result: FloorTileItemMetalYellowSolid
+
+- type: latheRecipe
+  parent: NFBaseFloorTileRecipe
+  id: FloorTileItemMetalFreezer
+  result: FloorTileItemMetalFreezer
+
+- type: latheRecipe
+  parent: NFBaseFloorTileRecipe
+  id: FloorTileItemMetalIndustrial
+  result: FloorTileItemMetalIndustrial
+
+- type: latheRecipe
+  parent: NFBaseFloorTileRecipe
+  id: FloorTileItemMetalMS13
+  result: FloorTileItemMetalMS13
+
+- type: latheRecipe
+  parent: NFBaseFloorTileRecipe
+  id: FloorTileItemMetalGrate
+  result: FloorTileItemMetalGrate
+
+- type: latheRecipe
+  parent: NFBaseFloorTileRecipe
+  id: FloorTileItemMetalSolid
+  result: FloorTileItemMetalSolid
+
+# N14 wood tiles
+- type: latheRecipe
+  parent: NFBaseFloorTileWoodRecipe
+  id: FloorTileItemWoodOak
+  result: FloorTileItemWoodOak
+
+- type: latheRecipe
+  parent: NFBaseFloorTileWoodRecipe
+  id: FloorTileItemWoodHouse
+  result: FloorTileItemWoodHouse
+
+- type: latheRecipe
+  parent: NFBaseFloorTileWoodRecipe
+  id: FloorTileItemWoodMaple
+  result: FloorTileItemWoodMaple
+
+# N14 carpets
+- type: latheRecipe
+  parent: NFBaseFloorTileClothRecipe
+  id: FloorTileItemCarpetRed
+  result: FloorTileItemCarpetRed

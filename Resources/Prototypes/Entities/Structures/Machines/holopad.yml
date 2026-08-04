@@ -16,7 +16,10 @@
         mask:
         - Impassable
   - type: ApcPowerReceiver
-    powerLoad: 300
+    powerLoad: 5
+  - type: PowerState
+    idlePowerDraw: 5
+    workingPowerDraw: 300
   - type: StationAiVision
     range: 1
     needsAnchoring: true
@@ -105,6 +108,7 @@
         node: machineFrame
       - !type:DoActsBehavior
         acts: ["Destruction"]
+  - type: TooShortForUiWhitelist # MACRO
 
 - type: entity
   name: long-range holopad

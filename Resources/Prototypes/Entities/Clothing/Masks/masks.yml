@@ -95,7 +95,7 @@
   - type: IngestionBlocker
 
 - type: entity
-  parent: [ ClothingMaskGasAtmos, BaseCentcommContraband ]
+  parent: [ ClothingMaskGasAtmos, BaseC3NanoTrasenContrabandLowValue ] # Aurora's Song - BaseCentcommContraband<BaseC3NanoTrasenContrabandLowValue
   id: ClothingMaskGasCentcom
   name: CentComm gas mask
   description: Oooh, gold and green. Fancy! This should help as you sit in your office.
@@ -462,7 +462,7 @@
     id: ClothingMaskGasMercenary # Frontier
 
 - type: entity
-  parent: [ ClothingMaskGas, BaseCentcommContraband ]
+  parent: [ ClothingMaskGas, BaseC3NanoTrasenContraband ] # Aurora's Song - BaseCentcommContraband<BaseC3NanoTrasenContraband
   id: ClothingMaskGasERT
   name: ert gas mask
   description: The gas mask of the elite squad of the ERT.
@@ -749,9 +749,6 @@
     sprite: Clothing/Mask/italian_moustache.rsi
   - type: Item
     storedRotation: -90
-  - type: AddAccentClothing
-    accent: ReplacementAccent
-    replacement: italian
 
 - type: entity
   parent: ClothingMaskBase

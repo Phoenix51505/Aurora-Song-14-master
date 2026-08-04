@@ -10,6 +10,20 @@
     sprite: Objects/Weapons/Guns/Battery/svalinn.rsi
   - type: Item
     sprite: Objects/Weapons/Guns/Battery/svalinn.rsi
+  - type: Battery # Aurora's Song - Shouldn't have an internal battery
+    maxCharge: 0
+    startingCharge: 0
+  - type: BatterySelfRecharger  # Aurora's Song - Doesn't recharge
+    autoRechargeRate: 0
+  - type: ItemSlots  # Aurora's Song - Add Medium and High whitelists
+    slots:
+      cell_slot:
+        whitelist:
+          tags:
+          - PowerCell
+          - PowerCellSmall
+          - PowerCellMedium
+          - PowerCellHigh
 
 - type: entity
   id: NFWeaponEnergyPistolLaserMakeshift
@@ -280,3 +294,5 @@
           Yellow: { state: mode-yellow }
   - type: StaticPrice
     price: 250
+  - type: PacifismAllowedGun # Aurora's Song - added PacifismAllowedGun since it is not a weapon
+

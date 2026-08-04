@@ -16,7 +16,6 @@ using Content.Shared.Procedural; // Frontier
 using Content.Shared.Salvage; // Frontier
 using Robust.Shared.Prototypes; // Frontier
 using Content.Shared._NF.CCVar; // Frontier
-using Content.Shared.Shuttles.Components; // Frontier
 using Robust.Shared.Configuration;
 using Content.Shared.Ghost;
 using System.Numerics; // Frontier
@@ -36,7 +35,7 @@ public sealed partial class SalvageSystem
     private const double SalvageJobTime = 0.002;
     private readonly List<(ProtoId<SalvageDifficultyPrototype> id, int value)> _missionDifficulties = [("NFModerate", 0), ("NFHazardous", 1), ("NFExtreme", 2)]; // Frontier: mission difficulties with order
 
-    [Dependency] private readonly IConfigurationManager _cfgManager = default!; // Frontier
+    [Dependency] private IConfigurationManager _cfgManager = default!; // Frontier
 
     private float _cooldown;
     private float _failedCooldown; // Frontier

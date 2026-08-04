@@ -27,6 +27,7 @@
   - NFAmmunitionBoxRifle30Overpressure
   - NFAmmunitionBoxBigRifle30Overpressure
   - NFAmmunitionBoxRifle30Rubber
+  - ASAmmunitionBoxRifle30Long # Aurora's Song
   - ASAmmunitionBoxBigPistol35 # Aurora Song
   - ASAmmunitionBoxBigPistol35Overpressure # Aurora Song
   - ASAmmunitionBoxBigPistol40 # Aurora Song
@@ -59,6 +60,10 @@
   - NFMagazineRifle30OverpressureEmpty
   - ASMagazineMarksmanRifle30Empty  # Adding marksman rifle for the Commissioner to refill
   - ASMagazineMarksmanRifle30OverpressureEmpty # Adding marksman rifle for the Commissioner to refill
+  - ASMagazineEnblocRifle30LongEmpty # Aurora's Song
+  - ASMagazineEnblocRifle30Long # Aurora's Song
+  - ASSpeedLoaderRifle30LongEmpty # Aurora's SOng
+  - ASSpeedLoaderRifle30Long # Aurora's Song
   - NFSpeedLoaderPistol35Empty
   - NFSpeedLoaderPistol45Empty
   - MagazineAsmgtUniversalEmpty

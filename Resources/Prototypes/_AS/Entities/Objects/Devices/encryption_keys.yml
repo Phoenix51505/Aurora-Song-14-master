@@ -78,7 +78,7 @@
     - state: arcadia_label
 
 - type: entity
-  parent: [EncryptionKey, BaseC3Contraband]
+  parent: [EncryptionKey, BaseC3NanoTrasenContrabandLowValue]
   id: EncryptionKeyNanotrasen
   name: nanotrasen encryption key
   categories: [ DoNotMap ]

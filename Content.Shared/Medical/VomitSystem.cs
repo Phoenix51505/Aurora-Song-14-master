@@ -19,20 +19,20 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Medical;
 
-public sealed class VomitSystem : EntitySystem
+public sealed partial class VomitSystem : EntitySystem
 {
-    [Dependency] private readonly INetManager _netManager = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly HungerSystem _hunger = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly MovementModStatusSystem _movementMod = default!;
-    [Dependency] private readonly ThirstSystem _thirst = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedBloodstreamSystem _bloodstream = default!;
-    [Dependency] private readonly SharedForensicsSystem _forensics = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedPuddleSystem _puddle = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private INetManager _netManager = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private HungerSystem _hunger = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private MovementModStatusSystem _movementMod = default!;
+    [Dependency] private ThirstSystem _thirst = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedBloodstreamSystem _bloodstream = default!;
+    [Dependency] private SharedForensicsSystem _forensics = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedPuddleSystem _puddle = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
 
     public override void Initialize()
     {
@@ -52,9 +52,23 @@ public sealed class VomitSystem : EntitySystem
 
     private void TryVomitSolution(Entity<StomachComponent> ent, ref BodyRelayedEvent<TryVomitEvent> args)
     {
-        if (_solutionContainer.ResolveSolution(ent.Owner, StomachSystem.DefaultSolutionName, ref ent.Comp.Solution, out var sol))
-            _solutionContainer.TryTransferSolution(ent.Comp.Solution.Value, args.Args.Sol, sol.AvailableVolume);
+        // Aurora's Song Start - Allow vomit cancellation
+        if (args.Args.Cancelled)
+            return;
+        // Aurora's Song End
 
+        if (!_solutionContainer.ResolveSolution(ent.Owner,
+                StomachSystem.DefaultSolutionName,
+                ref ent.Comp.Solution,
+                out var sol))
+            return;
+
+        // Empty stomach solution into the new vomit solution
+        args.Args.Sol.AddSolution(sol, _proto);
+        sol.RemoveAllSolution();
+
+        // Remind the stomach that it's empty.
+        _solutionContainer.UpdateChemicals(ent.Comp.Solution.Value);
         args.Args = args.Args with { Handled = true };
     }
 
@@ -128,4 +142,4 @@ public sealed class VomitSystem : EntitySystem
 }
 
 [ByRefEvent]
-public record struct TryVomitEvent(Solution Sol, bool Forced = false, bool Handled = false);
+public record struct TryVomitEvent(Solution Sol, bool Forced = false, bool Handled = false, bool Cancelled = false); // Aurora's Song - Add canceling

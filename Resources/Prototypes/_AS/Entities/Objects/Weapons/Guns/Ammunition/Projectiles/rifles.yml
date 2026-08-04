@@ -1,0 +1,10 @@
+﻿- type: entity
+  id: ASBulletRifle30Long
+  name: bullet (.30 Long rifle)
+  parent: NFBaseBullet
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 30

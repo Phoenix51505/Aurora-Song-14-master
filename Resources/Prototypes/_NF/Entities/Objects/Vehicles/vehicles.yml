@@ -118,7 +118,7 @@
       maxItemSize: Huge
       blacklist:
         components:
-        - HumanoidAppearance
+        - HumanoidProfile # Aurora's Song HumanoidAppearance>HumanoidProfile
     - type: ContainerContainer
       containers:
         storagebase: !type:Container
@@ -301,7 +301,8 @@
 # Enhanced version of the vanilla Janicart that adds a bucket and mop slot.
 - type: entity
   id: NFVehicleJanicart
-  parent: VehicleJanicart
+  parent: [SolutionTank, SolutionGinormous, VehicleJanicart] # Aurora's Song - Convert to solution
+  name: janicart # Aurora's Song - name fixing due to weird parent
   components:
   - type: ItemSlots
     slots:
@@ -374,26 +375,22 @@
     sprite: Objects/Vehicles/janicart.rsi
   - type: Appearance
   - type: Spillable
-    solution: bucket
+    solution: tank # Aurora's Song - Convert to solution
     spillDelay: 3.0
     spillWhenThrown: false
-  - type: SolutionContainerManager
-    solutions:
-      bucket:
-        maxVol: 800
   - type: DrainableSolution
-    solution: bucket
+    solution: tank # Aurora's Song - Convert to solution
   - type: RefillableSolution
-    solution: bucket
+    solution: tank # Aurora's Song - Convert to solution
   - type: ExaminableSolution
-    solution: bucket
+    solution: tank # Aurora's Song - Convert to solution
   - type: Tag
     tags:
       - Wringer
       - DoorBumpOpener
   - type: Edible  # Aurora's Song - Convert to edible from Drink
     edible: Drink
-    solution: bucket
+    solution: tank # Aurora's Song - Convert to solution
     destroyOnEmpty: false # Aurora's Song: DO NOT EAT IT
   - type: ContainerContainer
     containers:
@@ -832,7 +829,6 @@
   name: dumpster
   description: It only has one wheel!
   components:
-  - type: Timer
   - type: TimedSpawner
     prototypes:
     - SpawnGoblinMadeToolMalfunction

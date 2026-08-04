@@ -1,0 +1,11 @@
+- type: npcFaction
+  id: ASNanoTrasenRogue
+  neutral:
+  - ExplorersExpeditionNF
+  defaultHostile: true
+
+- type: npcFaction
+  id: ColonialCommand
+
+- type: npcFaction # updated faction for non command equipment that CDETs shouldn't shoot at
+  id: AuroranColony

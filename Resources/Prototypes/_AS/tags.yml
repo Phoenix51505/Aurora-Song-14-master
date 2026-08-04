@@ -1,12 +1,10 @@
 ﻿# Added back stuff from upmerge
+#region Upmerge
 - type: Tag
   id: ATVKeys
 
 - type: Tag
   id: DeathAcidifier
-
-- type: Tag
-  id: DrinkGlass
 
 - type: Tag
   id: Ingredient
@@ -34,10 +32,32 @@
 
 - type: Tag
   id: Wringer
+#endregion
+
+#region weapon group tags
+- type: Tag
+  id: Baton
+
+#endregion
 
 #region .30 rifle
 - type: Tag
+  id: ASMagazineBRTopMountedRifle30
+
+- type: Tag
   id: ASMagazineMarksmanRifle30
+#endregion
+
+#region .30 long rifle
+- type: Tag
+  id: ASCartridgeRifle30Long
+
+- type: Tag
+  id: ASMagazineEnblocRifle30Long
+
+- type: Tag
+  id: ASSpeedLoaderRifle30Long
+#endregion
 
 #region .40 pistol
 - type: Tag
@@ -57,6 +77,7 @@
 
 - type: Tag
   id: ASSpeedLoaderPistol40
+#endregion
 
 #region .25 caseless
 - type: Tag
@@ -67,6 +88,35 @@
 
 - type: Tag
   id: ASMagazinePistolCaselessRifle
+#endregion
+
+#region Chems
+- type: Tag
+  id: Aphrodisiac
+
+- type: Tag
+  id: Cryogenic
+
+- type: Tag
+  id: IPCCompatible
+
+- type: Tag
+  id: Narcotic
+
+- type: Tag
+  id: Toxin
+
+- type: Tag
+  id: ShelegCompatible
+#endregion
+
+#region shotgun 8g
+- type: Tag
+  id: ShellShotgun8g
+
+- type: Tag
+  id: MagazineShotgunLever
+#endregion
 
 #region Docking Tags
 - type: Tag
@@ -83,6 +133,7 @@
 
 - type: Tag
   id: ArrivalShuttle
+#endregion
 
 #region uplinks - Aurora
 - type: Tag
@@ -90,13 +141,14 @@
 
 - type: Tag
   id: ExchangeUplink
+#endregion
 
 #region licenses
 - type: Tag
   id: License
+#endregion
 
 #region Power Cells
-
 - type: Tag
   id: PowerCellMedium
 
@@ -111,3 +163,4 @@
 
 - type: Tag
   id: PowerCellAntique
+#endregion
