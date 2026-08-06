@@ -2,6 +2,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.Storage.Components;
 using Content.Shared.Item.ItemToggle; // DeltaV
+using Content.Shared.Item.ItemToggle.Components; // Aurora's Song
 using Content.Shared.Whitelist;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
@@ -95,6 +96,7 @@ public sealed partial class MagnetPickupSystem : EntitySystem
         if (!comp.MagnetCanBeEnabled)
             return;
 
+        comp.IdleTallies = 0; // Aurora's Song: If we have any tallies, set them to 0
         comp.MagnetEnabled = !comp.MagnetEnabled;
         Dirty(uid, comp);
     }
@@ -203,6 +205,28 @@ public sealed partial class MagnetPickupSystem : EntitySystem
 
                 playedSound = true;
             }
+
+            if (count == 0) // Begin Aurora's Song Magnet Performance
+            {
+                comp.IdleTallies++; // If we didn't pick anything up, at 1 to our tallies
+            } 
+            else
+            {
+                comp.IdleTallies = 0; // If we did pick something up, reset our tallies
+            }
+
+            if (comp.IdleTallies >= comp.IdleTallyThreshold)
+            {                
+                if(comp.MagnetCanBeEnabled
+                && comp.MagnetEnabled) // If we are over our tally threshold, are a magnet that can be enabled, and are presently enabled, toggle ourselves off
+                {
+                    ToggleMagnet(uid, comp);
+                } else if (TryComp<ItemToggleComponent>(uid, out var toggleComp) && _toggle.IsActivated(uid)) // Otherwise, if we use a different toggle system, try and toggle that
+                {    
+                    _toggle.TryDeactivate((uid, toggleComp), predicted: false, showPopup: false);
+                    comp.IdleTallies = 0;
+                }
+            }// End Aurora's Song Magnet Performance
         }
     }
 }

@@ -80,6 +80,7 @@ public sealed partial class MaterialStorageMagnetPickupSystem : EntitySystem
         var query = EntityQueryEnumerator<MaterialStorageMagnetPickupComponent>();
         comp.MagnetEnabled = !comp.MagnetEnabled;
 
+        comp.IdleTallies = 0; // Aurora's Song: If we have any tallies, set them to 0
         return comp.MagnetEnabled;
     }
 
@@ -91,7 +92,7 @@ public sealed partial class MaterialStorageMagnetPickupSystem : EntitySystem
 
         while (query.MoveNext(out var uid, out var comp, out var storage, out var xform))
         {
-            if (comp.NextScan < currentTime)
+            if (comp.NextScan > currentTime) // Aurora's Song: Don't run this every frame
                 continue;
 
             comp.NextScan += ScanDelay;
@@ -102,6 +103,7 @@ public sealed partial class MaterialStorageMagnetPickupSystem : EntitySystem
 
             var parentUid = xform.ParentUid;
 
+            var count = 0; // Aurora's Song
             foreach (var near in _lookup.GetEntitiesInRange(uid, comp.Range, LookupFlags.Dynamic | LookupFlags.Sundries))
             {
                 if (!_physicsQuery.TryGetComponent(near, out var physics) || physics.BodyStatus != BodyStatus.OnGround)
@@ -112,7 +114,23 @@ public sealed partial class MaterialStorageMagnetPickupSystem : EntitySystem
 
                 if (!_storage.TryInsertMaterialEntity(uid, near, uid, storage))
                     continue;
+                count++; // Aurora's Song
             }
+
+            if (count == 0) // Begin Aurora's Song Magnet Performance
+            {
+                comp.IdleTallies += 1; // If we didn't pick anything up, at 1 to our tallies
+            } 
+            else
+            {
+                comp.IdleTallies = 0; // If we did pick something up, reset our tallies
+            }
+
+            if (comp.IdleTallies >= comp.IdleTallyThreshold
+            && comp.MagnetEnabled) // If we are over our tally threshold, and are presently enabled, toggle ourselves off
+            {
+                ToggleMagnet(uid, comp);
+            } // End Aurora's Song Magnet Performance
         }
     }
 }

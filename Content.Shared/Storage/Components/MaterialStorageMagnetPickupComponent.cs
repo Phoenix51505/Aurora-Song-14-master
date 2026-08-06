@@ -17,4 +17,18 @@ public sealed partial class MaterialStorageMagnetPickupComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("magnetEnabled")]
     public bool MagnetEnabled = false;
+
+    // Begin Aurora's Song
+    /// <summary>
+    /// How many idle tallies has this magnet accrued
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public int IdleTallies = 0;
+
+    /// <summary>
+    /// How many idle tallies are needed before the magnet automatically shuts off
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public int IdleTallyThreshold = 10; // Equivalent to 10 seconds without picking anything up
+    // End Aurora's Song
 }
