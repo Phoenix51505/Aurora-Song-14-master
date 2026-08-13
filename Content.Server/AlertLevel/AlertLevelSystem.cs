@@ -229,27 +229,16 @@ public sealed partial class AlertLevelSystem : EntitySystem
         // The full announcement to be spat out into chat.
         var announcementFull = Loc.GetString("alert-level-announcement", ("name", name), ("announcement", announcement));
 
-        var playDefault = false;
-        if (playSound)
-        {
-            if (detail.Sound != null)
-            {
-                //var filter = _stationSystem.GetInOwningStation(station); // Frontier: global alerts
-                var filter = Filter.Empty(); // Frontier
-                filter.AddInMap(_ticker.DefaultMap, EntityManager); // Frontier
-                _audio.PlayGlobal(detail.Sound, filter, true, detail.Sound.Params);
-            }
-            else
-            {
-                playDefault = true;
-            }
-        }
+
+        Filter allPlayersInGame = Filter.Empty().AddWhere(_ticker.UserHasJoinedGame); // Aurora's Song: Consider sending these to lobby, too
+        var soundByte = (playSound && detail.Sound != null) ? detail.Sound : null; // Aurora's Song
 
         if (announce && Resolve(station, ref dataComponent)) // Frontier: add Resolve for dataComponent
         {
             var stationName = dataComponent.EntityName; // Frontier: moved down
-            _chatSystem.DispatchStationAnnouncement(station, announcementFull, playDefaultSound: playDefault,
+            _chatSystem.DispatchFilteredAnnouncement(allPlayersInGame, announcementFull, announcementSound: soundByte,
                 colorOverride: detail.Color, sender: stationName);
+            // Aurora's Song: Changed to DispatchFilteredAnnouncement instead of DispatchStationAnnouncement.
         }
 
         RaiseLocalEvent(new AlertLevelChangedEvent(EntityUid.Invalid, level)); // Frontier: pass invalid, we have no station
